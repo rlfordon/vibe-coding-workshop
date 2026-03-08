@@ -14,7 +14,8 @@
 - **Database**: sql.js (pure JS SQLite, no native deps needed)
 - **Config**: render.yaml, .env, .gitignore, README.md all created
 - **Branding**: "Vibe Coding Workshop", scarlet #BA0C2F, BioRhyme + Source Sans Pro fonts
-- **Slide deck**: 21-slide deck redesigned with story arc, project showcase, and free tools list
+- **Slide deck**: 23-slide deck with Do Now warm-up, About Me, story arc, project showcase, and free tools list
+- **Backup handout**: `backup-handout.html` — offline fallback with all prompts, ideas, and session plan
 - **Preview tab**: Code/Preview toggle, auto-switches to preview on paste
 
 ## What's Fixed
