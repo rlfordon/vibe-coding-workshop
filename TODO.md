@@ -32,7 +32,7 @@
 - [x] **Preview tab** — moved code preview to its own tab (Slides | Build | Preview | Gallery)
 - [ ] **Iteration guidance** — "what to do once you have a working app" content (tips, next steps); could be its own tab or section
 - [ ] **AI-powered idea feedback** — use AI on the Build page to give students feedback on their idea before they go to Gemini (big scope)
-- [ ] **Update slides** — full redesign plan at `docs/plans/2026-03-08-slide-deck-implementation.md`
+- [x] **Update slides** — redesigned from 20 to 22 slides per plan at `docs/plans/2026-03-08-slide-deck-implementation.md`
 
 ## Class Plan
 
