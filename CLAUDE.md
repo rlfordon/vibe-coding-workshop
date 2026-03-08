@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Single web app for a live vibe-coding workshop (~100 law students). Three tabs: Slides (embedded HTML deck), Build (prompt wizard for Gemini Canvas), Gallery (submit/view/vote/comment on student HTML projects). Brand: "Vibe Coding Workshop", primary color scarlet `#BA0C2F`.
+Single web app for a live vibe-coding workshop (~100 law students). Four tabs: Slides (embedded HTML deck), Build (prompt wizard for Gemini Canvas), Preview (paste code to test rendering), Gallery (submit/view/vote/comment on student HTML projects). Brand: "Vibe Coding Workshop", primary color scarlet `#BA0C2F`.
 
 ## Commands
 
@@ -25,7 +25,7 @@ rm server/data/workshop.db        # Recreated on next server start
 
 ## Architecture
 
-**Client** (`client/`): Vite + React 19 + Tailwind v4. Tab-based SPA — `App.jsx` renders `Slides.jsx`, `PromptWizard.jsx`, or `Gallery.jsx` based on active tab. Fonts: BioRhyme (headings) + Source Sans Pro (body).
+**Client** (`client/`): Vite + React 19 + Tailwind v4. Tab-based SPA — `App.jsx` renders `Slides.jsx`, `PromptWizard.jsx`, `Preview.jsx`, or `Gallery.jsx` based on active tab. Fonts: BioRhyme (headings) + Source Sans Pro (body).
 
 **Server** (`server/`): Express serving the built client as static files + 4 REST endpoints. Uses `sql.js` (pure-JS SQLite compiled to WASM — chosen because `better-sqlite3` requires Visual Studio on this Windows machine). Database persisted to `server/data/workshop.db`, saved to disk after every write.
 
@@ -46,6 +46,7 @@ The lucide-react UMD bundle expects `window.react` (lowercase) but React's UMD s
 - `client/src/SandboxedIframe.jsx` — Shared iframe rendering pipeline (prepareHtml, wrapReactCode, CDN shims)
 - `client/src/Gallery.jsx` — Gallery UI (submit/vote/comment)
 - `client/src/PromptWizard.jsx` — Build tab single-screen launchpad (prompt template + idea cards)
+- `client/src/Preview.jsx` — Preview tab (paste code, render in SandboxedIframe)
 - `server/db.js` — sql.js wrapper providing a better-sqlite3-like API (`prepare().all()`, `.get()`, `.run()`)
 - `client/public/slides.html` — Self-contained slide deck, served as static file
 

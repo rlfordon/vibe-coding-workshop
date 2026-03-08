@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import Slides from './Slides';
 import PromptWizard from './PromptWizard';
+import Preview from './Preview';
 import Gallery from './Gallery';
 
 const TABS = [
   { id: 'slides', label: 'Slides' },
   { id: 'build', label: 'Build' },
+  { id: 'preview', label: 'Preview' },
   { id: 'gallery', label: 'Gallery' },
 ];
 
@@ -63,6 +65,7 @@ export default function App() {
       <main>
         {activeTab === 'slides' && <Slides />}
         {activeTab === 'build' && <PromptWizard />}
+        {activeTab === 'preview' && <Preview />}
         {activeTab === 'gallery' && <Gallery />}
       </main>
     </div>
