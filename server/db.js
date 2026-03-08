@@ -32,7 +32,8 @@ db.run(`
     votes INTEGER DEFAULT 0,
     voters TEXT DEFAULT '[]',
     comments TEXT DEFAULT '[]',
-    created_at TEXT DEFAULT (datetime('now'))
+    created_at TEXT DEFAULT (datetime('now')),
+    author_id TEXT DEFAULT ''
   )
 `);
 

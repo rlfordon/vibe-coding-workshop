@@ -70,8 +70,12 @@ function parseProject(row) {
 
 // GET /api/projects — all projects sorted by votes desc
 app.get("/api/projects", (req, res) => {
+  const voterId = req.cookies.voter_id || "";
   const rows = db.prepare("SELECT * FROM projects ORDER BY votes DESC").all();
-  res.json(rows.map(parseProject));
+  res.json(rows.map((row) => ({
+    ...parseProject(row),
+    is_owner: row.author_id === voterId && voterId !== "",
+  })));
 });
 
 // POST /api/projects — create a new project
@@ -86,8 +90,9 @@ app.post("/api/projects", (req, res) => {
     return res.status(400).json({ error: "author, title, and html are required non-empty strings." });
   }
 
-  db.prepare("INSERT INTO projects (author, title, html) VALUES (?, ?, ?)")
-    .run(author.trim(), title.trim(), html.trim());
+  const authorId = req.cookies.voter_id || "";
+  db.prepare("INSERT INTO projects (author, title, html, author_id) VALUES (?, ?, ?, ?)")
+    .run(author.trim(), title.trim(), html.trim(), authorId);
 
   const row = db.prepare("SELECT * FROM projects ORDER BY id DESC LIMIT 1").get();
   res.status(201).json(parseProject(row));
@@ -154,6 +159,26 @@ app.post("/api/projects/:id/comments", (req, res) => {
 
   const updated = db.prepare("SELECT * FROM projects WHERE id = ?").get(req.params.id);
   res.json(parseProject(updated));
+});
+
+// DELETE /api/projects/:id — delete own project (author_id must match voter_id)
+app.delete("/api/projects/:id", (req, res) => {
+  const voterId = req.cookies.voter_id;
+  if (!voterId) {
+    return res.status(400).json({ error: "No voter_id cookie found." });
+  }
+
+  const row = db.prepare("SELECT * FROM projects WHERE id = ?").get(req.params.id);
+  if (!row) {
+    return res.status(404).json({ error: "Project not found." });
+  }
+
+  if (row.author_id !== voterId) {
+    return res.status(403).json({ error: "You can only delete your own projects." });
+  }
+
+  db.prepare("DELETE FROM projects WHERE id = ?").run(req.params.id);
+  res.json({ ok: true, message: "Project deleted." });
 });
 
 // ---------------------------------------------------------------------------

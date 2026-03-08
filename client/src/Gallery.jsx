@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ThumbsUp, MessageCircle, X, Send, Plus, Maximize2, ChevronDown, ChevronUp } from 'lucide-react';
+import { ThumbsUp, MessageCircle, X, Send, Plus, Maximize2, ChevronDown, ChevronUp, Trash2 } from 'lucide-react';
 import SandboxedIframe from './SandboxedIframe';
 
 const API = '/api/projects';
@@ -27,6 +27,18 @@ export default function Gallery() {
     const interval = setInterval(fetchProjects, 5000);
     return () => clearInterval(interval);
   }, []);
+
+  const handleDelete = async (id) => {
+    if (!window.confirm('Delete this project? You can always resubmit later.')) return;
+    try {
+      const res = await fetch(`${API}/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        setProjects((prev) => prev.filter((p) => p.id !== id));
+      }
+    } catch (e) {
+      console.error('Delete failed:', e);
+    }
+  };
 
   const handleVote = async (id) => {
     try {
@@ -82,6 +94,7 @@ export default function Gallery() {
             key={project.id}
             project={project}
             onVote={() => handleVote(project.id)}
+            onDelete={() => handleDelete(project.id)}
             onExpand={() => setExpanded(project)}
             onProjectUpdate={(updated) => {
               setProjects((prev) =>
@@ -109,7 +122,7 @@ export default function Gallery() {
   );
 }
 
-function ProjectCard({ project, onVote, onExpand, onProjectUpdate }) {
+function ProjectCard({ project, onVote, onDelete, onExpand, onProjectUpdate }) {
   const [showComments, setShowComments] = useState(false);
 
   return (
@@ -147,6 +160,15 @@ function ProjectCard({ project, onVote, onExpand, onProjectUpdate }) {
             {project.comments.length}
             {showComments ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
           </button>
+          {project.is_owner && (
+            <button
+              onClick={onDelete}
+              className="ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all border border-slate-200 hover:border-red-300 hover:text-red-600 hover:bg-red-50 text-slate-400"
+              title="Delete your project"
+            >
+              <Trash2 size={13} />
+            </button>
+          )}
         </div>
 
         {/* Comments section */}
