@@ -24,14 +24,14 @@ export default function App() {
 
   if (isAdmin) {
     return (
-      <div className="min-h-screen bg-slate-50 font-[Source_Sans_Pro,sans-serif] text-slate-900">
+      <div className="min-h-screen overflow-x-hidden bg-slate-50 font-[Source_Sans_Pro,sans-serif] text-slate-900">
         <Admin />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 font-[Source_Sans_Pro,sans-serif] text-slate-900">
+    <div className="min-h-screen overflow-x-hidden bg-slate-50 font-[Source_Sans_Pro,sans-serif] text-slate-900">
       {/* Nav Bar */}
       <nav
         className={`sticky top-0 z-50 border-b transition-all duration-300 ${
@@ -40,10 +40,10 @@ export default function App() {
             : 'bg-white border-slate-200 py-3'
         }`}
       >
-        <div className={`max-w-6xl mx-auto px-4 flex items-center ${isSlides ? 'justify-center gap-4' : 'justify-between'}`}>
+        <div className={`max-w-6xl mx-auto px-4 flex items-center gap-4 ${isSlides ? 'justify-center' : 'justify-between'}`}>
           {/* Branding — hidden when slides are active */}
           {!isSlides && (
-            <div className="flex items-center gap-3">
+            <div className="flex-shrink-0 flex items-center gap-3">
               <div className="flex flex-col leading-none select-none">
                 <span className="text-[#BA0C2F] font-[BioRhyme,serif] font-extrabold text-lg uppercase tracking-tight leading-none">
                   Vibe Coding
@@ -55,13 +55,13 @@ export default function App() {
             </div>
           )}
 
-          {/* Tabs */}
-          <div className="flex gap-1">
+          {/* Tabs — horizontally scrollable on mobile */}
+          <div className="flex gap-1 overflow-x-auto scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
             {TABS.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${
+                className={`flex-shrink-0 px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${
                   activeTab === tab.id
                     ? 'bg-[#BA0C2F] text-white'
                     : isSlides
