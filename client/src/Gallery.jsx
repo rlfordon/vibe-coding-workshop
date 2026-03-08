@@ -269,8 +269,12 @@ function SubmitModal({ onClose, onSubmitted }) {
         const newProject = await res.json();
         onSubmitted(newProject);
       } else {
-        const data = await res.json();
-        setError(data.error || 'Submission failed.');
+        let message = 'Submission failed.';
+        try {
+          const data = await res.json();
+          message = data.error || message;
+        } catch { /* server returned non-JSON error */ }
+        setError(message);
       }
     } catch {
       setError('Network error. Please try again.');
