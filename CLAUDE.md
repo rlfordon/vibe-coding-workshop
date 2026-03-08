@@ -33,7 +33,7 @@ rm server/data/workshop.db        # Recreated on next server start
 
 **Iframe rendering** (`SandboxedIframe.jsx`): Shared module used by both Gallery and Build tabs. Students paste code from Gemini Canvas which may be React/JSX (with imports) or plain HTML. The `prepareHtml()` → `wrapReactCode()` pipeline: (1) parses all import statements, (2) strips them from the code, (3) generates CDN script tags and `const { ... } = window.globalName` shims, (4) wraps everything in an HTML shell with React, Babel standalone, and Tailwind loaded via CDN. Rendered in sandboxed iframes via Blob URLs.
 
-**PromptWizard** (`PromptWizard.jsx`): Three-path experience — (A) open-ended idea description with prompt generation, (B) inspiration examples accordion, (C) guided project prompts accordion. Includes a code preview pane using `SandboxedIframe` so students can test their code before submitting to Gallery.
+**PromptWizard** (`PromptWizard.jsx`): Single-screen launchpad — one copyable prompt template at the top, six idea cards below. Clicking a card swaps the prompt content; a Reset link returns to the template. No sidebar, no preview pane, no accordions.
 
 **Deploy**: `render.yaml` defines a single Render Web Service (Starter plan, $7/mo) with a 1GB persistent disk for SQLite. Repo: `rlfordon/vibe-coding-workshop-ud` (private). Build requires `npm install --include=dev` since Vite is a devDependency.
 
@@ -45,7 +45,7 @@ The lucide-react UMD bundle expects `window.react` (lowercase) but React's UMD s
 
 - `client/src/SandboxedIframe.jsx` — Shared iframe rendering pipeline (prepareHtml, wrapReactCode, CDN shims)
 - `client/src/Gallery.jsx` — Gallery UI (submit/vote/comment)
-- `client/src/PromptWizard.jsx` — Build tab with three-path prompt wizard + code preview
+- `client/src/PromptWizard.jsx` — Build tab single-screen launchpad (prompt template + idea cards)
 - `server/db.js` — sql.js wrapper providing a better-sqlite3-like API (`prepare().all()`, `.get()`, `.run()`)
 - `client/public/slides.html` — Self-contained slide deck, served as static file
 
