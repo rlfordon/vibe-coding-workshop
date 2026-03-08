@@ -60,14 +60,15 @@ function wrapReactCode(code) {
   // Determine which CDN scripts to include based on what's imported
   const importedSources = new Set(imports.map(i => i.source));
   const cdnScripts = [];
+  const cs = '</script>';
   if (importedSources.has('recharts')) {
-    cdnScripts.push('<script src="https://unpkg.com/recharts@2.15.3/umd/Recharts.js" crossorigin><` + `/script>');
+    cdnScripts.push('<script src="https://unpkg.com/recharts@2.15.3/umd/Recharts.js" crossorigin>' + cs);
   }
   if (importedSources.has('lucide-react')) {
-    cdnScripts.push('<script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.js" crossorigin><` + `/script>');
+    cdnScripts.push('<script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.js" crossorigin>' + cs);
   }
   if (importedSources.has('framer-motion')) {
-    cdnScripts.push('<script src="https://unpkg.com/framer-motion@11/dist/framer-motion.js" crossorigin><` + `/script>');
+    cdnScripts.push('<script src="https://unpkg.com/framer-motion@11/dist/framer-motion.js" crossorigin>' + cs);
   }
 
   // Strip all import statements (including multiline) and export default
@@ -84,16 +85,17 @@ function wrapReactCode(code) {
     strippedCode = strippedCode.replace(/export\s+default\s+\w+;?/g, '');
   }
 
+  const closeScript = '</script>';
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin><` + `/script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin><` + `/script>
-<script src="https://unpkg.com/@babel/standalone@7/babel.min.js"><` + `/script>
-<script src="https://cdn.tailwindcss.com"><` + `/script>
-<script>window.react = window.React;<` + `/script>
+<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin>${closeScript}
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin>${closeScript}
+<script src="https://unpkg.com/@babel/standalone@7/babel.min.js">${closeScript}
+<script src="https://cdn.tailwindcss.com">${closeScript}
+<script>window.react = window.React;${closeScript}
 ${cdnScripts.join('\n')}
 <style>
   body { margin: 0; font-family: system-ui, sans-serif; }
@@ -108,7 +110,7 @@ window.onerror = function(msg, url, line, col, err) {
   document.getElementById('error-display').textContent = 'Error: ' + msg + '\\nLine: ' + line;
   return true;
 };
-<` + `/script>
+${closeScript}
 <script type="text/babel" data-type="module">
 const { useState, useEffect, useRef, useMemo, useCallback, useReducer, useContext, createContext, Fragment, memo, forwardRef } = React;
 
@@ -118,7 +120,7 @@ ${strippedCode}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(React.createElement(${componentName}));
-<` + `/script>
+${closeScript}
 </body>
 </html>`;
 }
