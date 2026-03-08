@@ -3,12 +3,14 @@ import Slides from './Slides';
 import PromptWizard from './PromptWizard';
 import Preview from './Preview';
 import Gallery from './Gallery';
+import Resources from './Resources';
 
 const TABS = [
   { id: 'slides', label: 'Slides' },
   { id: 'build', label: 'Build' },
   { id: 'preview', label: 'Preview' },
   { id: 'gallery', label: 'Gallery' },
+  { id: 'resources', label: 'Resources' },
 ];
 
 export default function App() {
@@ -67,6 +69,7 @@ export default function App() {
         {activeTab === 'build' && <PromptWizard />}
         {activeTab === 'preview' && <Preview />}
         {activeTab === 'gallery' && <Gallery />}
+        {activeTab === 'resources' && <Resources />}
       </main>
     </div>
   );
