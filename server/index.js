@@ -80,7 +80,7 @@ app.get("/api/projects", (req, res) => {
 
 // POST /api/projects — create a new project
 app.post("/api/projects", (req, res) => {
-  const { author, title, html } = req.body;
+  const { author, title, html } = req.body || {};
 
   if (
     !author || typeof author !== "string" || !author.trim() ||
@@ -90,12 +90,17 @@ app.post("/api/projects", (req, res) => {
     return res.status(400).json({ error: "author, title, and html are required non-empty strings." });
   }
 
-  const authorId = req.cookies.voter_id || "";
-  db.prepare("INSERT INTO projects (author, title, html, author_id) VALUES (?, ?, ?, ?)")
-    .run(author.trim(), title.trim(), html.trim(), authorId);
+  try {
+    const authorId = req.cookies.voter_id || "";
+    db.prepare("INSERT INTO projects (author, title, html, author_id) VALUES (?, ?, ?, ?)")
+      .run(author.trim(), title.trim(), html.trim(), authorId);
 
-  const row = db.prepare("SELECT * FROM projects ORDER BY id DESC LIMIT 1").get();
-  res.status(201).json(parseProject(row));
+    const row = db.prepare("SELECT * FROM projects ORDER BY id DESC LIMIT 1").get();
+    res.status(201).json(parseProject(row));
+  } catch (err) {
+    console.error("Failed to create project:", err);
+    res.status(500).json({ error: "Failed to save project. Please try again." });
+  }
 });
 
 // POST /api/projects/:id/vote — vote for a project (one vote per voter_id)
@@ -204,6 +209,14 @@ app.post("/api/admin/reset", (req, res) => {
 // ---------------------------------------------------------------------------
 app.get("*", (req, res) => {
   res.sendFile(path.join(clientDist, "index.html"));
+});
+
+// ---------------------------------------------------------------------------
+// JSON error handler — return JSON instead of HTML for unhandled errors
+// ---------------------------------------------------------------------------
+app.use((err, req, res, next) => {
+  console.error("Unhandled error:", err.message);
+  res.status(err.status || 500).json({ error: err.message || "Internal server error." });
 });
 
 // ---------------------------------------------------------------------------
