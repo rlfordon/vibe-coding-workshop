@@ -10,7 +10,7 @@
 - **Server API**: All 4 endpoints tested and working (GET projects, POST project, POST vote, POST comment)
 - **Database**: sql.js (pure JS SQLite, no native deps needed)
 - **Config**: render.yaml, .env.example, .gitignore, README.md all created
-- **Branding**: "Vibe Coding Workshop" (not Justice Tech), OSU scarlet #BA0C2F, BioRhyme + Source Sans Pro fonts
+- **Branding**: "Vibe Coding Workshop", scarlet #BA0C2F, BioRhyme + Source Sans Pro fonts
 
 ## What's Fixed
 

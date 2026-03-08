@@ -1,6 +1,6 @@
 # Vibe Coding Workshop
 
-A web app for a live vibe-coding workshop at Ohio State Moritz College of Law. Three sections:
+A web app for a live vibe-coding workshop. Three sections:
 
 - **Slides** — 20-slide instructional deck (arrow keys to navigate)
 - **Build** — Prompt wizard that helps students pick a legal topic + game mechanic and generates a starter prompt for Gemini Canvas

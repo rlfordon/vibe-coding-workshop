@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Single web app for a live vibe-coding workshop (~100 law students, OSU Moritz College of Law). Three tabs: Slides (embedded HTML deck), Build (prompt wizard for Gemini Canvas), Gallery (submit/view/vote/comment on student HTML projects). Brand: "Vibe Coding Workshop", primary color OSU scarlet `#BA0C2F`.
+Single web app for a live vibe-coding workshop (~100 law students). Three tabs: Slides (embedded HTML deck), Build (prompt wizard for Gemini Canvas), Gallery (submit/view/vote/comment on student HTML projects). Brand: "Vibe Coding Workshop", primary color scarlet `#BA0C2F`.
 
 ## Commands
 
@@ -43,8 +43,7 @@ The lucide-react UMD bundle expects `window.react` (lowercase) but React's UMD s
 
 - `client/src/Gallery.jsx` — Gallery + iframe sandboxing logic (the complex part)
 - `server/db.js` — sql.js wrapper providing a better-sqlite3-like API (`prepare().all()`, `.get()`, `.run()`)
-- `client/public/slides.html` — Copy of `vibe-coding-slides.html`, served as static file
-- `justice-tech-exercise.jsx` — Original prompt wizard component (source material for `PromptWizard.jsx`)
+- `client/public/slides.html` — Self-contained slide deck, served as static file
 
 ## Conventions
 

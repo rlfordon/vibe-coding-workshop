@@ -35,10 +35,6 @@ export default function App() {
                   Workshop
                 </span>
               </div>
-              <div className="hidden sm:block w-px h-6 bg-slate-200" />
-              <span className="hidden sm:block text-[10px] text-slate-400 font-semibold uppercase tracking-wider">
-                Ohio State &middot; Moritz College of Law
-              </span>
             </div>
           )}
 
