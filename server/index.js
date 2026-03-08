@@ -1,3 +1,4 @@
+import { readFileSync } from "fs";
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -5,6 +6,18 @@ import crypto from "crypto";
 import path from "path";
 import { fileURLToPath } from "url";
 import db from "./db.js";
+
+// Load .env from project root (Render sets env vars directly, this is for local dev)
+try {
+  const envPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", ".env");
+  const envContents = readFileSync(envPath, "utf-8");
+  for (const line of envContents.split("\n")) {
+    const match = line.match(/^\s*([\w]+)\s*=\s*(.*)\s*$/);
+    if (match && !(match[1] in process.env)) {
+      process.env[match[1]] = match[2];
+    }
+  }
+} catch { /* .env not found — fine in production */ }
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
