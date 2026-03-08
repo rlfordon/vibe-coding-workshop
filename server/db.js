@@ -37,6 +37,15 @@ db.run(`
   )
 `);
 
+// Migrate: add author_id column if missing (old databases created before delete feature)
+try {
+  const cols = db.exec("PRAGMA table_info(projects)")[0]?.values.map(r => r[1]) || [];
+  if (!cols.includes("author_id")) {
+    db.run("ALTER TABLE projects ADD COLUMN author_id TEXT DEFAULT ''");
+    save();
+  }
+} catch { /* column already exists or table is fresh */ }
+
 function save() {
   const data = db.export();
   const buffer = Buffer.from(data);
