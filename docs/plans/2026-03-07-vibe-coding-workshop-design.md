@@ -27,7 +27,7 @@ Express server serving a Vite+React frontend and a REST API. SQLite via `better-
 ## Navigation
 
 - Three tabs: Slides | Build | Gallery
-- Top bar: "Vibe Coding Workshop" + OSU scarlet accent + tabs
+- Top bar: "Vibe Coding Workshop" + scarlet accent + tabs
 - Slides tab active: nav shrinks to thin strip (just tab buttons), slides fill viewport in iframe
 
 ## Gallery
@@ -56,7 +56,7 @@ Adapted from existing JSX. Same topic/mechanic/prompt logic. Remove JusticeTechL
 ## Design
 
 - Fonts: BioRhyme (headings) + Source Sans Pro (body)
-- Primary color: OSU scarlet #BA0C2F
+- Primary color: scarlet #BA0C2F
 - Clean/minimal, white + slate accents
 - Mobile-responsive
 
