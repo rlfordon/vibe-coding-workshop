@@ -1,15 +1,17 @@
 import { useState } from 'react';
-import { Eye } from 'lucide-react';
+import { Code, Eye } from 'lucide-react';
 import SandboxedIframe from './SandboxedIframe';
 
 export default function Preview() {
   const [code, setCode] = useState('');
-  const [showPreview, setShowPreview] = useState(false);
+  const [view, setView] = useState('code'); // 'code' or 'preview'
+
+  const hasCode = code.trim().length > 0;
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-8 pb-20">
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-6">
         <h1 className="text-3xl sm:text-4xl font-[BioRhyme,serif] font-bold text-slate-800 tracking-tight">
           Preview Your App
         </h1>
@@ -19,37 +21,51 @@ export default function Preview() {
         <div className="h-1.5 w-full bg-[#BA0C2F] rounded-full mt-4" />
       </div>
 
-      {/* Code input */}
-      <textarea
-        value={code}
-        onChange={(e) => { setCode(e.target.value); setShowPreview(false); }}
-        placeholder="Paste your HTML or React code from Gemini Canvas here..."
-        rows={8}
-        className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm font-mono focus:outline-none focus:border-[#BA0C2F] bg-white resize-y placeholder:text-slate-400"
-      />
+      {/* Toggle */}
+      <div className="flex items-center gap-1 mb-3">
+        <button
+          onClick={() => setView('code')}
+          className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-sm font-bold transition-all ${
+            view === 'code'
+              ? 'bg-[#BA0C2F] text-white'
+              : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100'
+          }`}
+        >
+          <Code size={14} />
+          Code
+        </button>
+        <button
+          onClick={() => { if (hasCode) setView('preview'); }}
+          className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-sm font-bold transition-all ${
+            view === 'preview'
+              ? 'bg-[#BA0C2F] text-white'
+              : hasCode
+                ? 'text-slate-500 hover:text-slate-800 hover:bg-slate-100'
+                : 'text-slate-300 cursor-not-allowed'
+          }`}
+        >
+          <Eye size={14} />
+          Preview
+        </button>
+      </div>
 
-      <button
-        onClick={() => setShowPreview(true)}
-        disabled={!code.trim()}
-        className={`mt-4 flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all ${
-          !code.trim()
-            ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
-            : 'bg-[#BA0C2F] text-white hover:opacity-90 active:scale-95 shadow-sm'
-        }`}
-      >
-        <Eye size={15} />
-        Preview
-      </button>
-
-      {/* Rendered preview */}
-      {showPreview && code.trim() && (
-        <div className="mt-6 rounded-xl border border-slate-200 overflow-hidden bg-white" style={{ height: 500 }}>
+      {/* Single pane — code or preview */}
+      <div className="rounded-xl border border-slate-200 overflow-hidden bg-white" style={{ height: 'calc(100vh - 280px)', minHeight: 400 }}>
+        {view === 'code' ? (
+          <textarea
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+            onPaste={() => setTimeout(() => setView('preview'), 0)}
+            placeholder="Paste your HTML or React code from Gemini Canvas here..."
+            className="w-full h-full px-4 py-3 text-sm font-mono focus:outline-none bg-white resize-none placeholder:text-slate-400"
+          />
+        ) : (
           <SandboxedIframe html={code} title="Code Preview" />
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Hint */}
-      <p className="mt-4 text-xs text-slate-400 font-medium">
+      <p className="mt-3 text-xs text-slate-400 font-medium">
         This is the same renderer the Gallery uses — what you see here is what others will see.
       </p>
     </div>
