@@ -61,13 +61,13 @@ function wrapReactCode(code) {
   const importedSources = new Set(imports.map(i => i.source));
   const cdnScripts = [];
   if (importedSources.has('recharts')) {
-    cdnScripts.push('<script src="https://unpkg.com/recharts@2.15.3/umd/Recharts.js" crossorigin><\/script>');
+    cdnScripts.push('<script src="https://unpkg.com/recharts@2.15.3/umd/Recharts.js" crossorigin><` + `/script>');
   }
   if (importedSources.has('lucide-react')) {
-    cdnScripts.push('<script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.js" crossorigin><\/script>');
+    cdnScripts.push('<script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.js" crossorigin><` + `/script>');
   }
   if (importedSources.has('framer-motion')) {
-    cdnScripts.push('<script src="https://unpkg.com/framer-motion@11/dist/framer-motion.js" crossorigin><\/script>');
+    cdnScripts.push('<script src="https://unpkg.com/framer-motion@11/dist/framer-motion.js" crossorigin><` + `/script>');
   }
 
   // Strip all import statements (including multiline) and export default
@@ -89,11 +89,11 @@ function wrapReactCode(code) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin><\/script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin><\/script>
-<script src="https://unpkg.com/@babel/standalone@7/babel.min.js"><\/script>
-<script src="https://cdn.tailwindcss.com"><\/script>
-<script>window.react = window.React;<\/script>
+<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin><` + `/script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin><` + `/script>
+<script src="https://unpkg.com/@babel/standalone@7/babel.min.js"><` + `/script>
+<script src="https://cdn.tailwindcss.com"><` + `/script>
+<script>window.react = window.React;<` + `/script>
 ${cdnScripts.join('\n')}
 <style>
   body { margin: 0; font-family: system-ui, sans-serif; }
@@ -108,7 +108,7 @@ window.onerror = function(msg, url, line, col, err) {
   document.getElementById('error-display').textContent = 'Error: ' + msg + '\\nLine: ' + line;
   return true;
 };
-<\/script>
+<` + `/script>
 <script type="text/babel" data-type="module">
 const { useState, useEffect, useRef, useMemo, useCallback, useReducer, useContext, createContext, Fragment, memo, forwardRef } = React;
 
@@ -118,7 +118,7 @@ ${strippedCode}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(React.createElement(${componentName}));
-<\/script>
+<` + `/script>
 </body>
 </html>`;
 }
@@ -129,7 +129,7 @@ function isReactCode(code) {
          /export\s+default\s+/m.test(code);
 }
 
-export function prepareHtml(code) {
+function prepareHtml(code) {
   if (isReactCode(code)) {
     return wrapReactCode(code);
   }

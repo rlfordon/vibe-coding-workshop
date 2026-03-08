@@ -3,84 +3,128 @@ import {
   Clock,
   ShieldAlert,
   Copy,
-  ExternalLink,
   Lightbulb,
   CheckCircle2,
   RotateCcw,
-  Link as LinkIcon,
   Sparkles,
   Zap,
-  MousePointer2,
+  PenLine,
   FileText,
   BrainCircuit,
+  ChevronDown,
+  ChevronRight,
+  Compass,
+  Rocket,
+  Eye,
 } from 'lucide-react';
+import SandboxedIframe from './SandboxedIframe';
 
-const SCARLET = '#BA0C2F';
-
-const topics = [
+const INSPIRATION_EXAMPLES = [
   {
-    id: 'served',
-    title: "What happens after you've been served?",
-    url: 'https://www.ohiobar.org/public-resources/commonly-asked-law-questions-results/courts-and-lawyers/know-how-to-answer-a-complaint/',
-    shorthand: 'Filing an Answer',
+    id: 'thanksgiving',
+    title: 'Thanksgiving Dinner Coordinator',
+    description: 'Upload your recipes, get a step-by-step schedule with times, and adjust everything when you\'re running late.',
   },
   {
-    id: 'hearing',
-    title: 'How to prepare for a hearing',
-    url: 'https://www.ohiolegalhelp.org/topic/hearing',
-    shorthand: 'Court Basics',
+    id: 'court-filing',
+    title: 'Court Filing Decision Tree',
+    description: 'Answer a few questions about your dispute and find out which court to file in and what the process looks like.',
   },
   {
-    id: 'debt',
-    title: 'Debt collection lawsuits',
-    url: 'https://www.ohiolegalhelp.org/topic/debt_lawsuit',
-    shorthand: 'Debt Collection',
+    id: 'discovery',
+    title: 'Discovery Response Drafter',
+    description: 'Paste in discovery requests, step through them one by one, choose how to respond, and get formatted output.',
   },
   {
-    id: 'custom',
-    title: '[Your Choice]',
-    url: '',
-    shorthand: 'Choose Your Own',
+    id: 'bluebook',
+    title: 'Bluebook Citation Builder',
+    description: 'Fill in the fields — author, title, volume, page — and get the correctly formatted Bluebook citation.',
+  },
+  {
+    id: 'study-quizzer',
+    title: 'Finals Study Quizzer',
+    description: 'Paste in your class notes, get quizzed on the material, and see which topics you need to review most.',
   },
 ];
 
-const formats = [
-  { id: 'path', title: 'Choose-your-path', desc: '3 decisions \u2192 feedback' },
-  { id: 'myth', title: 'Myth vs. Fact', desc: '5 cards with feedback' },
-  { id: 'timeline', title: 'Timeline ordering game', desc: 'Step-by-step logic' },
-  { id: 'redflag', title: 'Spot the red flag', desc: 'Identify urgent issues' },
-  { id: 'custom', title: 'Custom mechanic', desc: 'Make it simple!' },
+const GUIDED_PROJECTS = [
+  {
+    id: 'sol-calculator',
+    title: 'Statute of Limitations Calculator',
+    prompt: 'I want to make a Gemini Canvas app. I\'m a law student and I think it would be really useful to have a tool that helps someone figure out whether they\'ve missed the deadline to file a lawsuit in Ohio. Here\'s the relevant statute: https://codes.ohio.gov/ohio-revised-code/chapter-2305\n\nBefore you start building, ask me a few questions about what would be most useful.',
+  },
+  {
+    id: 'small-claims',
+    title: 'Should I File in Small Claims Court?',
+    prompt: 'I want to make a Gemini Canvas app. I think a lot of people don\'t realize they could handle their dispute in small claims court instead of hiring a lawyer. I want to build something that helps someone figure out if small claims is right for them. Here\'s some info about how it works in Ohio: https://www.ohiolegalhelp.org/topic/small-claims\n\nBefore you start building, ask me a few questions about what would be most useful.',
+  },
+  {
+    id: 'case-brief',
+    title: 'Case Brief Builder',
+    prompt: 'I want to make a Gemini Canvas app. Briefing cases takes me forever and I always forget what goes in each section. I want a tool where I can fill in the parts of a case brief and get a clean, formatted version I can use for class.\n\nBefore you start building, ask me a few questions about what would be most useful.',
+  },
+  {
+    id: 'deadline-tracker',
+    title: 'Legal Deadline Tracker',
+    prompt: 'I want to make a Gemini Canvas app. In civil litigation there are so many deadlines that depend on each other \u2014 when the answer is due, when discovery closes, etc. I want a tool where I can enter a key date and see all the downstream deadlines calculated for me. Here are the Ohio Rules of Civil Procedure: https://www.supremecourt.ohio.gov/docs/LegalResources/Rules/civil/CivilProcedure.pdf\n\nBefore you start building, ask me a few questions about what would be most useful.',
+  },
+  {
+    id: 'client-intake',
+    title: 'Client Intake Questionnaire',
+    prompt: 'I want to make a Gemini Canvas app. When someone comes in for an initial legal consultation, there\'s a lot of information to gather \u2014 what happened, key dates, who\'s involved, what documents they have. I want to build a tool that walks someone through those questions and gives them a clean summary at the end.\n\nBefore you start building, ask me a few questions about what would be most useful.',
+  },
+  {
+    id: 'red-flag',
+    title: 'Contract Clause Red-Flag Spotter',
+    prompt: 'I want to make a Gemini Canvas app. A lot of people sign contracts without knowing what to look out for. I want to build something that teaches people to spot red flags in contracts \u2014 like one-sided indemnification or automatic renewal clauses. Here\'s some background on Ohio consumer protection law: https://codes.ohio.gov/ohio-revised-code/chapter-1345\n\nBefore you start building, ask me a few questions about what would be most useful.',
+  },
+  {
+    id: 'tenant-rights',
+    title: 'Know Your Rights: Tenant Edition',
+    prompt: 'I want to make a Gemini Canvas app. A lot of renters don\'t know their rights when something goes wrong \u2014 like their landlord won\'t fix something, or they\'re being evicted, or they\'re not getting their security deposit back. I want to build a tool that helps someone figure out what their rights are in Ohio. Here\'s some background: https://www.ohiolegalhelp.org/guide/housing\n\nBefore you start building, ask me a few questions about what would be most useful.',
+  },
+  {
+    id: 'oral-argument',
+    title: 'Mock Oral Argument Practice Tool',
+    prompt: 'I want to make a Gemini Canvas app. I want to get better at oral arguments but it\'s hard to practice on my own. I want a tool with a timer, a place to jot notes, and some kind of self-assessment rubric I can fill out after I\'m done to track what I need to work on.\n\nBefore you start building, ask me a few questions about what would be most useful.',
+  },
 ];
+
+const generateOpenEndedPrompt = (userText) => {
+  return `I want to make a Gemini Canvas app. ${userText}\n\nBefore you start building, ask me a few questions about what would be most useful.`;
+};
 
 export default function PromptWizard() {
-  const [selectedTopic, setSelectedTopic] = useState(null);
-  const [selectedFormat, setSelectedFormat] = useState(null);
+  const [userIdea, setUserIdea] = useState('');
+  const [generatedPrompt, setGeneratedPrompt] = useState('');
   const [copied, setCopied] = useState(false);
+  const [inspirationOpen, setInspirationOpen] = useState(false);
+  const [guidedOpen, setGuidedOpen] = useState(false);
+  const [previewCode, setPreviewCode] = useState('');
+  const [showPreview, setShowPreview] = useState(false);
 
-  const generatePrompt = () => {
-    const topicText =
-      selectedTopic?.id === 'custom'
-        ? '[DESCRIBE YOUR TOPIC HERE]'
-        : selectedTopic?.title;
+  const handleGeneratePrompt = () => {
+    if (!userIdea.trim()) return;
+    setGeneratedPrompt(generateOpenEndedPrompt(userIdea.trim()));
+  };
 
-    const formatText =
-      selectedFormat?.id === 'custom'
-        ? '[DESCRIBE YOUR SIMPLE MECHANIC]'
-        : selectedFormat?.title;
+  const handleInspirationClick = (example) => {
+    setUserIdea(example.description);
+    setInspirationOpen(false);
+  };
 
-    const sourceText = selectedTopic?.url
-      ? `\n\nI'm using this as a source: ${selectedTopic.url}`
-      : '';
-
-    return `I want to build a tiny micro-game for self-represented litigants about: ${topicText}.\n\nThe format should be a "${formatText}".${sourceText}\n\nCan you give me a quick plan for how this should work? I need a learning objective, 3 key points to teach, and a clear win condition. Once we agree on the plan, I'll have you build the MVP.`;
+  const handleGuidedClick = (project) => {
+    setGeneratedPrompt(project.prompt);
+    setGuidedOpen(false);
   };
 
   const copyToClipboard = async () => {
+    if (!generatedPrompt) return;
     try {
-      await navigator.clipboard.writeText(generatePrompt());
+      await navigator.clipboard.writeText(generatedPrompt);
     } catch {
       const textArea = document.createElement('textarea');
-      textArea.value = generatePrompt();
+      textArea.value = generatedPrompt;
       document.body.appendChild(textArea);
       textArea.select();
       document.execCommand('copy');
@@ -95,10 +139,10 @@ export default function PromptWizard() {
       {/* Header */}
       <div className="mb-10">
         <h1 className="text-3xl sm:text-4xl font-[BioRhyme,serif] font-bold text-slate-800 tracking-tight">
-          Vibe-Coding a Micro-Game
+          Build Something
         </h1>
         <p className="text-lg text-slate-500 font-medium mt-1">
-          Self-Represented Litigant (SRL) Activity
+          Use AI to build a tool that solves a real problem.
         </p>
         <div className="h-1.5 w-full bg-[#BA0C2F] rounded-full mt-4" />
       </div>
@@ -109,7 +153,7 @@ export default function PromptWizard() {
           {/* Goals */}
           <Section icon={<Lightbulb size={16} />} title="Activity Goals">
             <ul className="space-y-3">
-              {['Confirm tool access & login', 'Practice the vibe-coding loop', 'Apply legal domain expertise'].map(
+              {['Identify a real problem to solve', 'Scope it for a single-page app', 'Build and iterate with AI'].map(
                 (goal, i) => (
                   <li key={i} className="flex gap-2.5 text-sm text-slate-600 font-medium leading-tight">
                     <CheckCircle2 size={15} className="text-[#BA0C2F] shrink-0 mt-0.5" />
@@ -121,22 +165,21 @@ export default function PromptWizard() {
           </Section>
 
           {/* Timeline */}
-          <Section icon={<Clock size={16} />} title="Timeline: 30m">
+          <Section icon={<Clock size={16} />} title="Timeline">
             <div className="space-y-2.5">
               {[
-                { label: 'Set-up & Plan', time: '5m' },
-                { label: 'Build (MVP)', time: '15m', bold: true },
-                { label: 'Iterate', time: '5m' },
-                { label: 'Share-out', time: '5m' },
+                { label: 'Brainstorm' },
+                { label: 'Build', bold: true },
+                { label: 'Gallery Walk & Voting' },
               ].map((item, i) => (
                 <div
                   key={i}
-                  className={`flex justify-between items-center text-sm ${
+                  className={`flex items-center gap-2.5 text-sm ${
                     item.bold ? 'font-bold text-slate-900' : 'text-slate-600 font-medium'
                   }`}
                 >
+                  <div className={`w-2 h-2 rounded-full ${item.bold ? 'bg-[#BA0C2F]' : 'bg-slate-300'}`} />
                   <span>{item.label}</span>
-                  <span className="font-mono bg-slate-100 px-2 py-0.5 rounded text-[10px]">{item.time}</span>
                 </div>
               ))}
             </div>
@@ -165,13 +208,13 @@ export default function PromptWizard() {
             <div className="space-y-5">
               <Tip icon={<BrainCircuit size={13} className="text-[#BA0C2F]" />} title="Thinking Mode">
                 <span className="italic">Highly Recommended:</span> Use "Thinking" mode. It helps Gemini reason through
-                legal branching before writing code.
+                complex logic before writing code.
               </Tip>
               <Tip icon={<Zap size={13} className="text-yellow-600" />} title="Fact Check">
-                Use recommended sources to verify logic. AI can hallucinate local rules!
+                AI can hallucinate facts and rules. Always verify important details against a reliable source.
               </Tip>
               <Tip icon={<RotateCcw size={13} className="text-blue-600" />} title="Iterate">
-                Focus on the legal logic first. You can iterate on "the look" or extra features in the final 5 minutes.
+                Your first version won't be perfect — that's the point. Ask Gemini to change, add, or fix things.
               </Tip>
             </div>
           </Section>
@@ -179,79 +222,116 @@ export default function PromptWizard() {
 
         {/* Main Content */}
         <div className="lg:col-span-8 space-y-8">
-          {/* Scope Builder */}
+          {/* Path A: Describe Your Idea */}
           <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8">
             <header className="flex items-center gap-3 mb-6">
               <div className="p-2.5 bg-red-50 rounded-xl">
-                <MousePointer2 className="text-[#BA0C2F]" size={24} />
+                <PenLine className="text-[#BA0C2F]" size={24} />
               </div>
               <div>
-                <h3 className="text-xl font-[BioRhyme,serif] font-bold text-slate-800">Define the Scope</h3>
-                <p className="text-sm text-slate-500 font-medium">Pick your legal topic and interaction style.</p>
+                <h3 className="text-xl font-[BioRhyme,serif] font-bold text-slate-800">Describe Your Idea</h3>
+                <p className="text-sm text-slate-500 font-medium">What problem do you want to solve? What would be useful to have?</p>
               </div>
             </header>
 
-            <div className="space-y-8">
-              {/* Topics */}
-              <div>
-                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-3 block">
-                  Legal Topic
-                </label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  {topics.map((t) => (
-                    <button
-                      key={t.id}
-                      onClick={() => setSelectedTopic(t)}
-                      className={`p-4 rounded-xl text-left transition-all border-2 ${
-                        selectedTopic?.id === t.id
-                          ? 'border-[#BA0C2F] bg-red-50/30 shadow-sm'
-                          : 'border-slate-100 bg-slate-50/50 hover:border-slate-200'
-                      }`}
-                    >
-                      <div
-                        className={`font-bold text-sm mb-0.5 ${
-                          selectedTopic?.id === t.id ? 'text-[#BA0C2F]' : 'text-slate-800'
-                        }`}
-                      >
-                        {t.shorthand}
-                      </div>
-                      <div className="text-[11px] text-slate-500 leading-tight font-medium">
-                        {t.id === 'custom' ? 'Describe your own legal concept' : t.title}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
+            <textarea
+              value={userIdea}
+              onChange={(e) => setUserIdea(e.target.value)}
+              placeholder="Example: I want a tool that helps renters figure out if their landlord is allowed to keep their security deposit..."
+              rows={4}
+              className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-[#BA0C2F] bg-slate-50/50 resize-y placeholder:text-slate-400"
+            />
 
-              {/* Mechanics */}
-              <div>
-                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-3 block">
-                  Game Mechanic
-                </label>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                  {formats.map((f) => (
+            <button
+              onClick={handleGeneratePrompt}
+              disabled={!userIdea.trim()}
+              className={`mt-4 flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all ${
+                !userIdea.trim()
+                  ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                  : 'bg-[#BA0C2F] text-white hover:opacity-90 active:scale-95 shadow-sm'
+              }`}
+            >
+              <Sparkles size={15} />
+              Generate My Prompt
+            </button>
+          </div>
+
+          {/* Path B: Need Inspiration? */}
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <button
+              onClick={() => setInspirationOpen(!inspirationOpen)}
+              className="w-full px-6 py-4 flex items-center justify-between hover:bg-slate-50/50 transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-amber-50 rounded-lg">
+                  <Compass size={18} className="text-amber-600" />
+                </div>
+                <div className="text-left">
+                  <h3 className="font-bold text-slate-800 text-sm">Need Inspiration?</h3>
+                  <p className="text-xs text-slate-500 font-medium">Browse example ideas to get started</p>
+                </div>
+              </div>
+              {inspirationOpen ? <ChevronDown size={18} className="text-slate-400" /> : <ChevronRight size={18} className="text-slate-400" />}
+            </button>
+
+            {inspirationOpen && (
+              <div className="px-6 pb-5 pt-1 border-t border-slate-100">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-3">
+                  {INSPIRATION_EXAMPLES.map((ex) => (
                     <button
-                      key={f.id}
-                      onClick={() => setSelectedFormat(f)}
-                      className={`p-3.5 rounded-xl text-left transition-all border-2 ${
-                        selectedFormat?.id === f.id
-                          ? 'border-[#BA0C2F] bg-red-50/30 shadow-sm'
-                          : 'border-slate-100 bg-slate-50/50 hover:border-slate-200'
-                      }`}
+                      key={ex.id}
+                      onClick={() => handleInspirationClick(ex)}
+                      className="p-4 rounded-xl text-left transition-all border-2 border-slate-100 bg-slate-50/50 hover:border-amber-300 hover:bg-amber-50/30"
                     >
-                      <div
-                        className={`text-xs font-bold mb-0.5 ${
-                          selectedFormat?.id === f.id ? 'text-[#BA0C2F]' : 'text-slate-800'
-                        }`}
-                      >
-                        {f.title}
-                      </div>
-                      <div className="text-[10px] text-slate-500 leading-tight font-medium">{f.desc}</div>
+                      <div className="font-bold text-sm text-slate-800 mb-1">{ex.title}</div>
+                      <div className="text-[11px] text-slate-500 leading-snug font-medium">{ex.description}</div>
                     </button>
                   ))}
                 </div>
               </div>
-            </div>
+            )}
+          </div>
+
+          {/* Path C: Just Get Me Started */}
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <button
+              onClick={() => setGuidedOpen(!guidedOpen)}
+              className="w-full px-6 py-4 flex items-center justify-between hover:bg-slate-50/50 transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-50 rounded-lg">
+                  <Rocket size={18} className="text-blue-600" />
+                </div>
+                <div className="text-left">
+                  <h3 className="font-bold text-slate-800 text-sm">Just Get Me Started</h3>
+                  <p className="text-xs text-slate-500 font-medium">Pick a pre-written project prompt</p>
+                </div>
+              </div>
+              {guidedOpen ? <ChevronDown size={18} className="text-slate-400" /> : <ChevronRight size={18} className="text-slate-400" />}
+            </button>
+
+            {guidedOpen && (
+              <div className="px-6 pb-5 pt-1 border-t border-slate-100">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-3">
+                  {GUIDED_PROJECTS.map((proj) => (
+                    <button
+                      key={proj.id}
+                      onClick={() => handleGuidedClick(proj)}
+                      className="p-4 rounded-xl text-left transition-all border-2 border-slate-100 bg-slate-50/50 hover:border-blue-300 hover:bg-blue-50/30"
+                    >
+                      <div className="font-bold text-sm text-slate-800">{proj.title}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Tip */}
+          <div className="bg-amber-50/60 border border-amber-200/60 rounded-xl px-5 py-3">
+            <p className="text-xs text-amber-900/70 font-medium leading-relaxed">
+              <span className="font-bold">Tip:</span> Gemini will ask you some questions before building. You don't need to have all the answers — just say "I'm not sure" or "just go with what makes sense" and it'll figure it out.
+            </p>
           </div>
 
           {/* Prompt Output */}
@@ -262,14 +342,14 @@ export default function PromptWizard() {
                 <div className="flex items-center gap-2">
                   <FileText size={14} className="text-slate-400" />
                   <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
-                    Construction Prompt
+                    Your Prompt
                   </span>
                 </div>
                 <button
                   onClick={copyToClipboard}
-                  disabled={!selectedTopic || !selectedFormat}
+                  disabled={!generatedPrompt}
                   className={`flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                    !selectedTopic || !selectedFormat
+                    !generatedPrompt
                       ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
                       : 'bg-[#BA0C2F] text-white hover:opacity-90 active:scale-95 shadow-sm'
                   }`}
@@ -281,18 +361,18 @@ export default function PromptWizard() {
               <div className="p-6 sm:p-8 relative">
                 <div
                   className={`p-6 rounded-xl border border-slate-100 bg-slate-50/50 min-h-[120px] transition-opacity duration-300 ${
-                    !selectedTopic || !selectedFormat ? 'opacity-30' : 'opacity-100'
+                    !generatedPrompt ? 'opacity-30' : 'opacity-100'
                   }`}
                 >
                   <pre className="text-slate-700 font-mono text-sm whitespace-pre-wrap leading-relaxed select-all">
-                    {generatePrompt()}
+                    {generatedPrompt || 'Your prompt will appear here...'}
                   </pre>
                 </div>
-                {(!selectedTopic || !selectedFormat) && (
+                {!generatedPrompt && (
                   <div className="absolute inset-0 flex items-center justify-center p-6">
                     <div className="bg-white px-5 py-3 rounded-xl border border-slate-200 shadow-lg">
                       <p className="text-slate-500 text-sm font-semibold">
-                        Select a topic and mechanic above to build your prompt.
+                        Describe your idea above, or pick a guided project to get started.
                       </p>
                     </div>
                   </div>
@@ -301,68 +381,48 @@ export default function PromptWizard() {
             </div>
           </div>
 
-          {/* Reference Materials */}
-          <div className="space-y-3">
-            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 px-1 block">
-              Reference Materials
-            </label>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              {[
-                {
-                  name: 'FCMC Self-Help',
-                  url: 'https://municipalcourt.franklincountyohio.gov/Departments-Services/Self-Help-Center',
-                  desc: 'Local court guides',
-                },
-                { name: 'Ohio Legal Help', url: 'https://www.ohiolegalhelp.org', desc: 'Plain-language law' },
-                {
-                  name: 'Law Library',
-                  url: 'https://lawlibrary.franklincountyohio.gov/Home',
-                  desc: 'Clinics & research',
-                },
-              ].map((res, i) => (
-                <a
-                  key={i}
-                  href={res.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover:border-[#BA0C2F] hover:shadow-md transition-all group flex flex-col justify-between"
-                >
-                  <div>
-                    <h4 className="font-bold text-slate-800 text-xs mb-0.5 group-hover:text-[#BA0C2F] transition-colors">
-                      {res.name}
-                    </h4>
-                    <p className="text-[10px] text-slate-500 font-medium leading-tight">{res.desc}</p>
-                  </div>
-                  <div className="mt-3 flex justify-end">
-                    <ExternalLink size={11} className="text-slate-300 group-hover:text-[#BA0C2F]" />
-                  </div>
-                </a>
-              ))}
+          {/* Preview Pane */}
+          <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8">
+            <header className="flex items-center gap-3 mb-4">
+              <div className="p-2.5 bg-green-50 rounded-xl">
+                <Eye className="text-green-700" size={24} />
+              </div>
+              <div>
+                <h3 className="text-xl font-[BioRhyme,serif] font-bold text-slate-800">Preview Your App</h3>
+                <p className="text-sm text-slate-500 font-medium">Paste your code here to preview it</p>
+              </div>
+            </header>
 
-              {selectedTopic && selectedTopic.id !== 'custom' && (
-                <a
-                  href={selectedTopic.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-red-50 p-4 rounded-xl border-2 border-[#BA0C2F]/20 shadow-sm hover:shadow-md transition-all group flex items-start justify-between md:col-span-3"
-                >
-                  <div className="flex gap-3">
-                    <div className="p-2 bg-[#BA0C2F]/10 rounded-lg h-fit">
-                      <LinkIcon size={16} className="text-[#BA0C2F]" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-[#BA0C2F] text-sm mb-0.5 uppercase tracking-tight">
-                        Active Reference: {selectedTopic.shorthand}
-                      </h4>
-                      <p className="text-[11px] text-[#BA0C2F]/70 italic font-medium">
-                        Your primary source material for this game build.
-                      </p>
-                    </div>
-                  </div>
-                  <ExternalLink size={14} className="text-[#BA0C2F]/40 group-hover:text-[#BA0C2F]" />
-                </a>
-              )}
-            </div>
+            <p className="text-xs text-slate-400 font-medium mb-3">
+              This is the same renderer the Gallery uses — what you see here is what others will see.
+            </p>
+
+            <textarea
+              value={previewCode}
+              onChange={(e) => { setPreviewCode(e.target.value); setShowPreview(false); }}
+              placeholder="Paste your HTML or React code from Gemini Canvas here..."
+              rows={6}
+              className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm font-mono focus:outline-none focus:border-[#BA0C2F] bg-slate-50/50 resize-y placeholder:text-slate-400"
+            />
+
+            <button
+              onClick={() => setShowPreview(true)}
+              disabled={!previewCode.trim()}
+              className={`mt-4 flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all ${
+                !previewCode.trim()
+                  ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                  : 'bg-green-700 text-white hover:opacity-90 active:scale-95 shadow-sm'
+              }`}
+            >
+              <Eye size={15} />
+              Preview
+            </button>
+
+            {showPreview && previewCode.trim() && (
+              <div className="mt-5 rounded-xl border border-slate-200 overflow-hidden bg-white" style={{ height: 400 }}>
+                <SandboxedIframe html={previewCode} title="Code Preview" />
+              </div>
+            )}
           </div>
         </div>
       </div>
