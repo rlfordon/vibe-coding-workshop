@@ -4,6 +4,7 @@ import PromptWizard from './PromptWizard';
 import Preview from './Preview';
 import Gallery from './Gallery';
 import Resources from './Resources';
+import Deploy from './Deploy';
 import Admin from './Admin';
 
 const TABS = [
@@ -11,6 +12,7 @@ const TABS = [
   { id: 'build', label: 'Build' },
   { id: 'preview', label: 'Preview' },
   { id: 'gallery', label: 'Gallery' },
+  { id: 'deploy', label: 'Deploy' },
   { id: 'resources', label: 'Resources' },
 ];
 
@@ -81,6 +83,7 @@ export default function App() {
         {activeTab === 'preview' && <Preview />}
         {activeTab === 'gallery' && <Gallery />}
         {activeTab === 'resources' && <Resources />}
+        {activeTab === 'deploy' && <Deploy />}
       </main>
     </div>
   );
