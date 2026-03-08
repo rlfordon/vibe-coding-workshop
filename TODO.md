@@ -5,7 +5,8 @@
 - **Project scaffolded**: Vite + React + Tailwind client, Express + sql.js server
 - **App.jsx**: Tab navigation (Slides | Build | Gallery) with minimal nav on slides view
 - **Slides.jsx**: Embeds `vibe-coding-slides.html` in fullscreen iframe — working
-- **PromptWizard.jsx**: Adapted from user's JSX — topic/mechanic picker + prompt generator — working
+- **PromptWizard.jsx**: Reworked — three-path layout (open-ended, inspiration, guided) + code preview pane — working
+- **SandboxedIframe.jsx**: Extracted from Gallery as shared module — used by both Gallery and Build tabs
 - **Gallery.jsx**: Submit modal, project cards with vote/comment, expanded view modal — working
 - **Server API**: All 4 endpoints tested and working (GET projects, POST project, POST vote, POST comment)
 - **Database**: sql.js (pure JS SQLite, no native deps needed)
