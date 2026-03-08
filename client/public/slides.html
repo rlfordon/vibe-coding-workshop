@@ -501,6 +501,42 @@
     font-size: 16px;
     margin-bottom: 6px;
   }
+
+  .showcase-card {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+  }
+
+  .showcase-card img {
+    width: 100%;
+    max-height: 240px;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+  }
+
+  .showcase-card h3 {
+    font-size: 17px;
+    margin-bottom: 4px;
+    text-align: center;
+  }
+
+  .showcase-card .small {
+    font-size: 12px;
+  }
+
+  .showcase-card a {
+    color: var(--osu-scarlet);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .showcase-card a:hover {
+    text-decoration: underline;
+  }
 </style>
 </head>
 <body>
@@ -528,7 +564,17 @@
     <span class="slide-number">2</span>
   </div>
 
-  <!-- SLIDE 3: Why vibe code? -->
+  <!-- SLIDE 3: My first vibe-coded app -->
+  <div class="slide flex-col">
+    <h1>My first vibe-coded app</h1>
+    <p style="margin-bottom: 16px;">I made this for Thanksgiving dinner. No code. Just a conversation with AI.</p>
+    <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
+      <img src="thanksgiving-demo.gif" alt="Thanksgiving Dinner Planner demo" style="max-height: 340px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.12);">
+    </div>
+    <span class="slide-number">3</span>
+  </div>
+
+  <!-- SLIDE 4: Why vibe code? -->
   <div class="slide flex-col">
     <h1>Why vibe code?</h1>
     <ul style="margin-top: 8px;">
@@ -538,10 +584,10 @@
       <li>Build things that don't exist yet because no developer knows your workflow</li>
     </ul>
 
-    <span class="slide-number">3</span>
+    <span class="slide-number">4</span>
   </div>
 
-  <!-- SLIDE 4: The key distinction -->
+  <!-- SLIDE 5: The key distinction -->
   <div class="slide flex-col">
     <h1>The key distinction</h1>
     <p style="margin-bottom: 16px; font-size: 20px;">When you vibe code, AI plays two very different roles:</p>
@@ -560,38 +606,6 @@
     </div>
     <div class="callout" style="margin-top: 12px;">
       <p>Think of it like hiring a carpenter to build a bookshelf. The carpenter leaves, and the bookshelf just holds books. <strong>It doesn't build more shelves.</strong></p>
-    </div>
-
-    <span class="slide-number">4</span>
-  </div>
-
-  <!-- SLIDE 5: What your app CAN and CAN'T do -->
-  <div class="slide flex-col">
-    <h1>What your app can &amp; can't do</h1>
-    <div class="two-col" style="margin-top: 8px;">
-      <div class="can-do">
-        <h3>✓ Your app CAN</h3>
-        <ul>
-          <li>Follow a decision tree (if/then logic)</li>
-          <li>Calculate deadlines, fees, or scores</li>
-          <li>Look things up in data you provide</li>
-          <li>Display information based on user choices</li>
-          <li>Enforce rules and flag errors</li>
-        </ul>
-      </div>
-      <div class="cant-do">
-        <h3>✗ Your app CANNOT</h3>
-        <ul>
-          <li>Read and interpret a document</li>
-          <li>Summarize or paraphrase text</li>
-          <li>Answer open-ended questions</li>
-          <li>Make judgment calls</li>
-          <li>Do anything requiring "understanding"</li>
-        </ul>
-      </div>
-    </div>
-    <div class="index-card">
-      <p>📇 <strong>The index card test:</strong> If you could write every possible answer on index cards ahead of time, your app can handle it. If you'd need a smart person to figure out the answer — it can't.</p>
     </div>
 
     <span class="slide-number">5</span>
@@ -635,107 +649,58 @@
     <span class="slide-number">8</span>
   </div>
 
-  <!-- SLIDE 9: Example projects -->
+  <!-- SLIDE 9: Today's tool -->
   <div class="slide flex-col">
-    <h1>Example projects</h1>
-    <div class="three-col" style="margin-top: 6px;">
-      <div>
-        <h3>Legal practice</h3>
-        <div class="project-card">
-          <p>A decision-tree tool that walks someone through what to do after being served</p>
-        </div>
-        <div class="project-card">
-          <p>A deadline calculator based on federal or state court rules</p>
-        </div>
-      </div>
-      <div>
-        <h3>Teaching</h3>
-        <div class="project-card">
-          <p>An interactive quiz on debt collection basics or civil procedure</p>
-        </div>
-        <div class="project-card">
-          <p>A "spot the red flag" exercise for contract review</p>
-        </div>
-      </div>
-      <div>
-        <h3>Personal life</h3>
-        <div class="project-card">
-          <p>A step-by-step Thanksgiving dinner timeline from a set of recipes</p>
-        </div>
-        <div class="project-card">
-          <p>A checklist and packing tool for travel planning</p>
-        </div>
-      </div>
+    <span class="step-num">2</span>
+    <h1>Today's tool: Gemini Canvas</h1>
+    <p style="margin-bottom: 16px;">Available through your <strong>university Google account</strong> — no signup needed.</p>
+    <ul style="margin-top: 8px;">
+      <li>Describe what you want in plain language</li>
+      <li>Gemini writes the code and shows you a live preview</li>
+      <li>Ask for changes — it updates the app in real time</li>
+      <li>When you're happy, copy the code to share</li>
+    </ul>
+    <div class="callout" style="margin-top: 16px;">
+      <p><strong>Canvas</strong> is Gemini's built-in code editor. You'll click the <strong>"Canvas"</strong> button under Tools when you're ready to build.</p>
     </div>
-    <p class="small" style="margin-top: 10px;">All of these follow rules and logic — no AI needed at runtime.</p>
-
     <span class="slide-number">9</span>
   </div>
 
-  <!-- SLIDE 10: Step 2 - Choose platform -->
+  <!-- SLIDE 10: Plan with AI -->
   <div class="slide flex-col">
-    <span class="step-num">2</span>
-    <h1>Choose your platform</h1>
-    <p style="margin-bottom: 12px;">Today we'll use <strong>Google Gemini Canvas</strong> — available through your university Google account.</p>
-    <div class="three-col" style="margin-top: 0;">
-      <div>
-        <h3>Today's tool</h3>
-        <ul>
-          <li><strong>Google Gemini Canvas</strong> — describe what you want, get a working web app</li>
-        </ul>
-      </div>
-      <div>
-        <h3>Also free</h3>
-        <ul>
-          <li>Google AI Studio (personal Gmail)</li>
-          <li>Cursor (free for students)</li>
-        </ul>
-      </div>
-      <div>
-        <h3>Others (free tiers)</h3>
-        <ul>
-          <li>Replit</li>
-          <li>v0 by Vercel</li>
-          <li>Lovable</li>
-          <li>Bolt.new</li>
-        </ul>
-      </div>
+    <span class="step-num">3</span>
+    <h1>Plan with AI</h1>
+    <p style="margin-bottom: 12px;">Don't just say "build me an app." <strong>Have a conversation first.</strong></p>
+    <ul style="margin-top: 8px;">
+      <li>Tell Gemini what problem you want to solve and who it's for</li>
+      <li>Let it ask you questions — answer honestly (even "I'm not sure" is fine)</li>
+      <li>Go back and forth until you both understand what you're building</li>
+      <li><em>Then</em> tell it to start building</li>
+    </ul>
+    <div class="callout" style="margin-top: 16px;">
+      <p><strong>Your prompt template ends with:</strong> "Before you start building, ask me a few questions about who this is for and what their experience should be like."</p>
     </div>
-
     <span class="slide-number">10</span>
   </div>
 
-  <!-- SLIDE 11: Step 3 - Ask AI to help plan -->
-  <div class="slide flex-col">
-    <span class="step-num">3</span>
-    <h1>Ask AI to help plan</h1>
-    <ul style="margin-top: 8px;">
-      <li>Tell it <strong>what you want to build</strong> and <strong>how you want it to work</strong></li>
-      <li>Tell it what tools and platform you have available</li>
-      <li>If you're not sure the platform can handle your idea, ask!</li>
-    </ul>
-    <div class="callout" style="margin-top: 16px;">
-      <p><strong>Pro tip:</strong> Describe the <em>logic</em>, not the magic. Say "if the user picks X, show Y" rather than "I want it to figure out the right answer." If you catch yourself saying "figure out" or "understand," your idea might need AI at runtime — and that's beyond what these platforms do out of the box.</p>
-    </div>
-
-    <span class="slide-number">11</span>
-  </div>
-
-  <!-- SLIDE 12: Step 4 - Execute -->
+  <!-- SLIDE 11: Build it -->
   <div class="slide flex-col">
     <span class="step-num">4</span>
-    <h1>Execute</h1>
+    <h1>Build it</h1>
     <ul style="margin-top: 8px;">
-      <li>Go to the prompt site — it will generate a starter prompt and factual resources for your topic</li>
-      <li>Paste the prompt into Gemini Canvas</li>
+      <li>Go to the <strong>Build</strong> tab — copy the prompt template or pick an idea card</li>
+      <li>Paste the prompt into Gemini and plan together</li>
+      <li>When you're ready to build, click <strong>"Canvas"</strong> under Tools</li>
       <li>Test it — click through, try different inputs</li>
       <li>Don't worry about getting it perfect on the first try</li>
     </ul>
-
-    <span class="slide-number">12</span>
+    <div class="callout" style="margin-top: 16px;">
+      <p><strong>No Canvas button?</strong> That's OK — ask Gemini to write the code, then copy and paste it into the <strong>Preview</strong> tab to see it run.</p>
+    </div>
+    <span class="slide-number">11</span>
   </div>
 
-  <!-- SLIDE 13: Step 5 - Iterate -->
+  <!-- SLIDE 12: Iterate -->
   <div class="slide flex-col">
     <span class="step-num">5</span>
     <h1>Iterate</h1>
@@ -747,10 +712,10 @@
       <li><strong>Refine the UX</strong> — "Make it look more professional," "add a back button"</li>
     </ul>
 
-    <span class="slide-number">13</span>
+    <span class="slide-number">12</span>
   </div>
 
-  <!-- SLIDE 14: Prompt card -->
+  <!-- SLIDE 13: Things you can ask for next -->
   <div class="slide flex-col">
     <h1>Things you can ask for next</h1>
     <p style="margin-bottom: 4px;">Once your first version works, try asking Gemini to:</p>
@@ -781,69 +746,80 @@
       </div>
     </div>
 
+    <span class="slide-number">13</span>
+  </div>
+
+  <!-- SLIDE 14: What Canvas apps can & can't do -->
+  <div class="slide flex-col">
+    <h1>What Canvas apps can &amp; can't do</h1>
+    <div class="two-col" style="margin-top: 8px;">
+      <div class="can-do">
+        <h3>✓ Your app CAN</h3>
+        <ul>
+          <li>Follow a decision tree (if/then logic)</li>
+          <li>Calculate deadlines, fees, or scores</li>
+          <li>Look things up in data you provide</li>
+          <li>Display information based on user choices</li>
+          <li>Enforce rules and flag errors</li>
+        </ul>
+      </div>
+      <div class="cant-do">
+        <h3>✗ Your app CANNOT</h3>
+        <ul>
+          <li>Read and interpret a document</li>
+          <li>Summarize or paraphrase text</li>
+          <li>Answer open-ended questions</li>
+          <li>Make judgment calls</li>
+          <li>Do anything requiring "understanding"</li>
+        </ul>
+      </div>
+    </div>
+    <div class="index-card">
+      <p>📇 <strong>The index card test:</strong> If you could write every possible answer on index cards ahead of time, your app can handle it. If you'd need a smart person to figure out the answer — it can't.</p>
+    </div>
+
     <span class="slide-number">14</span>
   </div>
 
-  <!-- SLIDE 15: Resources -->
-  <div class="slide flex-col">
-    <h1>Vibe-coding resources</h1>
-    <div style="margin-top: 8px;">
-      <a class="resource-link" href="#">Jamie Tso Interview: Vibe-Coding Your Own Legal AI Tools <span>— Artificial Lawyer</span></a>
-      <a class="resource-link" href="#">Jamie's collection of vibe-coded apps</a>
-      <a class="resource-link" href="#">Projects from LegalQuant Hackathon <span>— LinkedIn</span></a>
-      <a class="resource-link" href="#">Secure Vibe Coding Guide <span>— Cloud Security Alliance</span></a>
-      <a class="resource-link" href="#">Vibe Coding: Best Practices for Prompting <span>— Supabase</span></a>
-    </div>
-
+  <!-- SLIDE 15: Let's try it -->
+  <div class="slide section-slide">
+    <h1>Let's try vibe coding</h1>
+    <p>Pick an idea and start building.</p>
     <span class="slide-number">15</span>
   </div>
 
-  <!-- SLIDE 16: Let's try it -->
-  <div class="slide section-slide">
-    <h1>Let's try vibe coding</h1>
-    <p>Form clusters of 4–6. Pick a topic together. Everyone builds individually.</p>
-
-    <span class="slide-number">16</span>
-  </div>
-
-  <!-- SLIDE 17: Activity instructions -->
+  <!-- SLIDE 16: Your assignment -->
   <div class="slide flex-col">
     <h1>Your assignment</h1>
-    <div class="three-col" style="margin-top: 6px;">
-      <div class="activity-col">
-        <h3>Topic (pick as a cluster)</h3>
+    <div class="two-col" style="margin-top: 8px;">
+      <div>
+        <h3>Pick your idea</h3>
         <ul>
-          <li>What happens after you've been served?</li>
-          <li>How to prepare for a hearing</li>
-          <li>Debt collection basics</li>
-          <li><em>Choose your own</em></li>
+          <li>Go to the <strong>Build</strong> tab</li>
+          <li>Pick an idea card — or bring your own</li>
+          <li>Copy the prompt</li>
+        </ul>
+        <h3 style="margin-top: 20px;">Sit in clusters</h3>
+        <ul>
+          <li>Groups of 4–6</li>
+          <li>Your cluster = your support group</li>
+          <li>Ask them for help before raising your hand</li>
         </ul>
       </div>
-      <div class="activity-col">
-        <h3>Mechanic (pick individually)</h3>
+      <div>
+        <h3>Goals</h3>
         <ul>
-          <li>Choose your path</li>
-          <li>Myth vs. fact</li>
-          <li>Timeline builder</li>
-          <li>Spot-the-red-flag</li>
-          <li><em>Choose your own</em></li>
-        </ul>
-      </div>
-      <div class="activity-col">
-        <h3>Requirements</h3>
-        <ul>
-          <li>A learning objective</li>
-          <li>3 key points to teach</li>
-          <li>A clear win condition</li>
+          <li>Plan with Gemini before you build</li>
+          <li>Get a working first version</li>
+          <li>Iterate — make it better</li>
+          <li>Test it on someone in your cluster</li>
         </ul>
       </div>
     </div>
-    <p class="small" style="margin-top: 8px;">Same topic within your cluster, different mechanics — so you can compare approaches at the end.</p>
-
-    <span class="slide-number">17</span>
+    <span class="slide-number">16</span>
   </div>
 
-  <!-- SLIDE 18: Difficulty progression -->
+  <!-- SLIDE 17: Level up as you go -->
   <div class="slide flex-col">
     <h1>Level up as you go</h1>
     <div class="level-track">
@@ -870,44 +846,106 @@
     </div>
     <p class="small" style="margin-top: 12px;">Everyone should reach Level 1. Levels 2–4 are stretch goals — go as far as you can.</p>
 
-    <span class="slide-number">18</span>
+    <span class="slide-number">17</span>
   </div>
 
-  <!-- SLIDE 19: Session plan -->
+  <!-- SLIDE 18: Session plan -->
   <div class="slide flex-col">
     <h1>Session plan</h1>
     <div style="margin-top: 8px;">
       <div class="timeline-row">
         <div class="timeline-time">~2 min</div>
-        <div class="timeline-desc"><strong>Form clusters</strong> — groups of 4–6, sit together, agree on a topic</div>
+        <div class="timeline-desc"><strong>Form clusters</strong> — groups of 4–6, pick your idea from the Build tab</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-time">~20 min</div>
+        <div class="timeline-desc"><strong>Build — first sprint</strong> — plan with Gemini, then start building</div>
       </div>
       <div class="timeline-row">
         <div class="timeline-time">~3 min</div>
-        <div class="timeline-desc"><strong>Pick your mechanic</strong> — each person chooses individually, visit the prompt site for your starter prompt</div>
+        <div class="timeline-desc"><strong>Cluster check-in</strong> — show your cluster what you have so far</div>
       </div>
       <div class="timeline-row">
-        <div class="timeline-time">~30–45 min</div>
-        <div class="timeline-desc"><strong>Build &amp; iterate</strong> — get to Level 1, then keep leveling up. Raise your hand if stuck!</div>
-      </div>
-      <div class="timeline-row">
-        <div class="timeline-time">~10 min</div>
-        <div class="timeline-desc"><strong>Cluster share</strong> — everyone in your cluster tries each other's tools</div>
+        <div class="timeline-time">~20 min</div>
+        <div class="timeline-desc"><strong>Build — second sprint</strong> — keep iterating, level up</div>
       </div>
       <div class="timeline-row">
         <div class="timeline-time">~5 min</div>
-        <div class="timeline-desc"><strong>Whole-room share</strong> — a few volunteers demo (60 sec each): what you built, what was hard, what you'd do next</div>
+        <div class="timeline-desc"><strong>Swap &amp; test</strong> — try someone else's app, give feedback</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-time">~5 min</div>
+        <div class="timeline-desc"><strong>Whole-room share</strong> — volunteers demo (60 sec each): what you built, what surprised you</div>
       </div>
     </div>
-
-    <span class="slide-number">19</span>
+    <span class="slide-number">18</span>
   </div>
 
-  <!-- SLIDE 20: Go! -->
+  <!-- SLIDE 19: Go! -->
   <div class="slide section-slide">
     <h1>Go build something.</h1>
     <p>Raise your hand if you get stuck. There are no wrong answers — only first drafts.</p>
 
+    <span class="slide-number">19</span>
+  </div>
+
+  <!-- SLIDE 20: I started just like you -->
+  <div class="slide flex-col">
+    <h1>I started just like you</h1>
+    <p style="margin-bottom: 12px;">Single-page apps built by talking to AI — no code written by hand.</p>
+    <div class="two-col" style="align-items: flex-start;">
+      <div class="showcase-card">
+        <img src="thanksgiving-demo.gif" alt="Thanksgiving Dinner Planner">
+        <h3>Thanksgiving Dinner Planner</h3>
+        <a href="https://www.ailawlibrarians.com/2025/11/27/thanksgiving-vibe-coding-and-the-case-for-single-serving-legal-software/" target="_blank">Blog post →</a>
+      </div>
+      <div class="showcase-card">
+        <img src="hallucination-game.png" alt="Citation Hallucination Game">
+        <h3>Citation Hallucination Game</h3>
+        <a href="https://hallucination-game.replit.app/" target="_blank">Try it →</a> · <a href="https://github.com/rlfordon/hallucination-game" target="_blank">GitHub →</a>
+      </div>
+    </div>
     <span class="slide-number">20</span>
+  </div>
+
+  <!-- SLIDE 21: Keep going -->
+  <div class="slide flex-col">
+    <h1>Keep going</h1>
+    <div class="two-col" style="align-items: flex-start; margin-bottom: 12px;">
+      <div class="showcase-card">
+        <img src="docket-qna.png" alt="Bankruptcy Docket Q&A">
+        <h3>Bankruptcy Docket Q&amp;A</h3>
+        <a href="https://bankruptcy-docket-qanda.onrender.com" target="_blank">Try it →</a> · <a href="https://github.com/rlfordon/docket-qna" target="_blank">GitHub →</a>
+      </div>
+      <div class="showcase-card">
+        <img src="workshop-site.png" alt="This Workshop Site">
+        <h3>This Workshop Site</h3>
+        <p class="small">The app you're using right now</p>
+        <a href="https://github.com/rlfordon/vibe-coding-workshop-ud" target="_blank">GitHub →</a>
+      </div>
+    </div>
+    <h3 style="margin-top: 4px;">Free tools to keep building</h3>
+    <ul style="font-size: 16px;">
+      <li><strong>Google AI Studio</strong> — free with a personal Google account</li>
+      <li><strong>Cursor</strong> — free for students</li>
+      <li><strong>Claude Code</strong> — Anthropic's coding CLI</li>
+      <li><strong>Others:</strong> Replit, v0, Lovable, Bolt.new</li>
+    </ul>
+    <span class="slide-number">21</span>
+  </div>
+
+  <!-- SLIDE 22: Resources -->
+  <div class="slide flex-col">
+    <h1>Vibe-coding resources</h1>
+    <div style="margin-top: 8px;">
+      <a class="resource-link" href="#">Jamie Tso Interview: Vibe-Coding Your Own Legal AI Tools <span>— Artificial Lawyer</span></a>
+      <a class="resource-link" href="#">Jamie's collection of vibe-coded apps</a>
+      <a class="resource-link" href="#">Projects from LegalQuant Hackathon <span>— LinkedIn</span></a>
+      <a class="resource-link" href="#">Secure Vibe Coding Guide <span>— Cloud Security Alliance</span></a>
+      <a class="resource-link" href="#">Vibe Coding: Best Practices for Prompting <span>— Supabase</span></a>
+    </div>
+
+    <span class="slide-number">22</span>
   </div>
 
 </div>
@@ -918,7 +956,7 @@
   <div class="progress-bar">
     <div class="progress-fill" id="progressFill"></div>
   </div>
-  <span id="slideCount">1 / 20</span>
+  <span id="slideCount">1 / 22</span>
   <button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next →</button>
 </div>
 
