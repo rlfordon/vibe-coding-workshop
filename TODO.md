@@ -3,7 +3,7 @@
 ## What's Done
 
 - **Project scaffolded**: Vite + React + Tailwind client, Express + sql.js server
-- **App.jsx**: Tab navigation (Slides | Build | Gallery) with minimal nav on slides view
+- **App.jsx**: Tab navigation (Slides | Build | Preview | Gallery) with minimal nav on slides view
 - **Slides.jsx**: Embeds `vibe-coding-slides.html` in fullscreen iframe — working
 - **PromptWizard.jsx**: Redesigned as single-screen launchpad — one copyable prompt template + six idea cards — working
 - **SandboxedIframe.jsx**: Extracted from Gallery as shared module — used by both Gallery and Build tabs
@@ -32,4 +32,24 @@
 - [x] **Preview tab** — moved code preview to its own tab (Slides | Build | Preview | Gallery)
 - [ ] **Iteration guidance** — "what to do once you have a working app" content (tips, next steps); could be its own tab or section
 - [ ] **AI-powered idea feedback** — use AI on the Build page to give students feedback on their idea before they go to Gemini (big scope)
-- [ ] **Update slides** — iteration tips in the slide deck reference old app types from earlier workshop versions
+- [ ] **Update slides** — full redesign plan at `docs/plans/2026-03-08-slide-deck-implementation.md`
+
+## Class Plan
+
+**Total time:** ~75 min (flexible 60–90)
+**Slides:** ~20 min
+
+**Activity flow:**
+1. ~2 min — Form clusters (4–6), pick your own idea (from Build tab or bring your own)
+2. ~20 min — Build, first sprint (plan with Gemini, then build in Canvas)
+3. ~3 min — Cluster check-in ("show what you have")
+4. ~20 min — Build, second sprint (iterate, level up)
+5. ~5 min — Swap & test (try someone else's app)
+6. ~5 min — Whole-room share (volunteers demo 60 sec each)
+
+**Key points to hit in slides:**
+- Open with Thanksgiving app story (jaw-drop moment)
+- Emphasize planning conversation before building ("don't just say build me an app")
+- Canvas button under Tools — fallback is copy code into Preview tab
+- Clusters are support groups, not topic groups
+- End with "I started just like you" showcase + free tools for continuing
