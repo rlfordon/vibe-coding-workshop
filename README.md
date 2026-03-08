@@ -167,4 +167,4 @@ rm server/data/workshop.db       # Reset database (recreated on next server star
 
 ## License
 
-Built for educational use. Fork it, adapt it, teach with it.
+[MIT License](LICENSE) — fork it, adapt it, teach with it.
