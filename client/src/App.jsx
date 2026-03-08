@@ -4,6 +4,7 @@ import PromptWizard from './PromptWizard';
 import Preview from './Preview';
 import Gallery from './Gallery';
 import Resources from './Resources';
+import Admin from './Admin';
 
 const TABS = [
   { id: 'slides', label: 'Slides' },
@@ -14,8 +15,18 @@ const TABS = [
 ];
 
 export default function App() {
+  // Check if URL hash is #admin (hidden route, not in nav)
+  const [isAdmin] = useState(() => window.location.hash === '#admin');
   const [activeTab, setActiveTab] = useState('slides');
   const isSlides = activeTab === 'slides';
+
+  if (isAdmin) {
+    return (
+      <div className="min-h-screen bg-slate-50 font-[Source_Sans_Pro,sans-serif] text-slate-900">
+        <Admin />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 font-[Source_Sans_Pro,sans-serif] text-slate-900">

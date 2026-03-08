@@ -144,6 +144,24 @@ app.post("/api/projects/:id/comments", (req, res) => {
 });
 
 // ---------------------------------------------------------------------------
+// Admin — password-protected database reset
+// ---------------------------------------------------------------------------
+app.post("/api/admin/reset", (req, res) => {
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  if (!adminPassword) {
+    return res.status(503).json({ error: "Admin not configured." });
+  }
+
+  const { password } = req.body;
+  if (!password || password !== adminPassword) {
+    return res.status(401).json({ error: "Wrong password." });
+  }
+
+  db.prepare("DELETE FROM projects").run();
+  res.json({ ok: true, message: "All projects deleted." });
+});
+
+// ---------------------------------------------------------------------------
 // SPA fallback — serve index.html for any non-API, non-static route
 // ---------------------------------------------------------------------------
 app.get("*", (req, res) => {
