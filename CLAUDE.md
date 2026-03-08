@@ -33,11 +33,11 @@ rm server/data/workshop.db        # Recreated on next server start
 
 **Gallery iframe rendering** (`Gallery.jsx`): The most complex piece. Students paste code from Gemini Canvas which may be React/JSX (with imports) or plain HTML. The `prepareHtml()` → `wrapReactCode()` pipeline: (1) parses all import statements, (2) strips them from the code, (3) generates CDN script tags and `const { ... } = window.globalName` shims, (4) wraps everything in an HTML shell with React, Babel standalone, and Tailwind loaded via CDN. Rendered in sandboxed iframes via Blob URLs.
 
-**Deploy**: `render.yaml` defines a single Render Web Service with a 1GB persistent disk for SQLite.
+**Deploy**: `render.yaml` defines a single Render Web Service (Starter plan, $7/mo) with a 1GB persistent disk for SQLite. Repo: `rlfordon/vibe-coding-workshop-ud` (private). Build requires `npm install --include=dev` since Vite is a devDependency.
 
-## Critical Known Bug
+## Gallery Iframe CDN Rendering
 
-The lucide-react UMD CDN bundle doesn't expose icon components correctly via `window.lucideReact`. Student React code that imports from `lucide-react` renders blank. See `TODO.md` for fix options and `test-output.html` for a standalone reproduction. The relevant code is in `Gallery.jsx` functions: `wrapReactCode()`, `parseImports()`, `buildImportShims()`, `LIB_GLOBALS` map.
+The lucide-react UMD bundle expects `window.react` (lowercase) but React's UMD sets `window.React` (uppercase). Fixed by injecting `window.react = window.React` shim before CDN libs load, and using `'LucideReact'` (PascalCase) in `LIB_GLOBALS`. See `test-output.html` for a standalone reproduction.
 
 ## Key Files
 
