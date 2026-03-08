@@ -12,8 +12,8 @@ const TABS = [
   { id: 'build', label: 'Build' },
   { id: 'preview', label: 'Preview' },
   { id: 'gallery', label: 'Gallery' },
-  { id: 'resources', label: 'Resources' },
   { id: 'deploy', label: 'Deploy' },
+  { id: 'resources', label: 'Resources' },
 ];
 
 export default function App() {

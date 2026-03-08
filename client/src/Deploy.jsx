@@ -14,6 +14,20 @@ export default function Deploy() {
           your own computer or published to an actual website — no coding
           experience required.
         </p>
+        <p className="text-slate-500 text-[1.05rem] max-w-[540px] mt-4">
+          Juliet Edjere wrote a{' '}
+          <a
+            href="https://blog.julietedjere.com/posts/vibe-coding-how-to-host-websites-from-gemini-canvas-on-netlify-for-free"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#BA0C2F] underline underline-offset-2 hover:decoration-2"
+          >
+            great guide
+          </a>{' '}
+          on deploying Gemini Canvas apps to Netlify — read it for more detail.
+          Below are the basic steps, plus an additional option for hosting on
+          GitHub Pages.
+        </p>
       </div>
 
       {/* 00 — The Big Picture */}
@@ -302,17 +316,7 @@ export default function Deploy() {
       {/* Footer */}
       <div className="border-t-2 border-slate-900 pt-5 mt-12">
         <p className="text-sm text-slate-500">
-          Have questions? Reach out to your instructor. For a deeper dive on this
-          workflow, see Juliet Edjere's guide:{' '}
-          <a
-            href="https://blog.julietedjere.com/posts/vibe-coding-how-to-host-websites-from-gemini-canvas-on-netlify-for-free"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#BA0C2F] underline underline-offset-2 hover:decoration-2"
-          >
-            Vibe Coding: From Prompt to Prototype with Gemini Canvas and Netlify
-          </a>
-          .
+          Have questions? Reach out to your instructor.
         </p>
       </div>
     </div>
