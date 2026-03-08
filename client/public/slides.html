@@ -36,6 +36,7 @@
     position: relative;
     background: var(--osu-white);
     box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    transform-origin: center center;
   }
 
   .slide {
@@ -980,6 +981,33 @@
   });
 
   showSlide(0);
+
+  // Scale the deck to fill viewport when embedded in fullscreen iframe
+  const deck = document.getElementById('deck');
+  const navBar = document.querySelector('.nav-bar');
+  const BASE_W = 960;
+  const BASE_H = 540;
+  const NAV_H = 50; // approx nav bar height
+
+  function rescale() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    // Only scale when viewport is larger than the base size (i.e. fullscreen)
+    if (vw > BASE_W + 10 || vh > BASE_H + NAV_H + 30) {
+      const scale = Math.min(vw / BASE_W, (vh - NAV_H) / BASE_H);
+      deck.style.transform = `scale(${scale})`;
+      deck.style.boxShadow = 'none';
+      navBar.style.transform = `scale(${scale})`;
+      navBar.style.transformOrigin = 'center top';
+    } else {
+      deck.style.transform = '';
+      deck.style.boxShadow = '';
+      navBar.style.transform = '';
+    }
+  }
+
+  window.addEventListener('resize', rescale);
+  rescale();
 </script>
 
 </body>
