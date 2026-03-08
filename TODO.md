@@ -26,3 +26,10 @@
 - [ ] Mobile responsiveness pass on gallery
 - [ ] Consider adding a delete/reset mechanism for demo day
 - [ ] Clean up `test-output.html` from project root (optional)
+
+## Future Ideas
+
+- [ ] **Preview tab** — move code preview out of Build into its own tab (more real estate, clearer separation from prompt phase)
+- [ ] **Iteration guidance** — "what to do once you have a working app" content (tips, next steps); could be its own tab or section
+- [ ] **AI-powered idea feedback** — use AI on the Build page to give students feedback on their idea before they go to Gemini (big scope)
+- [ ] **Update slides** — iteration tips in the slide deck reference old app types from earlier workshop versions
