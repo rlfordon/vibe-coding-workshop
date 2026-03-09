@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Home from './Home';
 import Slides from './Slides';
 import PromptWizard from './PromptWizard';
 import Preview from './Preview';
@@ -8,6 +9,7 @@ import Deploy from './Deploy';
 import Admin from './Admin';
 
 const TABS = [
+  { id: 'home', label: 'Home' },
   { id: 'slides', label: 'Slides' },
   { id: 'build', label: 'Build' },
   { id: 'preview', label: 'Preview' },
@@ -19,7 +21,7 @@ const TABS = [
 export default function App() {
   // Check if URL hash is #admin (hidden route, not in nav)
   const [isAdmin] = useState(() => window.location.hash === '#admin');
-  const [activeTab, setActiveTab] = useState('slides');
+  const [activeTab, setActiveTab] = useState('home');
   const isSlides = activeTab === 'slides';
 
   if (isAdmin) {
@@ -78,6 +80,7 @@ export default function App() {
 
       {/* Content */}
       <main>
+        {activeTab === 'home' && <Home onNavigate={setActiveTab} />}
         {activeTab === 'slides' && <Slides />}
         {activeTab === 'build' && <PromptWizard />}
         {activeTab === 'preview' && <Preview />}
