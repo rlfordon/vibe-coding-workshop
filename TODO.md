@@ -10,7 +10,8 @@
 - **Gallery.jsx**: Submit modal, project cards with vote/comment, expanded view modal — working
 - **Resources.jsx**: Links to vibe-coding articles and guides (moved out of slide deck)
 - **Admin page**: Password-protected database reset at `/#admin` (requires `ADMIN_PASSWORD` env var)
-- **Server API**: 5 endpoints (GET projects, POST project, POST vote, POST comment, POST admin/reset)
+- **Server API**: 6 endpoints (GET projects, POST project, POST vote, POST comment, DELETE project, POST admin/reset)
+- **Gallery delete**: Students can delete their own submissions (author_id ownership via voter_id cookie)
 - **Database**: sql.js (pure JS SQLite, no native deps needed)
 - **Config**: render.yaml, .env, .gitignore, README.md all created
 - **Branding**: "Vibe Coding Workshop", scarlet #BA0C2F, BioRhyme + Source Sans Pro fonts
@@ -22,7 +23,7 @@
 
 - **Gallery iframe rendering of React/JSX** — lucide-react UMD expected `window.react` (lowercase) but React UMD sets `window.React`. Fixed with `window.react = window.React` shim + PascalCase `LIB_GLOBALS`.
 - **Render deploy** — changed to Starter plan for persistent disk; added `--include=dev` for Vite in build command.
-- **GitHub repo** — `rlfordon/vibe-coding-workshop-ud` (private), deployed via Render Blueprint.
+- **GitHub repo** — `rlfordon/vibe-coding-workshop` (private, renamed from -ud), deployed via Render Blueprint.
 - **Server .env loading** — added lightweight .env loader for local dev (Render sets env vars in dashboard).
 
 ## Remaining Items
@@ -36,6 +37,8 @@
 
 - [ ] **Iteration guidance** — "what to do once you have a working app" content (tips, next steps); could be its own tab or section
 - [ ] **AI-powered idea feedback** — use AI on the Build page to give students feedback on their idea before they go to Gemini (big scope)
+- [ ] **Template repo for future workshops** — mark repo as GitHub template; for next workshop, create fresh copy and customize slides/prompts/branding
+- [ ] **Static + API split** — separate client (free Static Site on Render) from server (Web Service, spun up only for workshops) so students keep a permanent URL for slides/resources after workshop ends and server is torn down
 
 ## Class Plan
 
