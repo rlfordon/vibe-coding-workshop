@@ -35,7 +35,7 @@ rm server/data/workshop.db        # Recreated on next server start
 
 **PromptWizard** (`PromptWizard.jsx`): Single-screen launchpad — one copyable prompt template at the top, six idea cards below. Clicking a card swaps the prompt content; a Reset link returns to the template. No sidebar, no preview pane, no accordions.
 
-**Deploy**: `render.yaml` defines a single Render Web Service (Starter plan, $7/mo) with a 1GB persistent disk for SQLite. Repo: `rlfordon/vibe-coding-workshop-ud` (private). Build requires `npm install --include=dev` since Vite is a devDependency.
+**Deploy**: `render.yaml` defines a single Render Web Service (Starter plan, $7/mo) with a 1GB persistent disk for SQLite. Repo: `rlfordon/vibe-coding-workshop` (private). Build requires `npm install --include=dev` since Vite is a devDependency.
 
 ## Iframe CDN Rendering
 
