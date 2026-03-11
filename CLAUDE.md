@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Single web app for a live vibe-coding workshop (~100 law students). Five tabs: Slides (embedded HTML deck), Build (prompt wizard for Gemini Canvas), Preview (paste code to test rendering), Gallery (submit/view/vote/comment on student HTML projects), Resources (curated links). Hidden admin page at `/#admin` for database reset. Brand: "Vibe Coding Workshop", primary color scarlet `#BA0C2F`.
+Single web app for a live vibe-coding workshop (~100 law students). Seven tabs: Home (default landing page with workshop overview and step-by-step navigation), Slides (embedded HTML deck), Build (prompt wizard for Gemini Canvas), Preview (paste code to test rendering), Gallery (submit/view/vote/comment on student HTML projects), Deploy (deployment guide), Resources (curated links). Hidden admin page at `/#admin` for database reset. Brand: "Vibe Coding Workshop", primary color scarlet `#BA0C2F`.
 
 ## Commands
 
@@ -25,7 +25,7 @@ rm server/data/workshop.db        # Recreated on next server start
 
 ## Architecture
 
-**Client** (`client/`): Vite + React 19 + Tailwind v4. Tab-based SPA — `App.jsx` renders `Slides.jsx`, `PromptWizard.jsx`, `Preview.jsx`, `Gallery.jsx`, or `Resources.jsx` based on active tab. `/#admin` renders `Admin.jsx` (hidden, not in nav). Fonts: BioRhyme (headings) + Source Sans Pro (body).
+**Client** (`client/`): Vite + React 19 + Tailwind v4. Tab-based SPA — `App.jsx` renders `Home.jsx` (default), `Slides.jsx`, `PromptWizard.jsx`, `Preview.jsx`, `Gallery.jsx`, `Deploy.jsx`, or `Resources.jsx` based on active tab. `/#admin` renders `Admin.jsx` (hidden, not in nav). Fonts: BioRhyme (headings) + Source Sans Pro (body).
 
 **Server** (`server/`): Express serving the built client as static files + 6 REST endpoints. Uses `sql.js` (pure-JS SQLite compiled to WASM — chosen because `better-sqlite3` requires Visual Studio on this Windows machine). Database persisted to `server/data/workshop.db`, saved to disk after every write. Loads `.env` from project root for local dev (Render sets env vars via dashboard).
 
@@ -45,6 +45,7 @@ The lucide-react UMD bundle expects `window.react` (lowercase) but React's UMD s
 
 ## Key Files
 
+- `client/src/Home.jsx` — Default landing page with workshop overview and tab navigation
 - `client/src/SandboxedIframe.jsx` — Shared iframe rendering pipeline (prepareHtml, wrapReactCode, CDN shims)
 - `client/src/Gallery.jsx` — Gallery UI (submit/vote/comment)
 - `client/src/PromptWizard.jsx` — Build tab single-screen launchpad (prompt template + idea cards)
@@ -61,3 +62,7 @@ The lucide-react UMD bundle expects `window.react` (lowercase) but React's UMD s
 - Tailwind utility classes, no CSS modules or styled-components
 - No TypeScript — plain JSX
 - Vite dev proxy handles `/api` routing; in production Express serves both static and API
+
+## Other Files
+
+- `scratch/` — Non-code working files (CLE descriptions, drafts, notes)
