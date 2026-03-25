@@ -122,7 +122,7 @@
   }
 
   ul li::before {
-    content: '\2022';
+    content: '•';
     color: var(--osu-scarlet);
     font-weight: bold;
     position: absolute;
@@ -147,6 +147,14 @@
   }
 
   .two-col > div { flex: 1; }
+
+  .three-col {
+    display: flex;
+    gap: 24px;
+    flex: 1;
+  }
+
+  .three-col > div { flex: 1; }
 
   .title-slide {
     background: var(--osu-scarlet);
@@ -260,41 +268,43 @@
     background: var(--osu-light);
     border-radius: 6px;
     padding: 10px 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    font-size: 15px;
+    color: #333;
+    line-height: 1.35;
   }
 
-  .tool-item .tool-week {
-    font-family: 'BioRhyme', serif;
+  .tool-item strong {
+    color: var(--osu-scarlet);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .tool-item .week {
     font-size: 11px;
     font-weight: 700;
-    color: var(--osu-scarlet);
     text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  .tool-item .tool-name {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--osu-dark);
+    letter-spacing: 0.5px;
+    color: var(--osu-gray);
   }
 
   .key-insight {
-    background: #fef3f4;
-    border-left: 4px solid var(--osu-scarlet);
+    background: #e8f0f8;
+    border-left: 4px solid #4a7ab5;
     padding: 12px 16px;
-    margin-top: 14px;
+    margin-top: 12px;
     border-radius: 0 6px 6px 0;
   }
 
   .key-insight p {
     font-size: 16px;
+    color: #2a5a8a;
     font-style: italic;
-    color: #444;
   }
 
-  .key-insight strong { color: var(--osu-scarlet); }
+  .key-insight strong {
+    color: #2a5a8a;
+    font-style: normal;
+  }
 
   .nav-bar {
     position: absolute;
@@ -382,39 +392,39 @@
   <!-- SLIDE 4: What I built this semester -->
   <div class="slide flex-col">
     <h1>What I built this semester</h1>
-    <p style="margin-bottom: 6px;">Eight interactive teaching tools for 21st Century Lawyering, built with AI assistance. Each one started with a pedagogical problem I couldn't solve with slides alone.</p>
+    <p style="margin-bottom: 6px; font-size: 16px;">Eight interactive teaching tools for 21st Century Lawyering, built with AI assistance. Each one started with a pedagogical problem I couldn't solve with slides alone.</p>
     <div class="tool-grid">
       <div class="tool-item">
-        <span class="tool-week">Week 2</span>
-        <span class="tool-name">TokenExplorer</span>
+        <strong>TokenExplorer</strong>
+        <span class="week">Week 2</span>
       </div>
       <div class="tool-item">
-        <span class="tool-week">Week 5</span>
-        <span class="tool-name">Prompt Coach</span>
+        <strong>Prompt Coach</strong>
+        <span class="week">Week 5</span>
       </div>
       <div class="tool-item">
-        <span class="tool-week">Week 6</span>
-        <span class="tool-name">QnA Markup Screener</span>
+        <strong>QnA Markup Screener</strong>
+        <span class="week">Week 6</span>
       </div>
       <div class="tool-item">
-        <span class="tool-week">Week 6</span>
-        <span class="tool-name">QnA→Markup Gem</span>
+        <strong>QnA→Markup Gem</strong>
+        <span class="week">Week 6</span>
       </div>
       <div class="tool-item">
-        <span class="tool-week">Week 6</span>
-        <span class="tool-name">Wage Screener</span>
+        <strong>Wage Screener</strong>
+        <span class="week">Week 6</span>
       </div>
       <div class="tool-item">
-        <span class="tool-week">Week 7</span>
-        <span class="tool-name">Citation Extractor</span>
+        <strong>Citation Extractor</strong>
+        <span class="week">Week 7</span>
       </div>
       <div class="tool-item">
-        <span class="tool-week">Week 7</span>
-        <span class="tool-name">Hallucination Game</span>
+        <strong>Hallucination Game</strong>
+        <span class="week">Week 7</span>
       </div>
       <div class="tool-item">
-        <span class="tool-week">Week 8</span>
-        <span class="tool-name">Doc Tech Gallery</span>
+        <strong>Doc Tech Gallery</strong>
+        <span class="week">Week 8</span>
       </div>
     </div>
     <p class="small" style="margin-top: 10px;">Visit the Showcase tab for live links and details</p>
@@ -461,7 +471,7 @@
     <h1>What vibe-coded apps can &amp; can't do</h1>
     <div class="two-col" style="margin-top: 8px;">
       <div class="can-do">
-        <h3>&#10003; Your app CAN</h3>
+        <h3>✓ Your app CAN</h3>
         <ul>
           <li>Follow a decision tree (if/then logic)</li>
           <li>Calculate deadlines, fees, or scores</li>
@@ -471,7 +481,7 @@
         </ul>
       </div>
       <div class="cant-do">
-        <h3>&#10007; Your app CANNOT</h3>
+        <h3>✗ Your app CANNOT</h3>
         <ul>
           <li>Read and interpret a document</li>
           <li>Summarize or paraphrase text</li>
@@ -482,7 +492,7 @@
       </div>
     </div>
     <div class="index-card">
-      <p><strong>The index card test:</strong> If you could write every possible answer on index cards ahead of time (even with help from AI!), your app can handle it. If you'd need a smart person to figure out the answer after you've handed them over — it can't.</p>
+      <p>📇 <strong>The index card test:</strong> If you could write every possible answer on index cards ahead of time (even with help from AI!), your app can handle it. If you'd need a smart person to figure out the answer after you've handed them over — it can't.</p>
     </div>
     <span class="osu-footer">MORITZ COLLEGE OF LAW</span>
     <span class="slide-number">8</span>
@@ -542,8 +552,8 @@
     <p style="font-size: 20px; line-height: 1.6; margin-bottom: 20px;">Rebecca Fordon<br>Assistant Director of Innovation, Research &amp; Instruction<br><span style="color: var(--osu-gray);">The Ohio State University Moritz College of Law</span></p>
     <div style="display: flex; flex-direction: column; gap: 10px; font-size: 17px;">
       <a href="mailto:fordon.4@osu.edu" style="color: var(--osu-scarlet); text-decoration: none; font-weight: 600;">fordon.4@osu.edu</a>
-      <a href="https://www.linkedin.com/in/rebeccafordon/" target="_blank" style="color: #333; text-decoration: none;">LinkedIn <span style="color: var(--osu-gray);">&rarr; linkedin.com/in/rebeccafordon</span></a>
-      <a href="https://www.ailawlibrarians.com" target="_blank" style="color: #333; text-decoration: none;">Blog <span style="color: var(--osu-gray);">&rarr; ailawlibrarians.com</span></a>
+      <a href="https://www.linkedin.com/in/rebeccafordon/" target="_blank" style="color: #333; text-decoration: none;">LinkedIn <span style="color: var(--osu-gray);">→ linkedin.com/in/rebeccafordon</span></a>
+      <a href="https://www.ailawlibrarians.com" target="_blank" style="color: #333; text-decoration: none;">Blog <span style="color: var(--osu-gray);">→ ailawlibrarians.com</span></a>
     </div>
     <span class="osu-footer">MORITZ COLLEGE OF LAW</span>
     <span class="slide-number">12</span>
@@ -551,9 +561,9 @@
 
   <!-- Navigation (overlay, top-right, visible on hover) -->
   <div class="nav-bar">
-    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">&larr;</button>
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">←</button>
     <span id="slideCount">1 / 12</span>
-    <button class="nav-btn" id="nextBtn" onclick="navigate(1)">&rarr;</button>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)">→</button>
   </div>
 
 </div>
