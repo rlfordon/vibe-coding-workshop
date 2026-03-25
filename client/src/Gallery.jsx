@@ -4,7 +4,7 @@ import SandboxedIframe from './SandboxedIframe';
 
 const API = '/api/projects';
 
-export default function Gallery() {
+export default function Gallery({ eventId }) {
   const [projects, setProjects] = useState([]);
   const [showSubmit, setShowSubmit] = useState(false);
   const [expanded, setExpanded] = useState(null);
@@ -12,7 +12,7 @@ export default function Gallery() {
 
   const fetchProjects = async () => {
     try {
-      const res = await fetch(API);
+      const res = await fetch(`${API}?event_id=${encodeURIComponent(eventId)}`);
       const data = await res.json();
       setProjects(data);
     } catch (e) {
@@ -26,7 +26,7 @@ export default function Gallery() {
     fetchProjects();
     const interval = setInterval(fetchProjects, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [eventId]);
 
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this project? You can always resubmit later.')) return;
@@ -108,6 +108,7 @@ export default function Gallery() {
       {/* Submit Modal */}
       {showSubmit && (
         <SubmitModal
+          eventId={eventId}
           onClose={() => setShowSubmit(false)}
           onSubmitted={(newProject) => {
             setProjects((prev) => [newProject, ...prev].sort((a, b) => b.votes - a.votes));
@@ -244,7 +245,7 @@ function CommentsSection({ project, onProjectUpdate }) {
   );
 }
 
-function SubmitModal({ onClose, onSubmitted }) {
+function SubmitModal({ eventId, onClose, onSubmitted }) {
   const [author, setAuthor] = useState('');
   const [title, setTitle] = useState('');
   const [html, setHtml] = useState('');
@@ -263,7 +264,7 @@ function SubmitModal({ onClose, onSubmitted }) {
       const res = await fetch(API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ author: author.trim(), title: title.trim(), html: html.trim() }),
+        body: JSON.stringify({ author: author.trim(), title: title.trim(), html: html.trim(), event_id: eventId }),
       });
       if (res.ok) {
         const newProject = await res.json();

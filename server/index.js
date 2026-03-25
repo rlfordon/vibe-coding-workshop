@@ -68,10 +68,11 @@ function parseProject(row) {
 // API routes
 // ---------------------------------------------------------------------------
 
-// GET /api/projects — all projects sorted by votes desc
+// GET /api/projects — all projects sorted by votes desc, filtered by event
 app.get("/api/projects", (req, res) => {
   const voterId = req.cookies.voter_id || "";
-  const rows = db.prepare("SELECT * FROM projects ORDER BY votes DESC").all();
+  const eventId = req.query.event_id || "workshop";
+  const rows = db.prepare("SELECT * FROM projects WHERE event_id = ? ORDER BY votes DESC").all(eventId);
   res.json(rows.map((row) => ({
     ...parseProject(row),
     is_owner: row.author_id === voterId && voterId !== "",
@@ -80,7 +81,7 @@ app.get("/api/projects", (req, res) => {
 
 // POST /api/projects — create a new project
 app.post("/api/projects", (req, res) => {
-  const { author, title, html } = req.body || {};
+  const { author, title, html, event_id } = req.body || {};
 
   if (
     !author || typeof author !== "string" || !author.trim() ||
@@ -92,8 +93,9 @@ app.post("/api/projects", (req, res) => {
 
   try {
     const authorId = req.cookies.voter_id || "";
-    db.prepare("INSERT INTO projects (author, title, html, author_id) VALUES (?, ?, ?, ?)")
-      .run(author.trim(), title.trim(), html.trim(), authorId);
+    const eventId = event_id || "workshop";
+    db.prepare("INSERT INTO projects (author, title, html, author_id, event_id) VALUES (?, ?, ?, ?, ?)")
+      .run(author.trim(), title.trim(), html.trim(), authorId, eventId);
 
     const row = db.prepare("SELECT * FROM projects ORDER BY id DESC LIMIT 1").get();
     res.status(201).json(parseProject(row));
@@ -195,13 +197,18 @@ app.post("/api/admin/reset", (req, res) => {
     return res.status(503).json({ error: "Admin not configured." });
   }
 
-  const { password } = req.body;
+  const { password, event_id } = req.body;
   if (!password || password !== adminPassword) {
     return res.status(401).json({ error: "Wrong password." });
   }
 
-  db.prepare("DELETE FROM projects").run();
-  res.json({ ok: true, message: "All projects deleted." });
+  if (event_id) {
+    db.prepare("DELETE FROM projects WHERE event_id = ?").run(event_id);
+    res.json({ ok: true, message: `All projects for "${event_id}" deleted.` });
+  } else {
+    db.prepare("DELETE FROM projects").run();
+    res.json({ ok: true, message: "All projects deleted." });
+  }
 });
 
 // ---------------------------------------------------------------------------

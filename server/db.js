@@ -33,18 +33,25 @@ db.run(`
     voters TEXT DEFAULT '[]',
     comments TEXT DEFAULT '[]',
     created_at TEXT DEFAULT (datetime('now')),
-    author_id TEXT DEFAULT ''
+    author_id TEXT DEFAULT '',
+    event_id TEXT DEFAULT 'workshop'
   )
 `);
 
-// Migrate: add author_id column if missing (old databases created before delete feature)
+// Migrate: add columns if missing (old databases)
 try {
   const cols = db.exec("PRAGMA table_info(projects)")[0]?.values.map(r => r[1]) || [];
+  let migrated = false;
   if (!cols.includes("author_id")) {
     db.run("ALTER TABLE projects ADD COLUMN author_id TEXT DEFAULT ''");
-    save();
+    migrated = true;
   }
-} catch { /* column already exists or table is fresh */ }
+  if (!cols.includes("event_id")) {
+    db.run("ALTER TABLE projects ADD COLUMN event_id TEXT DEFAULT 'workshop'");
+    migrated = true;
+  }
+  if (migrated) save();
+} catch { /* columns already exist or table is fresh */ }
 
 function save() {
   const data = db.export();

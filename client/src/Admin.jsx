@@ -1,7 +1,14 @@
 import { useState } from 'react';
+import { EVENT_CONFIGS } from './eventConfigs';
+
+const eventOptions = [
+  { id: '', label: 'All events' },
+  ...Object.values(EVENT_CONFIGS).map((e) => ({ id: e.id, label: e.title })),
+];
 
 export default function Admin() {
   const [password, setPassword] = useState('');
+  const [selectedEvent, setSelectedEvent] = useState('');
   const [status, setStatus] = useState(null); // { ok, message }
   const [confirming, setConfirming] = useState(false);
 
@@ -13,10 +20,13 @@ export default function Admin() {
 
     setStatus(null);
     try {
+      const body = { password };
+      if (selectedEvent) body.event_id = selectedEvent;
+
       const res = await fetch('/api/admin/reset', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify(body),
       });
       const data = await res.json();
       if (res.ok) {
@@ -37,8 +47,21 @@ export default function Admin() {
         Admin
       </h1>
       <p className="text-slate-500 text-sm mb-8">
-        Reset the gallery database. This deletes all submitted projects, votes, and comments.
+        Reset the gallery database. This deletes submitted projects, votes, and comments.
       </p>
+
+      <label className="block text-sm font-semibold text-slate-700 mb-1">
+        Scope
+      </label>
+      <select
+        value={selectedEvent}
+        onChange={(e) => { setSelectedEvent(e.target.value); setConfirming(false); }}
+        className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm mb-4 focus:outline-none focus:ring-2 focus:ring-[#BA0C2F]/30 focus:border-[#BA0C2F] bg-white"
+      >
+        {eventOptions.map((opt) => (
+          <option key={opt.id} value={opt.id}>{opt.label}</option>
+        ))}
+      </select>
 
       <label className="block text-sm font-semibold text-slate-700 mb-1">
         Admin password
@@ -60,7 +83,9 @@ export default function Admin() {
             : 'bg-[#BA0C2F] hover:bg-[#9a0a27] text-white disabled:opacity-40 disabled:cursor-not-allowed'
         }`}
       >
-        {confirming ? 'Are you sure? Click again to confirm.' : 'Clear database'}
+        {confirming
+          ? `Are you sure? This will clear ${selectedEvent ? `"${selectedEvent}"` : 'ALL'} projects.`
+          : `Clear ${selectedEvent ? `"${selectedEvent}"` : 'all'} projects`}
       </button>
 
       {status && (
