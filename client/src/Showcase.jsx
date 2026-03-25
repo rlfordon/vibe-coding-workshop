@@ -1,6 +1,17 @@
-import { ExternalLink } from 'lucide-react';
+import { useState } from 'react';
+import { ExternalLink, X, BookOpen } from 'lucide-react';
+
+const FILTERS = [
+  { id: 'all', label: 'All' },
+  { id: 'teaching', label: 'Teaching' },
+  { id: 'research', label: 'Research' },
+  { id: 'community', label: 'Community' },
+];
 
 export default function Showcase({ items }) {
+  const [lightbox, setLightbox] = useState(null);
+  const [filter, setFilter] = useState('all');
+
   if (!items || items.length === 0) {
     return (
       <div className="max-w-6xl mx-auto px-4 py-20 text-center text-slate-400">
@@ -9,6 +20,8 @@ export default function Showcase({ items }) {
     );
   }
 
+  const filtered = filter === 'all' ? items : items.filter((item) => item.category === filter);
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-8 pb-20">
       <div className="mb-8">
@@ -16,13 +29,30 @@ export default function Showcase({ items }) {
           Tool Showcase
         </h1>
         <p className="text-lg text-slate-500 font-medium mt-1">
-          Eight teaching tools built with AI in one semester
+          Tools built with AI for teaching, research, and the classroom
         </p>
         <div className="h-1.5 w-full bg-[#BA0C2F] rounded-full mt-4" />
       </div>
 
+      {/* Filter bar */}
+      <div className="flex gap-2 mb-6">
+        {FILTERS.map((f) => (
+          <button
+            key={f.id}
+            onClick={() => setFilter(f.id)}
+            className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-colors ${
+              filter === f.id
+                ? 'bg-[#BA0C2F] text-white'
+                : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+            }`}
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {items.map((item) => (
+        {filtered.map((item) => (
           <div
             key={item.title}
             className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col"
@@ -33,7 +63,8 @@ export default function Showcase({ items }) {
                 <img
                   src={item.screenshot}
                   alt={item.title}
-                  className="w-full h-full object-cover object-top"
+                  className="w-full h-full object-cover object-top cursor-pointer hover:opacity-90 transition-opacity"
+                  onClick={() => setLightbox(item)}
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-slate-300 text-sm">
@@ -85,6 +116,17 @@ export default function Showcase({ items }) {
                     Try it
                   </a>
                 )}
+                {item.source && (
+                  <a
+                    href={item.source}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-xs font-bold text-slate-500 hover:text-slate-700 transition-colors"
+                  >
+                    <BookOpen size={12} />
+                    About
+                  </a>
+                )}
                 {item.github && (
                   <a
                     href={item.github}
@@ -103,6 +145,31 @@ export default function Showcase({ items }) {
           </div>
         ))}
       </div>
+
+      {/* Lightbox */}
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 cursor-pointer"
+          onClick={() => setLightbox(null)}
+        >
+          <button
+            onClick={() => setLightbox(null)}
+            className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors"
+          >
+            <X size={28} />
+          </button>
+          <div className="max-w-4xl w-full" onClick={(e) => e.stopPropagation()}>
+            <img
+              src={lightbox.screenshot}
+              alt={lightbox.title}
+              className="w-full rounded-lg shadow-2xl"
+            />
+            <p className="text-white text-center mt-3 font-semibold text-sm">
+              {lightbox.title}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

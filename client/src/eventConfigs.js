@@ -82,20 +82,22 @@ export const EVENT_CONFIGS = {
         title: 'TokenExplorer',
         description:
           'Students manipulate temperature settings and watch probability distributions shift in real time, making the statistical nature of LLMs visible.',
-        url: 'https://llm-token-explorer.onrender.com',
-        github: 'https://github.com/rlfordon/llm-explorer',
+        url: 'https://token-explorer-rlfordon.replit.app/',
+        github: 'https://github.com/rlfordon/TokenExplorer',
         screenshot: '/showcase/token-explorer.png',
         week: 'Week 2',
+        category: 'teaching',
         tags: ['LLMs', 'interactive demo'],
       },
       {
         title: 'Prompt Coach',
         description:
           'Split-panel app where students draft prompts on the left and receive real-time AI coaching on technique, confidentiality, and professional judgment on the right.',
-        url: 'https://prompt-coach.onrender.com',
+        url: 'https://prompt-coach-21cl.replit.app/',
         github: 'https://github.com/rlfordon/prompt-coach',
         screenshot: '/showcase/prompt-coach.png',
         week: 'Week 5',
+        category: 'teaching',
         tags: ['prompting', 'AI coaching'],
       },
       {
@@ -105,33 +107,37 @@ export const EVENT_CONFIGS = {
         url: 'https://www.qnamarkup.org/i/?source=https://raw.githubusercontent.com/rlfordon/vibe-coding-workshop/main/scratch/qna-markup-screener.txt',
         screenshot: '/showcase/qna-markup.png',
         week: 'Week 6',
+        category: 'teaching',
         tags: ['decision trees', 'legal aid'],
       },
       {
         title: 'Decision Tree to QnA Markup Gem',
         description:
           'A Gemini Gem that bridges domain knowledge and technical implementation — students describe their logic and it generates QnA Markup.',
-        url: 'https://gemini.google.com',
+        url: 'https://gemini.google.com/gem/1_GIi-Fpe8LCCNVsTSvUPQ2Dvv3LV0osX?usp=sharing',
         screenshot: '/showcase/qna-gem.png',
         week: 'Week 6',
+        category: 'teaching',
         tags: ['Gemini Gems', 'automation'],
       },
       {
         title: 'Ohio Unpaid Wages Screener',
         description:
           'The same decision tree vibe-coded into a React app in under 3 minutes. Used as a cliffhanger to introduce vibe coding and spark discussion.',
-        url: 'https://ohio-wage-screener.onrender.com',
+        url: 'https://gemini.google.com/share/47c8616ea640',
         screenshot: '/showcase/wage-screener.png',
         week: 'Week 6',
+        category: 'teaching',
         tags: ['vibe coding', 'React'],
       },
       {
         title: 'Citation Extractor Gem',
         description:
           'A Gemini Gem that extracts all case citations from an uploaded brief into a structured table, ready for verification on Westlaw and Lexis.',
-        url: 'https://gemini.google.com',
+        url: 'https://gemini.google.com/gem/1BYDV9gF0DbH0rQF9L2FqnCgOU0ju9oOT',
         screenshot: '/showcase/citation-extractor.png',
         week: 'Week 7',
+        category: 'teaching',
         tags: ['citations', 'Gemini Gems'],
       },
       {
@@ -142,6 +148,7 @@ export const EVENT_CONFIGS = {
         github: 'https://github.com/rlfordon/hallucination-game',
         screenshot: '/showcase/hallucination-game.png',
         week: 'Week 7',
+        category: 'teaching',
         tags: ['hallucinations', 'team exercise'],
       },
       {
@@ -152,7 +159,115 @@ export const EVENT_CONFIGS = {
         github: 'https://github.com/rlfordon/doc-tech-gallery',
         screenshot: '/showcase/doc-tech-gallery.png',
         week: 'Week 8',
+        category: 'teaching',
         tags: ['document tech', 'interactive demos'],
+      },
+      {
+        title: 'Docket Q&A',
+        description:
+          'AI-powered tool for querying bankruptcy case documents from the RECAP Archive. Ask questions about a case and get answers grounded in the actual filings.',
+        url: 'https://bankruptcy-docket-qanda.onrender.com',
+        github: 'https://github.com/rlfordon/docket-qna',
+        screenshot: '/showcase/docket-qna.png',
+        category: 'research',
+        tags: ['research', 'AI', 'bankruptcy'],
+      },
+      {
+        title: 'Citation Verifier',
+        description:
+          'Verify legal citations at scale — check whether case citations in a brief are real and accurately cited.',
+        url: 'https://verify-and-retrieve.replit.app/',
+        github: 'https://github.com/rlfordon/citation-verifier',
+        screenshot: '/showcase/citation-verifier.png',
+        category: 'research',
+        tags: ['research', 'citations'],
+      },
+      {
+        title: 'AI-Powered Lawyering Heatmap',
+        description:
+          'Interactive visualization comparing how reasoning models and RAG perform against human-only legal work across specialized tasks.',
+        url: 'https://gemini.google.com/share/22471ef31949',
+        screenshot: '/showcase/ai-lawyering-heatmap.png',
+        category: 'research',
+        tags: ['research', 'visualization'],
+      },
+      {
+        title: 'ReadCloser',
+        description:
+          'Collaborative close-reading and annotation tool by Leon Furze. Teachers share a passage, students highlight and annotate, everything lives in the URL — no accounts, no server.',
+        url: 'http://readcloser.com/',
+        screenshot: '/showcase/readcloser.png',
+        category: 'community',
+        tags: ['teaching', 'annotation', 'community'],
+      },
+      {
+        title: 'AI Policy Statement Generator',
+        description:
+          'Interactive tool for creating AI use policies for courses — choose between entire course or specific assignment, set permission levels, and generate a ready-to-use policy. Created by Ed Beck and Tera Doty-Blance (CC BY 4.0).',
+        url: 'https://ai.sunycreate.cloud/ai-policy-generator/',
+        github: 'https://github.com/beckej13820/edu-apps',
+        screenshot: '/showcase/ai-policy-generator.png',
+        category: 'community',
+        tags: ['teaching', 'AI policy', 'community'],
+      },
+      {
+        title: 'Due Process: Screening vs. Diagnostic Tests',
+        description:
+          'Due process simulation by David Colarusso. Adjust parameters for a multi-stage legal system to see how test characteristics and the balance of costs shift across populations.',
+        url: 'https://screening-vs-diagnostic-tests-50382557550.us-west1.run.app/',
+        source: 'https://suffolklitlab.org/algos-bias-due-process-you/',
+        screenshot: '/showcase/screening-diagnostic.png',
+        category: 'community',
+        tags: ['due process', 'simulation', 'community'],
+      },
+      {
+        title: 'Bail Risk Simulator',
+        description:
+          'Interactive dashboard by David Colarusso exploring the false positive paradox — how accuracy metrics can mislead when predicting rare events, using bail decisions as context.',
+        url: 'https://bail-risk-simulator-50382557550.us-west1.run.app/',
+        source: 'https://suffolklitlab.org/algos-bias-due-process-you/',
+        screenshot: '/showcase/bail-risk.png',
+        category: 'community',
+        tags: ['criminal law', 'bias', 'community'],
+      },
+      {
+        title: 'Facial Recognition Bias Sim',
+        description:
+          'Interactive tool by David Colarusso examining disparate impact from machine bias in facial recognition. Adjust parameters to observe unequal outcomes across populations.',
+        url: 'https://facial-recognition-bias-sim-50382557550.us-west1.run.app/',
+        source: 'https://suffolklitlab.org/algos-bias-due-process-you/',
+        screenshot: '/showcase/facial-recognition.png',
+        category: 'community',
+        tags: ['civil rights', 'bias', 'community'],
+      },
+      {
+        title: 'Universal History Simulator',
+        description:
+          'By historian Benjamin Breen (UC Santa Cruz). Drops students into different historical eras with pixel art and LLM-generated narratives grounded in primary sources.',
+        url: 'https://historysimulator.vercel.app/',
+        github: 'https://github.com/benjaminbreen/UHS',
+        screenshot: '/showcase/history-simulator.png',
+        category: 'community',
+        tags: ['history', 'simulation', 'community'],
+      },
+      {
+        title: 'Literary Canon Explorer',
+        description:
+          'By Benjamin Breen. Visualizes how literary reputation shifts over time by contrasting Victorian author mentions on Google Books vs. Wikipedia page views.',
+        url: 'https://historical-canon-explorer.vercel.app',
+        screenshot: '/showcase/literary-canon.png',
+        category: 'community',
+        tags: ['research', 'visualization', 'community'],
+      },
+      {
+        title: 'Premodern Concordance',
+        description:
+          'By Benjamin Breen & Mackenzie Cooley. Cross-linguistic analysis of premodern medical and scientific texts, tracking concepts across Portuguese, Spanish, Italian, French, and English sources.',
+        url: 'https://premodern-concordance.vercel.app',
+        github: 'https://github.com/benjaminbreen/premodern-concordance',
+        screenshot: '/showcase/premodern-concordance.png',
+        category: 'community',
+        tags: ['research', 'corpus analysis', 'community'],
       },
     ],
     resources: [
@@ -172,13 +287,33 @@ export const EVENT_CONFIGS = {
       },
       {
         title: "Barbora Obracajova's Legal Tech Gallery",
-        source: 'LinkedIn',
-        url: 'https://www.linkedin.com/in/barbora-obracajova/',
+        source: 'Lovable',
+        url: 'https://legaltechgallery.lovable.app/',
       },
       {
-        title: "David Colarusso's QnA Markup",
-        source: 'QnA Markup',
-        url: 'https://www.qnamarkup.org/',
+        title: "Barbora Obracajova on vibe-coding for legal education",
+        source: 'LinkedIn',
+        url: 'https://www.linkedin.com/posts/barboraobracajova_i-vibecoded-an-app-that-changed-how-i-explain-activity-7432409625544724480-9wvm',
+      },
+      {
+        title: "Automation Bias Exercise — Suffolk LIT Lab",
+        source: 'Suffolk LIT Lab',
+        url: 'https://suffolklitlab.org/algos-bias-due-process-you/#automation-bias',
+      },
+      {
+        title: 'Vibe Coding for Teachers: Create Educational Apps with the Help of AI',
+        source: 'Observatory / Tec de Monterrey',
+        url: 'https://observatory.tec.mx/edu-bits-2/vibe-coding-for-teachers-create-educational-apps-with-the-help-of-ai/',
+      },
+      {
+        title: 'What Is Happening to Writing?',
+        source: 'Res Obscura (Benjamin Breen)',
+        url: 'https://resobscura.substack.com/p/what-is-happening-to-writing',
+      },
+      {
+        title: 'Vibe Coding Ideas for Education',
+        source: 'Google Doc (community list)',
+        url: 'https://docs.google.com/document/d/1g_pSY33Gfm-DpxOvtnoLvsS0rlJj0vHkcZu2ndYuVTI/edit?tab=t.0',
       },
       {
         title: 'Secure Vibe Coding Guide',
