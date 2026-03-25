@@ -1,36 +1,51 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { EVENT_CONFIGS, DEFAULT_EVENT } from './eventConfigs';
 import Home from './Home';
 import Slides from './Slides';
 import PromptWizard from './PromptWizard';
 import Preview from './Preview';
 import Gallery from './Gallery';
+import Showcase from './Showcase';
 import Resources from './Resources';
 import Deploy from './Deploy';
 import Admin from './Admin';
 
-const TABS = [
-  { id: 'home', label: 'Home' },
-  { id: 'slides', label: 'Slides' },
-  { id: 'build', label: 'Build' },
-  { id: 'preview', label: 'Preview' },
-  { id: 'gallery', label: 'Gallery' },
-  { id: 'deploy', label: 'Deploy' },
-  { id: 'resources', label: 'Resources' },
-];
+function parseHash() {
+  const raw = window.location.hash.replace('#', '') || '';
+  if (raw === 'admin') return { mode: 'admin', eventId: null };
+  const eventId = EVENT_CONFIGS[raw] ? raw : DEFAULT_EVENT;
+  return { mode: 'event', eventId };
+}
 
 export default function App() {
-  // Check if URL hash is #admin (hidden route, not in nav)
-  const [isAdmin] = useState(() => window.location.hash === '#admin');
-  const [activeTab, setActiveTab] = useState('home');
-  const isSlides = activeTab === 'slides';
+  const [{ mode, eventId }, setRoute] = useState(parseHash);
+  const [activeTab, setActiveTab] = useState(() => {
+    const { mode: m, eventId: eid } = parseHash();
+    return m === 'admin' ? null : EVENT_CONFIGS[eid]?.defaultTab || 'home';
+  });
 
-  if (isAdmin) {
+  useEffect(() => {
+    function onHashChange() {
+      const next = parseHash();
+      setRoute(next);
+      if (next.mode === 'event') {
+        setActiveTab(EVENT_CONFIGS[next.eventId]?.defaultTab || 'home');
+      }
+    }
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
+  if (mode === 'admin') {
     return (
       <div className="min-h-screen overflow-x-hidden bg-slate-50 font-[Source_Sans_Pro,sans-serif] text-slate-900">
         <Admin />
       </div>
     );
   }
+
+  const eventConfig = EVENT_CONFIGS[eventId] || EVENT_CONFIGS[DEFAULT_EVENT];
+  const isSlides = activeTab === 'slides';
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-slate-50 font-[Source_Sans_Pro,sans-serif] text-slate-900">
@@ -51,7 +66,7 @@ export default function App() {
                   Vibe Coding
                 </span>
                 <span className="text-slate-400 font-semibold text-[10px] uppercase tracking-[0.2em] leading-none">
-                  Workshop
+                  {eventConfig.subtitle}
                 </span>
               </div>
             </div>
@@ -59,7 +74,7 @@ export default function App() {
 
           {/* Tabs — horizontally scrollable on mobile */}
           <div className="flex gap-1 overflow-x-auto scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
-            {TABS.map((tab) => (
+            {eventConfig.tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
@@ -80,12 +95,13 @@ export default function App() {
 
       {/* Content */}
       <main>
-        {activeTab === 'home' && <Home onNavigate={setActiveTab} />}
-        {activeTab === 'slides' && <Slides />}
+        {activeTab === 'home' && <Home config={eventConfig} onNavigate={setActiveTab} />}
+        {activeTab === 'slides' && <Slides slidesUrl={eventConfig.slidesUrl} />}
         {activeTab === 'build' && <PromptWizard />}
         {activeTab === 'preview' && <Preview />}
-        {activeTab === 'gallery' && <Gallery />}
-        {activeTab === 'resources' && <Resources />}
+        {activeTab === 'gallery' && <Gallery eventId={eventConfig.id} />}
+        {activeTab === 'showcase' && <Showcase items={eventConfig.showcase} />}
+        {activeTab === 'resources' && <Resources items={eventConfig.resources} />}
         {activeTab === 'deploy' && <Deploy />}
       </main>
 
@@ -94,8 +110,8 @@ export default function App() {
         <footer className="border-t border-slate-200 bg-white mt-12 py-6">
           <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-slate-400">
             <span>
-              MIT Licensed &middot; Built for the{' '}
-              <span className="text-[#BA0C2F] font-semibold">Vibe Coding Workshop</span>
+              MIT Licensed &middot; Built for{' '}
+              <span className="text-[#BA0C2F] font-semibold">{eventConfig.title}</span>
             </span>
             <a
               href="https://github.com/rlfordon/vibe-coding-workshop-ud"

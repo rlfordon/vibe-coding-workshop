@@ -1,27 +1,19 @@
-export default function Home({ onNavigate }) {
-  const steps = [
-    { tab: 'slides', label: 'Slides', desc: 'Follow along with the workshop presentation' },
-    { tab: 'build', label: 'Build', desc: 'Use the prompt wizard to generate your project with AI' },
-    { tab: 'preview', label: 'Preview', desc: 'Paste your code to see it rendered live' },
-    { tab: 'gallery', label: 'Gallery', desc: 'Submit your project, browse others, and vote for favorites' },
-    { tab: 'deploy', label: 'Deploy', desc: 'Learn how to publish your project to the web' },
-    { tab: 'resources', label: 'Resources', desc: 'Curated links to keep learning after the workshop' },
-  ];
+export default function Home({ config, onNavigate }) {
+  const { home } = config;
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-16">
       <div className="text-center mb-12">
         <h1 className="font-[BioRhyme,serif] text-4xl sm:text-5xl font-extrabold text-[#BA0C2F] mb-3">
-          Vibe Coding Workshop
+          {home.title}
         </h1>
         <p className="text-lg text-slate-600 max-w-xl mx-auto">
-          Build a real web project using AI — no coding experience required.
-          Follow the steps below to go from idea to published site in one session.
+          {home.description}
         </p>
       </div>
 
       <ol className="space-y-4">
-        {steps.map((step, i) => (
+        {home.steps.map((step, i) => (
           <li key={step.tab}>
             <button
               onClick={() => onNavigate(step.tab)}

@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vibe Coding for Law Faculty</title>
+<link href="https://fonts.googleapis.com/css2?family=BioRhyme:wght@400;700;800&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --osu-scarlet: #BA0C2F;
+    --osu-gray: #666666;
+    --osu-dark: #1a1a1a;
+    --osu-light: #f5f4f0;
+    --osu-white: #ffffff;
+    --slide-width: 960px;
+    --slide-height: 540px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #2a2a2a;
+    font-family: 'Source Sans Pro', sans-serif;
+    color: var(--osu-dark);
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slide-container {
+    width: var(--slide-width);
+    height: var(--slide-height);
+    position: relative;
+    background: var(--osu-white);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    transform-origin: center center;
+  }
+
+  .slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    padding: 50px 60px 60px;
+    overflow: hidden;
+  }
+
+  .slide.active { display: flex; }
+
+  .slide::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--osu-scarlet);
+  }
+
+  .slide-number {
+    position: absolute;
+    bottom: 12px;
+    right: 20px;
+    font-size: 12px;
+    color: var(--osu-gray);
+  }
+
+  .osu-footer {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    font-size: 11px;
+    color: var(--osu-gray);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: 'BioRhyme', serif;
+    color: var(--osu-scarlet);
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-family: 'BioRhyme', serif;
+    color: var(--osu-scarlet);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    font-family: 'BioRhyme', serif;
+    color: var(--osu-dark);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  p, li {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #333;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul li {
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 10px;
+  }
+
+  ul li::before {
+    content: '\2022';
+    color: var(--osu-scarlet);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+  }
+
+  .subtitle {
+    font-size: 20px;
+    color: var(--osu-gray);
+    margin-bottom: 10px;
+  }
+
+  .flex-col {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .two-col {
+    display: flex;
+    gap: 40px;
+    flex: 1;
+  }
+
+  .two-col > div { flex: 1; }
+
+  .title-slide {
+    background: var(--osu-scarlet);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .title-slide h1 {
+    color: var(--osu-white);
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+
+  .title-slide .subtitle {
+    color: rgba(255,255,255,0.85);
+    font-size: 22px;
+  }
+
+  .title-slide::after { background: rgba(255,255,255,0.3); }
+  .title-slide .osu-footer,
+  .title-slide .slide-number { color: rgba(255,255,255,0.6); }
+
+  .section-slide {
+    background: var(--osu-scarlet);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .section-slide h1 {
+    color: var(--osu-white);
+    font-size: 42px;
+  }
+
+  .section-slide p {
+    color: rgba(255,255,255,0.8);
+    font-size: 20px;
+    margin-top: 8px;
+  }
+
+  .section-slide::after { background: rgba(255,255,255,0.3); }
+  .section-slide .osu-footer,
+  .section-slide .slide-number { color: rgba(255,255,255,0.6); }
+
+  .callout {
+    background: #fef3f4;
+    border-left: 4px solid var(--osu-scarlet);
+    padding: 16px 20px;
+    margin: 14px 0;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .callout p {
+    font-size: 17px;
+    font-style: italic;
+    color: #444;
+  }
+
+  .callout strong { color: var(--osu-scarlet); }
+
+  .can-do, .cant-do {
+    padding: 16px 20px;
+    border-radius: 8px;
+    flex: 1;
+  }
+
+  .can-do {
+    background: #eef7ee;
+    border: 2px solid #4a9e4a;
+  }
+
+  .can-do h3 { color: #2d7a2d; }
+  .can-do li::before { color: #2d7a2d; }
+
+  .cant-do {
+    background: #fef3f4;
+    border: 2px solid var(--osu-scarlet);
+  }
+
+  .cant-do h3 { color: var(--osu-scarlet); }
+
+  .index-card {
+    background: #fffde6;
+    border: 2px solid #d4c84a;
+    padding: 18px 24px;
+    border-radius: 4px;
+    margin-top: 14px;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.06);
+    transform: rotate(-0.5deg);
+  }
+
+  .index-card p {
+    font-size: 18px;
+    font-weight: 600;
+    color: #555;
+  }
+
+  .index-card strong { color: var(--osu-scarlet); }
+
+  .small { font-size: 14px; color: var(--osu-gray); }
+
+  .tool-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .tool-item {
+    background: var(--osu-light);
+    border-radius: 6px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .tool-item .tool-week {
+    font-family: 'BioRhyme', serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--osu-scarlet);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .tool-item .tool-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--osu-dark);
+  }
+
+  .key-insight {
+    background: #fef3f4;
+    border-left: 4px solid var(--osu-scarlet);
+    padding: 12px 16px;
+    margin-top: 14px;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .key-insight p {
+    font-size: 16px;
+    font-style: italic;
+    color: #444;
+  }
+
+  .key-insight strong { color: var(--osu-scarlet); }
+
+  .nav-bar {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    user-select: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .slide-container:hover .nav-bar,
+  .nav-bar:focus-within {
+    opacity: 1;
+  }
+
+  .nav-btn {
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(4px);
+    border: none;
+    color: rgba(255,255,255,0.85);
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'Source Sans Pro', sans-serif;
+    transition: all 0.15s;
+  }
+
+  .nav-btn:hover {
+    background: rgba(0,0,0,0.65);
+    color: #fff;
+  }
+
+  #slideCount {
+    font-size: 11px;
+    color: rgba(0,0,0,0.45);
+    font-weight: 600;
+    min-width: 40px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-container" id="deck">
+
+  <!-- SLIDE 1: Title -->
+  <div class="slide title-slide active">
+    <h1>Vibe Coding<br>for Law Faculty</h1>
+    <p class="subtitle">AI-assisted development is changing what you can build for your classroom.</p>
+    <span class="osu-footer">MORITZ COLLEGE OF LAW</span>
+    <span class="slide-number">1</span>
+  </div>
+
+  <!-- SLIDE 2: What is vibe coding? -->
+  <div class="slide flex-col">
+    <h1>What is vibe coding?</h1>
+    <p style="margin-bottom: 16px;">A way for non-technical users to create software or apps by <strong>describing what they want in natural language</strong>, while AI takes care of generating the code behind the scenes.</p>
+    <div class="callout">
+      <p>"There's a new kind of coding I call 'vibe coding', where you fully give in to the vibes, embrace exponentials, and forget the code even exists."</p>
+      <p class="small" style="margin-top: 6px; font-style: normal;">— Andrej Karpathy, Feb 2025</p>
+    </div>
+    <p style="margin-top: 14px;">You talk to AI. AI writes code. You get a working tool.</p>
+    <span class="osu-footer">MORITZ COLLEGE OF LAW</span>
+    <span class="slide-number">2</span>
+  </div>
+
+  <!-- SLIDE 3: Why this matters for your teaching -->
+  <div class="slide flex-col">
+    <h1>Why this matters for your teaching</h1>
+    <ul style="margin-top: 8px;">
+      <li>The jump from "I can automate this for myself" to "I can build this for my students" is huge</li>
+      <li>AI-assisted development collapsed the gap between "that's a great idea" and "I'm using it in class tomorrow"</li>
+      <li>Vibe-coding replaced the paper handout — when the subject is technology, the medium should be too</li>
+      <li>The people who understand the problem best should be the ones building the solution</li>
+    </ul>
+    <span class="osu-footer">MORITZ COLLEGE OF LAW</span>
+    <span class="slide-number">3</span>
+  </div>
+
+  <!-- SLIDE 4: What I built this semester -->
+  <div class="slide flex-col">
+    <h1>What I built this semester</h1>
+    <p style="margin-bottom: 6px;">Eight interactive teaching tools for 21st Century Lawyering, built with AI assistance. Each one started with a pedagogical problem I couldn't solve with slides alone.</p>
+    <div class="tool-grid">
+      <div class="tool-item">
+        <span class="tool-week">Week 2</span>
+        <span class="tool-name">TokenExplorer</span>
+      </div>
+      <div class="tool-item">
+        <span class="tool-week">Week 5</span>
+        <span class="tool-name">Prompt Coach</span>
+      </div>
+      <div class="tool-item">
+        <span class="tool-week">Week 6</span>
+        <span class="tool-name">QnA Markup Screener</span>
+      </div>
+      <div class="tool-item">
+        <span class="tool-week">Week 6</span>
+        <span class="tool-name">QnA→Markup Gem</span>
+      </div>
+      <div class="tool-item">
+        <span class="tool-week">Week 6</span>
+        <span class="tool-name">Wage Screener</span>
+      </div>
+      <div class="tool-item">
+        <span class="tool-week">Week 7</span>
+        <span class="tool-name">Citation Extractor</span>
+      </div>
+      <div class="tool-item">
+        <span class="tool-week">Week 7</span>
+        <span class="tool-name">Hallucination Game</span>
+      </div>
+      <div class="tool-item">
+        <span class="tool-week">Week 8</span>
+        <span class="tool-name">Doc Tech Gallery</span>
+      </div>
+    </div>
+    <p class="small" style="margin-top: 10px;">Visit the Showcase tab for live links and details</p>
+    <span class="osu-footer">MORITZ COLLEGE OF LAW</span>
+    <span class="slide-number">4</span>
+  </div>
+
+  <!-- SLIDE 5: TokenExplorer -->
+  <div class="slide flex-col">
+    <h1>TokenExplorer</h1>
+    <p style="margin-bottom: 16px;">Students manipulate temperature settings and watch probability distributions shift in real time.</p>
+    <div class="key-insight">
+      <p><strong>Key insight:</strong> Once students see that LLMs are statistical prediction engines generating likely text, not true text, everything else clicks.</p>
+    </div>
+    <span class="osu-footer">MORITZ COLLEGE OF LAW</span>
+    <span class="slide-number">5</span>
+  </div>
+
+  <!-- SLIDE 6: Citation Hallucination Game -->
+  <div class="slide flex-col">
+    <h1>Citation Hallucination Game</h1>
+    <p style="margin-bottom: 16px;">Competitive team exercise: students create hallucinated citations, then try to catch another team's fakes under time pressure.</p>
+    <div class="key-insight">
+      <p><strong>Key insight:</strong> The lesson isn't "can you catch every error" but "given limited time, which errors do you prioritize?"</p>
+    </div>
+    <span class="osu-footer">MORITZ COLLEGE OF LAW</span>
+    <span class="slide-number">6</span>
+  </div>
+
+  <!-- SLIDE 7: Document Tech Gallery -->
+  <div class="slide flex-col">
+    <h1>Document Tech Gallery</h1>
+    <p style="margin-bottom: 16px;">Seven quick interactive demos (~60 seconds each). Students touch each technology rather than just hear about it.</p>
+    <div class="key-insight">
+      <p><strong>Key insight:</strong> It surfaces the "I didn't know that existed" moments.</p>
+    </div>
+    <p class="small" style="margin-top: 14px;">Inspired by Barbora Obracajova's Legal Tech Gallery</p>
+    <span class="osu-footer">MORITZ COLLEGE OF LAW</span>
+    <span class="slide-number">7</span>
+  </div>
+
+  <!-- SLIDE 8: What vibe-coded apps can & can't do -->
+  <div class="slide flex-col">
+    <h1>What vibe-coded apps can &amp; can't do</h1>
+    <div class="two-col" style="margin-top: 8px;">
+      <div class="can-do">
+        <h3>&#10003; Your app CAN</h3>
+        <ul>
+          <li>Follow a decision tree (if/then logic)</li>
+          <li>Calculate deadlines, fees, or scores</li>
+          <li>Look things up in data you provide</li>
+          <li>Display information based on user choices</li>
+          <li>Enforce rules and flag errors</li>
+        </ul>
+      </div>
+      <div class="cant-do">
+        <h3>&#10007; Your app CANNOT</h3>
+        <ul>
+          <li>Read and interpret a document</li>
+          <li>Summarize or paraphrase text</li>
+          <li>Answer open-ended questions</li>
+          <li>Make judgment calls</li>
+          <li>Do anything requiring "understanding"</li>
+        </ul>
+      </div>
+    </div>
+    <div class="index-card">
+      <p><strong>The index card test:</strong> If you could write every possible answer on index cards ahead of time (even with help from AI!), your app can handle it. If you'd need a smart person to figure out the answer after you've handed them over — it can't.</p>
+    </div>
+    <span class="osu-footer">MORITZ COLLEGE OF LAW</span>
+    <span class="slide-number">8</span>
+  </div>
+
+  <!-- SLIDE 9: Security & ethics -->
+  <div class="slide flex-col">
+    <h1>Security &amp; ethics</h1>
+    <ul style="margin-top: 12px;">
+      <li><strong>Do not enter client data</strong> into vibe-coded apps — these tools are not vetted for confidentiality</li>
+      <li><strong>Secure deployment</strong> may require IT help or technical know-how</li>
+      <li><strong>Ethical duties still apply</strong> — no legal advice, maintain confidentiality, no misleading advertising</li>
+      <li>Treat vibe-coded tools as <strong>internal aids</strong>, not client-facing products (at least for now)</li>
+      <li><strong>Faculty should vet tools before classroom use</strong> — AI-generated code may contain bugs or security issues</li>
+    </ul>
+    <span class="osu-footer">MORITZ COLLEGE OF LAW</span>
+    <span class="slide-number">9</span>
+  </div>
+
+  <!-- SLIDE 10: How to get started -->
+  <div class="slide flex-col">
+    <h1>How to get started</h1>
+    <ul style="margin-top: 8px;">
+      <li>Pick the smallest version of your idea</li>
+      <li>Open Gemini Canvas (free with your university Google account)</li>
+      <li>Describe what you want in plain language</li>
+      <li>Iterate — the first version is just the start</li>
+      <li>Share what you build with colleagues</li>
+    </ul>
+    <div class="callout" style="margin-top: 16px;">
+      <p><strong>You don't need to be a coder.</strong> You need to describe what you want clearly enough for AI to build it.</p>
+    </div>
+    <span class="osu-footer">MORITZ COLLEGE OF LAW</span>
+    <span class="slide-number">10</span>
+  </div>
+
+  <!-- SLIDE 11: Free tools to keep building -->
+  <div class="slide flex-col">
+    <h1>Free tools to keep building</h1>
+    <p style="margin-bottom: 12px;">You don't need to stop after today. All of these are free or have trials:</p>
+    <ul>
+      <li><strong>Google AI Studio</strong> — free with a personal Google account</li>
+      <li><strong>Cursor</strong> — free for students for a year</li>
+      <li><strong>Claude Code</strong> — Anthropic's coding CLI</li>
+      <li><strong>Replit</strong> — browser-based IDE with AI assistant</li>
+      <li><strong>v0 by Vercel</strong> — describe a UI, get working code</li>
+      <li><strong>Lovable</strong> — full-stack app builder</li>
+      <li><strong>Bolt.new</strong> — build and deploy in the browser</li>
+    </ul>
+    <span class="osu-footer">MORITZ COLLEGE OF LAW</span>
+    <span class="slide-number">11</span>
+  </div>
+
+  <!-- SLIDE 12: Thank you -->
+  <div class="slide flex-col" style="justify-content: center;">
+    <h1>Thank you</h1>
+    <p style="font-size: 20px; line-height: 1.6; margin-bottom: 20px;">Rebecca Fordon<br>Assistant Director of Innovation, Research &amp; Instruction<br><span style="color: var(--osu-gray);">The Ohio State University Moritz College of Law</span></p>
+    <div style="display: flex; flex-direction: column; gap: 10px; font-size: 17px;">
+      <a href="mailto:fordon.4@osu.edu" style="color: var(--osu-scarlet); text-decoration: none; font-weight: 600;">fordon.4@osu.edu</a>
+      <a href="https://www.linkedin.com/in/rebeccafordon/" target="_blank" style="color: #333; text-decoration: none;">LinkedIn <span style="color: var(--osu-gray);">&rarr; linkedin.com/in/rebeccafordon</span></a>
+      <a href="https://www.ailawlibrarians.com" target="_blank" style="color: #333; text-decoration: none;">Blog <span style="color: var(--osu-gray);">&rarr; ailawlibrarians.com</span></a>
+    </div>
+    <span class="osu-footer">MORITZ COLLEGE OF LAW</span>
+    <span class="slide-number">12</span>
+  </div>
+
+  <!-- Navigation (overlay, top-right, visible on hover) -->
+  <div class="nav-bar">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">&larr;</button>
+    <span id="slideCount">1 / 12</span>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)">&rarr;</button>
+  </div>
+
+</div>
+
+<script>
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+
+  function showSlide(n) {
+    slides.forEach(s => s.classList.remove('active'));
+    slides[n].classList.add('active');
+    document.getElementById('slideCount').textContent = `${n + 1} / ${total}`;
+  }
+
+  function navigate(dir) {
+    current = Math.max(0, Math.min(total - 1, current + dir));
+    showSlide(current);
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); navigate(1); }
+    if (e.key === 'ArrowLeft') { navigate(-1); }
+  });
+
+  showSlide(0);
+
+  // Scale the deck to fill viewport when embedded in fullscreen iframe
+  const deck = document.getElementById('deck');
+  const BASE_W = 960;
+  const BASE_H = 540;
+
+  function rescale() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    if (vw > BASE_W + 10 || vh > BASE_H + 30) {
+      const scale = Math.min(vw / BASE_W, vh / BASE_H);
+      deck.style.transform = `scale(${scale})`;
+      deck.style.boxShadow = 'none';
+    } else {
+      deck.style.transform = '';
+      deck.style.boxShadow = '';
+    }
+  }
+
+  window.addEventListener('resize', rescale);
+  rescale();
+</script>
+
+</body>
+</html>
