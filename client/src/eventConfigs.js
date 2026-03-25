@@ -64,6 +64,7 @@ export const EVENT_CONFIGS = {
       { id: 'home', label: 'Home' },
       { id: 'slides', label: 'Slides' },
       { id: 'showcase', label: 'Showcase' },
+      { id: 'deploy', label: 'Deploy' },
       { id: 'resources', label: 'Resources' },
     ],
     defaultTab: 'home',
@@ -73,7 +74,8 @@ export const EVENT_CONFIGS = {
         'How AI-assisted development is changing what law professors can build for their classrooms — and why the people who understand the problem best should be the ones building the solution.',
       steps: [
         { tab: 'slides', label: 'Slides', desc: 'Presentation on vibe coding in legal education' },
-        { tab: 'showcase', label: 'Showcase', desc: 'Eight teaching tools built with AI in one semester' },
+        { tab: 'showcase', label: 'Showcase', desc: 'Tools built with AI for teaching, research, and the classroom' },
+        { tab: 'deploy', label: 'Deploy', desc: 'How to publish simple one-file apps from Gemini Canvas' },
         { tab: 'resources', label: 'Resources', desc: 'Articles, tools, and inspiration to get started' },
       ],
     },
@@ -239,6 +241,15 @@ export const EVENT_CONFIGS = {
         screenshot: '/showcase/facial-recognition.png',
         category: 'community',
         tags: ['civil rights', 'bias', 'community'],
+      },
+      {
+        title: '4th Amendment Search & Seizure Analysis',
+        description:
+          'Interactive decision tree walking through the gates of Fourth Amendment analysis — applicability, reasonable expectation of privacy, and warrant requirements — with case law at each step.',
+        url: 'https://gemini.google.com/share/c7ba3b487abf',
+        screenshot: '/showcase/4th-amendment.png',
+        category: 'teaching',
+        tags: ['constitutional law', 'decision trees'],
       },
       {
         title: 'Universal History Simulator',
