@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vibe Coding for the Legal Profession</title>
+<link href="https://fonts.googleapis.com/css2?family=BioRhyme:wght@400;700;800&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --osu-scarlet: #BA0C2F;
+    --osu-gray: #666666;
+    --osu-dark: #1a1a1a;
+    --osu-light: #f5f4f0;
+    --osu-white: #ffffff;
+    --slide-width: 960px;
+    --slide-height: 540px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #2a2a2a;
+    font-family: 'Source Sans Pro', sans-serif;
+    color: var(--osu-dark);
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slide-container {
+    width: var(--slide-width);
+    height: var(--slide-height);
+    position: relative;
+    background: var(--osu-white);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    transform-origin: center center;
+  }
+
+  .slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    padding: 50px 60px 60px;
+    overflow: hidden;
+  }
+
+  .slide.active { display: flex; }
+
+  .slide::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--osu-scarlet);
+  }
+
+  .slide-number {
+    position: absolute;
+    bottom: 12px;
+    right: 20px;
+    font-size: 12px;
+    color: var(--osu-gray);
+  }
+
+  .osu-footer {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    font-size: 11px;
+    color: var(--osu-gray);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: 'BioRhyme', serif;
+    color: var(--osu-scarlet);
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-family: 'BioRhyme', serif;
+    color: var(--osu-scarlet);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    font-family: 'BioRhyme', serif;
+    color: var(--osu-dark);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  p, li {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #333;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul li {
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 10px;
+  }
+
+  ul li::before {
+    content: '\2022';
+    color: var(--osu-scarlet);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+  }
+
+  .subtitle {
+    font-size: 20px;
+    color: var(--osu-gray);
+    margin-bottom: 10px;
+  }
+
+  .flex-col {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .two-col {
+    display: flex;
+    gap: 40px;
+    flex: 1;
+  }
+
+  .two-col > div { flex: 1; }
+
+  .three-col {
+    display: flex;
+    gap: 24px;
+    flex: 1;
+  }
+
+  .three-col > div { flex: 1; }
+
+  .title-slide {
+    background: var(--osu-scarlet);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .title-slide h1 {
+    color: var(--osu-white);
+    font-size: 44px;
+    margin-bottom: 12px;
+  }
+
+  .title-slide .subtitle {
+    color: rgba(255,255,255,0.85);
+    font-size: 22px;
+  }
+
+  .title-slide .event-info {
+    color: rgba(255,255,255,0.65);
+    font-size: 16px;
+    margin-top: 20px;
+    line-height: 1.5;
+  }
+
+  .title-slide::after { background: rgba(255,255,255,0.3); }
+  .title-slide .osu-footer,
+  .title-slide .slide-number { color: rgba(255,255,255,0.6); }
+
+  .section-slide {
+    background: var(--osu-scarlet);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .section-slide h1 {
+    color: var(--osu-white);
+    font-size: 42px;
+  }
+
+  .section-slide p {
+    color: rgba(255,255,255,0.8);
+    font-size: 20px;
+    margin-top: 8px;
+  }
+
+  .section-slide::after { background: rgba(255,255,255,0.3); }
+  .section-slide .osu-footer,
+  .section-slide .slide-number { color: rgba(255,255,255,0.6); }
+
+  .callout {
+    background: #fef3f4;
+    border-left: 4px solid var(--osu-scarlet);
+    padding: 16px 20px;
+    margin: 14px 0;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .callout p {
+    font-size: 17px;
+    font-style: italic;
+    color: #444;
+  }
+
+  .callout strong { color: var(--osu-scarlet); }
+
+  .can-do, .cant-do {
+    padding: 16px 20px;
+    border-radius: 8px;
+    flex: 1;
+  }
+
+  .can-do {
+    background: #eef7ee;
+    border: 2px solid #4a9e4a;
+  }
+
+  .can-do h3 { color: #2d7a2d; }
+  .can-do li::before { color: #2d7a2d; }
+
+  .cant-do {
+    background: #fef3f4;
+    border: 2px solid var(--osu-scarlet);
+  }
+
+  .cant-do h3 { color: var(--osu-scarlet); }
+
+  .index-card {
+    background: #fffde6;
+    border: 2px solid #d4c84a;
+    padding: 18px 24px;
+    border-radius: 4px;
+    margin-top: 14px;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.06);
+    transform: rotate(-0.5deg);
+  }
+
+  .index-card p {
+    font-size: 18px;
+    font-weight: 600;
+    color: #555;
+  }
+
+  .index-card strong { color: var(--osu-scarlet); }
+
+  .small { font-size: 14px; color: var(--osu-gray); }
+
+  .step-num {
+    font-family: 'BioRhyme', serif;
+    font-size: 72px;
+    font-weight: 800;
+    color: rgba(186, 12, 47, 0.1);
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    line-height: 1;
+  }
+
+  .prompt-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .prompt-chip {
+    background: var(--osu-light);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 15px;
+    color: #333;
+    line-height: 1.35;
+  }
+
+  .prompt-chip .prompt-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--osu-scarlet);
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .timeline-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  .timeline-time {
+    width: 100px;
+    flex-shrink: 0;
+    font-family: 'BioRhyme', serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--osu-scarlet);
+    padding-top: 2px;
+  }
+
+  .timeline-desc {
+    flex: 1;
+    font-size: 17px;
+    color: #333;
+    border-left: 3px solid #eee;
+    padding-left: 16px;
+  }
+
+  .timeline-desc strong { color: var(--osu-dark); }
+
+  .key-insight {
+    background: #e8f0f8;
+    border-left: 4px solid #4a7ab5;
+    padding: 12px 16px;
+    margin-top: 12px;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .key-insight p {
+    font-size: 16px;
+    color: #2a5a8a;
+    font-style: italic;
+  }
+
+  .key-insight strong {
+    color: #2a5a8a;
+    font-style: normal;
+  }
+
+  .warning-callout {
+    background: #fff8e6;
+    border-left: 4px solid #d4a017;
+    padding: 12px 16px;
+    margin-top: 12px;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .warning-callout p {
+    font-size: 16px;
+    color: #7a5d00;
+    font-style: italic;
+  }
+
+  .warning-callout strong {
+    color: #7a5d00;
+    font-style: normal;
+  }
+
+  .nav-bar {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    user-select: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .slide-container:hover .nav-bar,
+  .nav-bar:focus-within {
+    opacity: 1;
+  }
+
+  .nav-btn {
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(4px);
+    border: none;
+    color: rgba(255,255,255,0.85);
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'Source Sans Pro', sans-serif;
+    transition: all 0.15s;
+  }
+
+  .nav-btn:hover {
+    background: rgba(0,0,0,0.65);
+    color: #fff;
+  }
+
+  #slideCount {
+    font-size: 11px;
+    color: rgba(0,0,0,0.45);
+    font-weight: 600;
+    min-width: 40px;
+    text-align: center;
+  }
+
+  .deploy-option {
+    background: var(--osu-light);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+  }
+
+  .deploy-option h3 {
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+
+  .deploy-option p {
+    font-size: 14px;
+    color: var(--osu-gray);
+    line-height: 1.4;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-container" id="deck">
+
+  <!-- SLIDE 1: Title -->
+  <div class="slide title-slide active">
+    <h1>Vibe Coding for the<br>Legal Profession</h1>
+    <p class="subtitle">Build a Custom Tool with AI in 60 Minutes</p>
+    <p class="event-info">Rebecca Fordon &middot; OSU Moritz College of Law<br>AI Legal Practice Summit &middot; Capital University &middot; April 18, 2026</p>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- SLIDE 2: Do Now -->
+  <div class="slide flex-col" style="justify-content: center;">
+    <h1 style="font-size: 28px; margin-bottom: 24px;">While you're waiting...</h1>
+    <div class="callout" style="margin: 0; padding: 24px 28px;">
+      <p style="font-size: 20px; font-style: normal; color: #1a1a1a; line-height: 1.6;"><strong style="color: var(--osu-scarlet);">What's a process in your practice you wish there was an app for?</strong><br>Something that's too manual, information that's hard to find, or a task you keep doing the same way for every client.</p>
+      <p style="font-size: 17px; margin-top: 14px; font-style: normal; color: #666;">Think about intake, case management, client communication, research, deadlines, billing &mdash; any friction point.</p>
+    </div>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- SLIDE 3: About me -->
+  <div class="slide flex-col" style="justify-content: center;">
+    <h1>Hi, I'm Rebecca</h1>
+    <p style="font-size: 20px; line-height: 1.6; margin-bottom: 20px;">Assistant Director of Innovation, Research &amp; Instruction<br><span style="color: var(--osu-gray);">The Ohio State University Moritz College of Law</span></p>
+    <div style="display: flex; flex-direction: column; gap: 10px; font-size: 17px;">
+      <a href="mailto:fordon.4@osu.edu" style="color: var(--osu-scarlet); text-decoration: none; font-weight: 600;">fordon.4@osu.edu</a>
+      <a href="https://www.linkedin.com/in/rebeccafordon/" target="_blank" style="color: #333; text-decoration: none;">LinkedIn <span style="color: var(--osu-gray);">&rarr; linkedin.com/in/rebeccafordon</span></a>
+      <a href="https://www.ailawlibrarians.com" target="_blank" style="color: #333; text-decoration: none;">Blog <span style="color: var(--osu-gray);">&rarr; ailawlibrarians.com</span></a>
+    </div>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- SLIDE 4: What is vibe coding? -->
+  <div class="slide flex-col">
+    <h1>What is vibe coding?</h1>
+    <p style="margin-bottom: 16px;">A way for non-technical people to create software by <strong>describing what they want in natural language</strong>, while AI generates the code behind the scenes.</p>
+    <div class="callout">
+      <p>"There's a new kind of coding I call 'vibe coding', where you fully give in to the vibes, embrace exponentials, and forget the code even exists."</p>
+      <p class="small" style="margin-top: 6px; font-style: normal;">&mdash; Andrej Karpathy, Feb 2025</p>
+    </div>
+    <p style="margin-top: 14px;">You describe what you need. AI writes the code. You get a working tool.</p>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- SLIDE 5: Why vibe code? -->
+  <div class="slide flex-col">
+    <h1>Why vibe code?</h1>
+    <ul style="margin-top: 8px;">
+      <li><strong>You're the domain expert.</strong> You know your practice, your clients, your workflows. That expertise is the hard part &mdash; the coding is now the easy part.</li>
+      <li><strong>Off-the-shelf doesn't solve your problem.</strong> No vendor builds software for your specific intake process, your jurisdiction's deadlines, or your niche practice area.</li>
+      <li><strong>The cost of experimenting is near zero.</strong> Build a prototype in an afternoon. Try it. Toss it or iterate. No developer, no budget request, no six-month timeline.</li>
+    </ul>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- SLIDE 6: What could you build? -->
+  <div class="slide flex-col">
+    <h1>What could you build?</h1>
+    <div class="three-col" style="margin-top: 8px;">
+      <div>
+        <h3>Client-Facing</h3>
+        <ul>
+          <li>Intake questionnaires</li>
+          <li>Fee estimate calculators</li>
+          <li>Know-your-rights screeners</li>
+          <li>Case status trackers</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Internal Tools</h3>
+        <ul>
+          <li>Deadline calculators</li>
+          <li>Case timeline builders</li>
+          <li>Conflict check workflows</li>
+          <li>Document assembly helpers</li>
+        </ul>
+      </div>
+      <div>
+        <h3>AI-Powered</h3>
+        <ul>
+          <li>Contract clause reviewer</li>
+          <li>Deposition summary tool</li>
+          <li>Research assistants</li>
+          <li>Code/statute explorers</li>
+        </ul>
+      </div>
+    </div>
+    <div class="key-insight">
+      <p><strong>The LegalQuants community</strong> &mdash; lawyers around the world are already doing this. Two hackathons, dozens of working tools. See the Showcase tab.</p>
+    </div>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- SLIDE 7: Security & Ethics -->
+  <div class="slide flex-col">
+    <h1>Security &amp; Ethics</h1>
+    <ul style="margin-top: 8px;">
+      <li><strong>Confidentiality (Rule 1.6)</strong> &mdash; do not enter client data into AI tools or vibe-coded apps unless you've vetted where that data goes</li>
+      <li><strong>Competence (Rule 1.1)</strong> &mdash; you don't need to understand the code, but you do need to understand what the tool does and verify it works correctly</li>
+      <li><strong>Supervision (Rules 5.1/5.3)</strong> &mdash; if staff or associates use a tool you built, you're responsible for ensuring it performs as intended</li>
+      <li><strong>Data residency</strong> &mdash; when you use Gemini or AI Studio, your prompts and code are processed on Google's servers. Know what your tool's terms of service say about data retention</li>
+    </ul>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- SLIDE 8: Deployment & Security in Practice -->
+  <div class="slide flex-col">
+    <h1>Deploying What You Build</h1>
+    <p style="margin-bottom: 8px; font-size: 16px;">The right deployment strategy depends on what data the tool touches and who uses it.</p>
+    <div class="two-col" style="margin-top: 4px;">
+      <div>
+        <div class="deploy-option">
+          <h3>No sensitive data</h3>
+          <p>Static HTML &mdash; calculators, decision trees, reference tools. Share the file directly, host on GitHub Pages for free, or deploy to Render/Vercel.</p>
+        </div>
+        <div class="deploy-option">
+          <h3>Internal use only</h3>
+          <p>Tools for your desk or your team. Run locally, share via internal file share. No public exposure, minimal risk.</p>
+        </div>
+      </div>
+      <div>
+        <div class="deploy-option">
+          <h3>Client-facing or sensitive data</h3>
+          <p>Needs real security review: HTTPS, access controls, data handling policies. This is where IT involvement matters &mdash; not to gatekeep, but to help you do it safely.</p>
+        </div>
+        <div class="warning-callout" style="margin-top: 0;">
+          <p><strong>The question isn't "can I deploy this?"</strong> &mdash; it's "what data does it touch and who has access?" A fee calculator with no client data is very different from an intake form that collects PII.</p>
+        </div>
+      </div>
+    </div>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- SLIDE 9: Steps section -->
+  <div class="slide section-slide">
+    <h1>Steps to follow</h1>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- SLIDE 10: Step 1 - Identify a pain point -->
+  <div class="slide flex-col">
+    <h1>Step 1: Identify a pain point</h1>
+    <ul style="margin-top: 8px;">
+      <li>Tasks you find yourself doing over and over for every client</li>
+      <li>Processes that slow you down or create bottlenecks</li>
+      <li>Information you look up repeatedly across multiple sources</li>
+      <li>Calculations or checklists you do manually and wish were automated</li>
+      <li>Things you've thought "there has to be a better way" about</li>
+    </ul>
+    <div class="callout" style="margin-top: 14px;">
+      <p><strong>The index card test:</strong> If you could write every possible answer on index cards ahead of time, your app can handle it. If you'd need professional judgment to figure out the answer &mdash; it can't.</p>
+    </div>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- SLIDE 11: Step 2 - Today's tools -->
+  <div class="slide flex-col">
+    <h1>Step 2: Choose a tool</h1>
+    <div class="two-col" style="margin-top: 8px;">
+      <div>
+        <h3>Gemini Canvas</h3>
+        <ul>
+          <li>Free with any Google account</li>
+          <li>Describe what you want, get a live preview</li>
+          <li>Builds fast &mdash; first version in minutes</li>
+          <li>Great for calculators, decision trees, forms</li>
+        </ul>
+        <div class="callout" style="margin-top: 8px;">
+          <p><strong>Recommended for today.</strong> You'll have a working tool in the session.</p>
+        </div>
+      </div>
+      <div>
+        <h3>Google AI Studio</h3>
+        <ul>
+          <li>Free with any Google account</li>
+          <li>Has a Build tab for creating apps</li>
+          <li>Builds are slower (10+ minutes)</li>
+          <li>Can incorporate AI &mdash; document review, analysis, summarization</li>
+        </ul>
+        <div class="warning-callout" style="margin-top: 8px;">
+          <p><strong>More powerful, but slower.</strong> You may not finish in the session.</p>
+        </div>
+      </div>
+    </div>
+    <p class="small" style="margin-top: 8px;"><strong>Other options:</strong> ChatGPT has Canvas and Claude has Artifacts &mdash; both can generate apps the same way. Use whatever you're comfortable with.</p>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- SLIDE 12: Step 3 - Plan with AI -->
+  <div class="slide flex-col">
+    <h1>Step 3: Plan with AI</h1>
+    <p style="margin-bottom: 12px;">Don't just say "build me an app." <strong>Have a conversation first.</strong></p>
+    <ul style="margin-top: 8px;">
+      <li>Tell Gemini what problem you want to solve and who it's for</li>
+      <li>Let it ask you questions &mdash; answer honestly (even "I'm not sure" is fine)</li>
+      <li>Go back and forth until you both understand what you're building</li>
+      <li><em>Then</em> tell it to start building</li>
+    </ul>
+    <div class="callout" style="margin-top: 16px;">
+      <p><strong>Your prompt template ends with:</strong> "Before you start building, ask me a few questions about who this is for and what their experience should be like."</p>
+    </div>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- SLIDE 13: Step 4 - Build it -->
+  <div class="slide flex-col">
+    <h1>Step 4: Build it</h1>
+    <ul style="margin-top: 8px;">
+      <li>Go to the <strong>Build</strong> tab &mdash; copy the prompt template or pick an idea card</li>
+      <li>Paste the prompt into Gemini and plan together</li>
+      <li>When you're ready to build, click <strong>"Canvas"</strong> under Tools</li>
+      <li>Test it &mdash; click through, try different inputs</li>
+      <li>Don't worry about getting it perfect on the first try</li>
+    </ul>
+    <div class="callout" style="margin-top: 16px;">
+      <p><strong>No Canvas button?</strong> That's OK &mdash; ask Gemini to write the code, then copy and paste it into the <strong>Preview</strong> tab on this site to see it run.</p>
+    </div>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- SLIDE 14: Step 5 - Iterate -->
+  <div class="slide flex-col">
+    <h1>Step 5: Iterate</h1>
+    <p style="margin-bottom: 10px;">The first version is just the start. <strong>The real skill is the conversation you have with AI after that.</strong></p>
+    <div class="prompt-grid">
+      <div class="prompt-chip">
+        <span class="prompt-label">Professional polish</span>
+        "Make this look like something I'd send to a client"
+      </div>
+      <div class="prompt-chip">
+        <span class="prompt-label">Edge cases</span>
+        "What if someone enters [unusual input]? Handle that gracefully"
+      </div>
+      <div class="prompt-chip">
+        <span class="prompt-label">Explanation</span>
+        "Add a short explanation after each result so the user understands why"
+      </div>
+      <div class="prompt-chip">
+        <span class="prompt-label">Security check</span>
+        "What best practices should I follow before sharing this?"
+      </div>
+      <div class="prompt-chip">
+        <span class="prompt-label">Mobile</span>
+        "Make this work well on a phone screen"
+      </div>
+      <div class="prompt-chip">
+        <span class="prompt-label">Export</span>
+        "Add a button to download the results as a PDF"
+      </div>
+    </div>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- SLIDE 15: What Canvas apps can & can't do -->
+  <div class="slide flex-col">
+    <h1>What Canvas apps can &amp; can't do</h1>
+    <div class="two-col" style="margin-top: 8px;">
+      <div class="can-do">
+        <h3>Your app CAN</h3>
+        <ul>
+          <li>Follow a decision tree (if/then logic)</li>
+          <li>Calculate deadlines, fees, or scores</li>
+          <li>Look things up in data you provide</li>
+          <li>Display information based on user choices</li>
+          <li>Enforce rules and flag errors</li>
+        </ul>
+      </div>
+      <div class="cant-do">
+        <h3>Your app CANNOT</h3>
+        <ul>
+          <li>Read and interpret a document</li>
+          <li>Summarize or paraphrase text</li>
+          <li>Answer open-ended questions</li>
+          <li>Make judgment calls</li>
+          <li>Do anything requiring "understanding"</li>
+        </ul>
+      </div>
+    </div>
+    <div class="index-card">
+      <p><strong>The index card test:</strong> If you could write every possible answer on index cards ahead of time, your app can handle it. If you'd need a smart person to figure out the answer &mdash; it can't. (For that, try Google AI Studio.)</p>
+    </div>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- SLIDE 16: Let's build -->
+  <div class="slide section-slide">
+    <h1>Let's build something.</h1>
+    <p>Pick an idea and start building. Raise your hand if you get stuck.</p>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- SLIDE 17: Session plan -->
+  <div class="slide flex-col">
+    <h1>Session plan</h1>
+    <div style="margin-top: 8px;">
+      <div class="timeline-row">
+        <div class="timeline-time">~15 min</div>
+        <div class="timeline-desc"><strong>Intro &amp; context</strong> &mdash; what vibe coding is, security considerations, tools overview</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-time">~20 min</div>
+        <div class="timeline-desc"><strong>Build &mdash; first sprint</strong> &mdash; pick your idea, plan with Gemini, start building</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-time">~3 min</div>
+        <div class="timeline-desc"><strong>Check-in</strong> &mdash; show your neighbor what you have so far</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-time">~15 min</div>
+        <div class="timeline-desc"><strong>Build &mdash; second sprint</strong> &mdash; keep iterating, polish the UX</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-time">~5 min</div>
+        <div class="timeline-desc"><strong>Share &amp; discuss</strong> &mdash; volunteers demo what they built, what surprised them</div>
+      </div>
+    </div>
+    <p class="small" style="margin-top: 12px;">Total: ~58 minutes. Don't worry if you don't finish &mdash; you'll have everything you need to keep going after the session.</p>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- SLIDE 18: What's possible -->
+  <div class="slide flex-col">
+    <h1>What's possible</h1>
+    <p style="margin-bottom: 10px;">Everything on the Showcase tab was built with AI assistance &mdash; no hand-written code.</p>
+    <ul>
+      <li><strong>Citation Verifier</strong> &mdash; check whether case citations in a brief are real and accurately cited</li>
+      <li><strong>eDiscovery Simulator</strong> &mdash; compare keyword search, TAR, and GenAI-assisted review across 100 mock documents</li>
+      <li><strong>Docket Q&amp;A</strong> &mdash; query bankruptcy case documents from the RECAP Archive</li>
+      <li><strong>Document Tech Gallery</strong> &mdash; seven interactive demos of document automation concepts</li>
+    </ul>
+    <div class="key-insight">
+      <p><strong>These started the same way you're starting today.</strong> The difference is just more iterations.</p>
+    </div>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- SLIDE 19: Free tools to keep building -->
+  <div class="slide flex-col">
+    <h1>Tools to keep building</h1>
+    <p style="margin-bottom: 8px;">You don't need to stop after today.</p>
+    <div class="two-col" style="margin-top: 4px;">
+      <div>
+        <h3>Free / free tier</h3>
+        <ul>
+          <li><strong>Gemini Canvas</strong> &mdash; what you used today</li>
+          <li><strong>Google AI Studio</strong> &mdash; for AI-powered apps</li>
+          <li><strong>Cursor</strong> &mdash; AI-powered code editor</li>
+          <li><strong>Replit</strong> &mdash; browser-based IDE with AI</li>
+          <li><strong>Lovable</strong> / <strong>Bolt.new</strong> &mdash; full-stack app builders</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Paid / more advanced</h3>
+        <ul>
+          <li><strong>Claude Code</strong> (Anthropic) &mdash; command-line coding tool, very capable for complex projects</li>
+          <li><strong>Codex</strong> (OpenAI) &mdash; OpenAI's coding agent</li>
+        </ul>
+        <p class="small" style="margin-top: 10px;">These require paid accounts and comfort with the command line, but they're significantly more powerful for multi-file projects and apps that need a backend.</p>
+      </div>
+    </div>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- SLIDE 20: Thank you -->
+  <div class="slide flex-col" style="justify-content: center;">
+    <h1>Thank you</h1>
+    <p style="font-size: 20px; line-height: 1.6; margin-bottom: 20px;">Rebecca Fordon<br>Assistant Director of Innovation, Research &amp; Instruction<br><span style="color: var(--osu-gray);">Moritz Law Library | The Ohio State University Moritz College of Law</span></p>
+    <div style="display: flex; flex-direction: column; gap: 10px; font-size: 17px;">
+      <a href="mailto:fordon.4@osu.edu" style="color: var(--osu-scarlet); text-decoration: none; font-weight: 600;">fordon.4@osu.edu</a>
+      <a href="https://www.linkedin.com/in/rebeccafordon/" target="_blank" style="color: #333; text-decoration: none;">LinkedIn <span style="color: var(--osu-gray);">&rarr; linkedin.com/in/rebeccafordon</span></a>
+      <a href="https://www.ailawlibrarians.com" target="_blank" style="color: #333; text-decoration: none;">Blog <span style="color: var(--osu-gray);">&rarr; ailawlibrarians.com</span></a>
+    </div>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- Navigation (overlay, top-right, visible on hover) -->
+  <div class="nav-bar">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">&larr;</button>
+    <span id="slideCount"></span>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)">&rarr;</button>
+  </div>
+
+</div>
+
+<script>
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+
+  // Auto-number slides
+  slides.forEach((slide, i) => {
+    const num = slide.querySelector('.slide-number');
+    if (num) num.textContent = i + 1;
+  });
+
+  function showSlide(n) {
+    slides.forEach(s => s.classList.remove('active'));
+    slides[n].classList.add('active');
+    document.getElementById('slideCount').textContent = `${n + 1} / ${total}`;
+  }
+
+  function navigate(dir) {
+    current = Math.max(0, Math.min(total - 1, current + dir));
+    showSlide(current);
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); navigate(1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); navigate(-1); }
+  });
+
+  let wheelTimeout = null;
+  document.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    if (wheelTimeout) return;
+    navigate(e.deltaY > 0 ? 1 : -1);
+    wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 400);
+  }, { passive: false });
+
+  showSlide(0);
+
+  // Scale the deck to fill viewport when embedded in fullscreen iframe
+  const deck = document.getElementById('deck');
+  const BASE_W = 960;
+  const BASE_H = 540;
+
+  function rescale() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    if (vw > BASE_W + 10 || vh > BASE_H + 30) {
+      const scale = Math.min(vw / BASE_W, vh / BASE_H);
+      deck.style.transform = `scale(${scale})`;
+      deck.style.boxShadow = 'none';
+    } else {
+      deck.style.transform = '';
+      deck.style.boxShadow = '';
+    }
+  }
+
+  window.addEventListener('resize', rescale);
+  rescale();
+</script>
+
+</body>
+</html>

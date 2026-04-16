@@ -97,10 +97,10 @@ export default function App() {
       <main>
         {activeTab === 'home' && <Home config={eventConfig} onNavigate={setActiveTab} />}
         {activeTab === 'slides' && <Slides slidesUrl={eventConfig.slidesUrl} />}
-        {activeTab === 'build' && <PromptWizard />}
+        {activeTab === 'build' && <PromptWizard build={eventConfig.build} />}
         {activeTab === 'preview' && <Preview />}
         {activeTab === 'gallery' && <Gallery eventId={eventConfig.id} />}
-        {activeTab === 'showcase' && <Showcase items={eventConfig.showcase} />}
+        {activeTab === 'showcase' && <Showcase items={eventConfig.showcase} subtitle={eventConfig.showcaseSubtitle} />}
         {activeTab === 'resources' && <Resources items={eventConfig.resources} />}
         {activeTab === 'deploy' && <Deploy />}
       </main>
@@ -114,7 +114,7 @@ export default function App() {
               <span className="text-[#BA0C2F] font-semibold">{eventConfig.title}</span>
             </span>
             <a
-              href="https://github.com/rlfordon/vibe-coding-workshop-ud"
+              href="https://github.com/rlfordon/vibe-coding-workshop"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-slate-400 hover:text-slate-600 transition-colors"

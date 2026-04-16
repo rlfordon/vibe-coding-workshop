@@ -1,16 +1,34 @@
 import { useState } from 'react';
 import { ExternalLink, X, BookOpen } from 'lucide-react';
 
-const FILTERS = [
-  { id: 'all', label: 'All' },
-  { id: 'teaching', label: 'Teaching' },
-  { id: 'research', label: 'Research' },
-  { id: 'community', label: 'Community' },
-];
+const CATEGORY_LABELS = {
+  teaching: 'Teaching',
+  research: 'Research',
+  community: 'Community',
+  practice: 'Practice',
+  'ai-literacy': 'AI Literacy',
+};
 
-export default function Showcase({ items }) {
+const BUILT_WITH_COLORS = {
+  'Claude Code': { bg: 'bg-orange-100', text: 'text-orange-700', border: 'border-orange-200' },
+  'Gemini Canvas': { bg: 'bg-blue-100', text: 'text-blue-700', border: 'border-blue-200' },
+  'Gemini Gem': { bg: 'bg-purple-100', text: 'text-purple-700', border: 'border-purple-200' },
+  'Replit': { bg: 'bg-sky-100', text: 'text-sky-700', border: 'border-sky-200' },
+  'Google AI Studio': { bg: 'bg-emerald-100', text: 'text-emerald-700', border: 'border-emerald-200' },
+  'QnA Markup': { bg: 'bg-amber-100', text: 'text-amber-700', border: 'border-amber-200' },
+};
+
+const HOSTED_ON_COLORS = {
+  'Render': { bg: 'bg-teal-50', text: 'text-teal-600', border: 'border-teal-200' },
+  'Replit': { bg: 'bg-sky-50', text: 'text-sky-600', border: 'border-sky-200' },
+  'GitHub Pages': { bg: 'bg-gray-50', text: 'text-gray-600', border: 'border-gray-200' },
+};
+
+export default function Showcase({ items, subtitle }) {
   const [lightbox, setLightbox] = useState(null);
-  const [filter, setFilter] = useState('all');
+  const [category, setCategory] = useState('all');
+  const [builtWith, setBuiltWith] = useState('all');
+  const [origin, setOrigin] = useState('all');
 
   if (!items || items.length === 0) {
     return (
@@ -20,7 +38,19 @@ export default function Showcase({ items }) {
     );
   }
 
-  const filtered = filter === 'all' ? items : items.filter((item) => item.category === filter);
+  // Derive available filters from items
+  const builtWithOptions = [...new Set(items.map((i) => i.builtWith).filter(Boolean))].sort();
+  const categoryOptions = [...new Set(items.map((i) => i.category).filter(Boolean))];
+  const categoryFilters = [
+    { id: 'all', label: 'All' },
+    ...categoryOptions.map((c) => ({ id: c, label: CATEGORY_LABELS[c] || c })),
+  ];
+
+  let filtered = items;
+  if (category !== 'all') filtered = filtered.filter((i) => i.category === category);
+  if (origin === 'mine') filtered = filtered.filter((i) => i.builtWith);
+  if (origin === 'community') filtered = filtered.filter((i) => !i.builtWith);
+  if (builtWith !== 'all') filtered = filtered.filter((i) => i.builtWith === builtWith);
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-8 pb-20">
@@ -29,26 +59,84 @@ export default function Showcase({ items }) {
           Tool Showcase
         </h1>
         <p className="text-lg text-slate-500 font-medium mt-1">
-          Tools built with AI for teaching, research, and the classroom
+          {subtitle || 'Tools built with AI for teaching, research, and the classroom'}
         </p>
         <div className="h-1.5 w-full bg-[#BA0C2F] rounded-full mt-4" />
       </div>
 
-      {/* Filter bar */}
-      <div className="flex gap-2 mb-6">
-        {FILTERS.map((f) => (
-          <button
-            key={f.id}
-            onClick={() => setFilter(f.id)}
-            className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-colors ${
-              filter === f.id
-                ? 'bg-[#BA0C2F] text-white'
-                : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
-            }`}
-          >
-            {f.label}
-          </button>
-        ))}
+      {/* Filter rows */}
+      <div className="space-y-3 mb-6">
+        {/* Row 1: Origin + Category */}
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-xs font-bold text-slate-400 uppercase tracking-wide mr-1">Show:</span>
+          {[
+            { id: 'all', label: 'All' },
+            { id: 'mine', label: 'My Projects' },
+            { id: 'community', label: 'Community' },
+          ].map((f) => (
+            <button
+              key={f.id}
+              onClick={() => {
+                setOrigin(f.id);
+                if (f.id === 'community') setBuiltWith('all');
+              }}
+              className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors ${
+                origin === f.id
+                  ? 'bg-[#BA0C2F] text-white'
+                  : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+              }`}
+            >
+              {f.label}
+            </button>
+          ))}
+          <span className="text-slate-200 mx-1">|</span>
+          {categoryFilters.map((f) => (
+            <button
+              key={f.id}
+              onClick={() => setCategory(f.id)}
+              className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors ${
+                category === f.id
+                  ? 'bg-[#BA0C2F] text-white'
+                  : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+              }`}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Row 2: Built with (hidden when showing community only) */}
+        {origin !== 'community' && (
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wide mr-1">Built with:</span>
+            <button
+              onClick={() => setBuiltWith('all')}
+              className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors ${
+                builtWith === 'all'
+                  ? 'bg-slate-700 text-white'
+                  : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+              }`}
+            >
+              All
+            </button>
+            {builtWithOptions.map((tool) => {
+              const colors = BUILT_WITH_COLORS[tool] || { bg: 'bg-slate-100', text: 'text-slate-600', border: 'border-slate-200' };
+              return (
+                <button
+                  key={tool}
+                  onClick={() => setBuiltWith(tool)}
+                  className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors border ${
+                    builtWith === tool
+                      ? `${colors.bg} ${colors.text} ${colors.border}`
+                      : 'bg-slate-100 text-slate-500 border-transparent hover:bg-slate-200'
+                  }`}
+                >
+                  {tool}
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -89,9 +177,31 @@ export default function Showcase({ items }) {
                 {item.description}
               </p>
 
+              {/* Built with / Hosted on badges */}
+              {(item.builtWith || item.hostedOn) && (
+                <div className="flex flex-wrap gap-1.5 mt-3">
+                  {item.builtWith && (() => {
+                    const colors = BUILT_WITH_COLORS[item.builtWith] || { bg: 'bg-slate-100', text: 'text-slate-600', border: 'border-slate-200' };
+                    return (
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${colors.bg} ${colors.text} ${colors.border}`}>
+                        {item.builtWith}
+                      </span>
+                    );
+                  })()}
+                  {item.hostedOn && (() => {
+                    const colors = HOSTED_ON_COLORS[item.hostedOn] || { bg: 'bg-slate-50', text: 'text-slate-600', border: 'border-slate-200' };
+                    return (
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${colors.bg} ${colors.text} ${colors.border}`}>
+                        Hosted on {item.hostedOn}
+                      </span>
+                    );
+                  })()}
+                </div>
+              )}
+
               {/* Tags */}
               {item.tags && item.tags.length > 0 && (
-                <div className="flex flex-wrap gap-1.5 mt-3">
+                <div className="flex flex-wrap gap-1.5 mt-2">
                   {item.tags.map((tag) => (
                     <span
                       key={tag}
@@ -145,6 +255,13 @@ export default function Showcase({ items }) {
           </div>
         ))}
       </div>
+
+      {/* Empty state for filters */}
+      {filtered.length === 0 && (
+        <div className="text-center text-slate-400 py-12">
+          No items match the current filters.
+        </div>
+      )}
 
       {/* Lightbox */}
       {lightbox && (

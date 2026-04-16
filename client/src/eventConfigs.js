@@ -27,6 +27,53 @@ export const EVENT_CONFIGS = {
         { tab: 'resources', label: 'Resources', desc: 'Curated links to keep learning after the workshop' },
       ],
     },
+    build: {
+      templates: [
+        {
+          id: 'canvas',
+          label: 'Gemini Canvas',
+          prompt: 'I want to make a Gemini Canvas app. [DESCRIBE YOUR IDEA \u2014 what problem does it solve? who is it for?]\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
+        },
+      ],
+      ideas: [
+        {
+          id: 'court-filing',
+          title: 'Court Filing Decision Tree',
+          description: 'Figure out which court to file in based on your dispute.',
+          prompt: 'I want to make a Gemini Canvas app. A lot of people don\'t know which court to file in \u2014 small claims, municipal, common pleas, etc. I want to build something where someone answers a few questions about their dispute and finds out which court to go to and what the process looks like.\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
+        },
+        {
+          id: 'sol-calculator',
+          title: 'Statute of Limitations Calculator',
+          description: 'Check whether the deadline to file a lawsuit has passed.',
+          prompt: 'I want to make a Gemini Canvas app. I\'m a law student and I think it would be really useful to have a tool that helps someone figure out whether they\'ve missed the deadline to file a lawsuit in Ohio. Here\'s the relevant statute: https://codes.ohio.gov/ohio-revised-code/chapter-2305\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
+        },
+        {
+          id: 'case-brief',
+          title: 'Case Brief Builder',
+          description: 'Fill in the parts of a case brief and get a clean formatted version.',
+          prompt: 'I want to make a Gemini Canvas app. Briefing cases takes me forever and I always forget what goes in each section. I want a tool where I can fill in the parts of a case brief and get a clean, formatted version I can use for class.\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
+        },
+        {
+          id: 'tenant-rights',
+          title: 'Know Your Rights: Tenant Edition',
+          description: 'Help renters figure out their rights when something goes wrong.',
+          prompt: 'I want to make a Gemini Canvas app. A lot of renters don\'t know their rights when something goes wrong \u2014 like their landlord won\'t fix something, or they\'re being evicted, or they\'re not getting their security deposit back. I want to build a tool that helps someone figure out what their rights are in Ohio. Here\'s some background: https://www.ohiolegalhelp.org/guide/housing\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
+        },
+        {
+          id: 'red-flag',
+          title: 'Contract Red-Flag Spotter',
+          description: 'Teach people to spot dangerous clauses in contracts.',
+          prompt: 'I want to make a Gemini Canvas app. A lot of people sign contracts without knowing what to look out for. I want to build something that teaches people to spot red flags in contracts \u2014 like one-sided indemnification or automatic renewal clauses. Here\'s some background on Ohio consumer protection law: https://codes.ohio.gov/ohio-revised-code/chapter-1345\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
+        },
+        {
+          id: 'client-intake',
+          title: 'Client Intake Questionnaire',
+          description: 'Walk someone through the questions for an initial legal consultation.',
+          prompt: 'I want to make a Gemini Canvas app. When someone comes in for an initial legal consultation, there\'s a lot of information to gather \u2014 what happened, key dates, who\'s involved, what documents they have. I want to build a tool that walks someone through those questions and gives them a clean summary at the end.\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
+        },
+      ],
+    },
     resources: [
       {
         title: 'Jamie Tso Interview: Vibe-Coding Your Own Legal AI Tools',
@@ -90,6 +137,7 @@ export const EVENT_CONFIGS = {
         week: 'Week 2',
         category: 'teaching',
         tags: ['LLMs', 'interactive demo'],
+        builtWith: 'Replit',
       },
       {
         title: 'Prompt Coach',
@@ -101,6 +149,8 @@ export const EVENT_CONFIGS = {
         week: 'Week 5',
         category: 'teaching',
         tags: ['prompting', 'AI coaching'],
+        builtWith: 'Google AI Studio',
+        hostedOn: 'Replit',
       },
       {
         title: 'QnA Markup Screener',
@@ -111,6 +161,7 @@ export const EVENT_CONFIGS = {
         week: 'Week 6',
         category: 'teaching',
         tags: ['decision trees', 'legal aid'],
+        builtWith: 'QnA Markup',
       },
       {
         title: 'Decision Tree to QnA Markup Gem',
@@ -121,6 +172,7 @@ export const EVENT_CONFIGS = {
         week: 'Week 6',
         category: 'teaching',
         tags: ['Gemini Gems', 'automation'],
+        builtWith: 'Gemini Gem',
       },
       {
         title: 'Ohio Unpaid Wages Screener',
@@ -131,6 +183,7 @@ export const EVENT_CONFIGS = {
         week: 'Week 6',
         category: 'teaching',
         tags: ['vibe coding', 'React'],
+        builtWith: 'Gemini Canvas',
       },
       {
         title: 'Citation Extractor Gem',
@@ -141,6 +194,7 @@ export const EVENT_CONFIGS = {
         week: 'Week 7',
         category: 'teaching',
         tags: ['citations', 'Gemini Gems'],
+        builtWith: 'Gemini Gem',
       },
       {
         title: 'Citation Hallucination Game',
@@ -152,6 +206,8 @@ export const EVENT_CONFIGS = {
         week: 'Week 7',
         category: 'teaching',
         tags: ['hallucinations', 'team exercise'],
+        builtWith: 'Claude Code',
+        hostedOn: 'Replit',
       },
       {
         title: 'Document Tech Gallery',
@@ -163,6 +219,8 @@ export const EVENT_CONFIGS = {
         week: 'Week 8',
         category: 'teaching',
         tags: ['document tech', 'interactive demos'],
+        builtWith: 'Claude Code',
+        hostedOn: 'Render',
       },
       {
         title: 'Docket Q&A',
@@ -173,6 +231,8 @@ export const EVENT_CONFIGS = {
         screenshot: '/showcase/docket-qna.png',
         category: 'research',
         tags: ['research', 'AI', 'bankruptcy'],
+        builtWith: 'Claude Code',
+        hostedOn: 'Render',
       },
       {
         title: 'Citation Verifier',
@@ -183,6 +243,8 @@ export const EVENT_CONFIGS = {
         screenshot: '/showcase/citation-verifier.png',
         category: 'research',
         tags: ['research', 'citations'],
+        builtWith: 'Claude Code',
+        hostedOn: 'Replit',
       },
       {
         title: 'AI-Powered Lawyering Heatmap',
@@ -192,6 +254,7 @@ export const EVENT_CONFIGS = {
         screenshot: '/showcase/ai-lawyering-heatmap.png',
         category: 'research',
         tags: ['research', 'visualization'],
+        builtWith: 'Gemini Canvas',
       },
       {
         title: 'ReadCloser',
@@ -250,6 +313,67 @@ export const EVENT_CONFIGS = {
         screenshot: '/showcase/4th-amendment.png',
         category: 'teaching',
         tags: ['constitutional law', 'decision trees'],
+        builtWith: 'Gemini Canvas',
+      },
+      {
+        title: 'Career Landscape Explorer',
+        description:
+          'Interactive tool where students explore how AI reshapes legal careers — browse by practice area or firm type, see a five-variable impact framework adapted from the O-Ring model.',
+        url: 'https://career-landscape.onrender.com/',
+        github: 'https://github.com/rlfordon/career-landscape',
+        screenshot: '/showcase/career-landscape.png',
+        category: 'teaching',
+        tags: ['careers', 'AI impact'],
+        builtWith: 'Claude Code',
+        hostedOn: 'Render',
+      },
+      {
+        title: 'eDiscovery Simulator',
+        description:
+          'Students play a junior associate navigating EDRM phases on a fictional employment case — compare keyword search, TAR/CAL, and GenAI-assisted review across 100 mock documents.',
+        url: 'https://ediscovery-simulator.onrender.com/',
+        github: 'https://github.com/rlfordon/ediscovery-simulator',
+        screenshot: '/showcase/ediscovery-simulator.png',
+        category: 'teaching',
+        tags: ['eDiscovery', 'simulation'],
+        builtWith: 'Claude Code',
+        hostedOn: 'Render',
+      },
+      {
+        title: 'DHS AI Use Case Explorer',
+        description:
+          'Searchable explorer of 236 AI systems in the DHS inventory, with curated watchdog annotations from the Brennan Center, EFF, and others, plus bias taxonomy flags.',
+        url: 'https://rlfordon.github.io/dhs-ai-explorer/',
+        github: 'https://github.com/rlfordon/dhs-ai-explorer',
+        screenshot: '/showcase/dhs-ai-explorer.png',
+        category: 'research',
+        tags: ['AI policy', 'government', 'bias'],
+        builtWith: 'Claude Code',
+        hostedOn: 'GitHub Pages',
+      },
+      {
+        title: 'Excel Formula Explorer',
+        description:
+          'Interactive app teaching Excel text functions through a fictional law firm merger scenario — guided demos with an Excel-like grid, formula bar, and hands-on sandboxes for each function.',
+        url: 'https://spreadsheet-sandbox.onrender.com',
+        github: 'https://github.com/rlfordon/spreadsheet-sandbox',
+        screenshot: '/showcase/spreadsheet-sandbox.png',
+        category: 'teaching',
+        tags: ['Excel', 'data cleaning'],
+        builtWith: 'Claude Code',
+        hostedOn: 'Render',
+      },
+      {
+        title: 'Boolean Search Builder',
+        description:
+          'Step-by-step wizard that guides students through building precise Boolean queries for Westlaw, Lexis, and Bloomberg — handles parentheses, proximity connectors, and truncation automatically.',
+        url: 'https://booleanbuilder.replit.app/',
+        github: 'https://github.com/rlfordon/BooleanBuilder',
+        screenshot: '/showcase/boolean-builder.png',
+        category: 'teaching',
+        tags: ['legal research', 'Boolean search'],
+        builtWith: 'Gemini Canvas',
+        hostedOn: 'Replit',
       },
       {
         title: 'Universal History Simulator',
@@ -325,6 +449,316 @@ export const EVENT_CONFIGS = {
         title: 'Vibe Coding Ideas for Education',
         source: 'Google Doc (community list)',
         url: 'https://docs.google.com/document/d/1g_pSY33Gfm-DpxOvtnoLvsS0rlJj0vHkcZu2ndYuVTI/edit?tab=t.0',
+      },
+      {
+        title: 'Secure Vibe Coding Guide',
+        source: 'Cloud Security Alliance',
+        url: 'https://cloudsecurityalliance.org/blog/2025/04/09/secure-vibe-coding-guide',
+      },
+      {
+        title: 'Vibe Coding: Best Practices for Prompting',
+        source: 'Supabase',
+        url: 'https://supabase.com/blog/vibe-coding-best-practices-for-prompting',
+      },
+    ],
+  },
+
+  practicesummit: {
+    id: 'practicesummit',
+    title: 'Vibe Coding for the Legal Profession',
+    subtitle: 'AI Legal Practice Summit',
+    slidesUrl: '/slides-practicesummit.html',
+    showcaseSubtitle: 'Tools built with AI for legal practice, research, and the profession',
+    tabs: [
+      { id: 'home', label: 'Home' },
+      { id: 'slides', label: 'Slides' },
+      { id: 'build', label: 'Build' },
+      { id: 'preview', label: 'Preview' },
+      { id: 'deploy', label: 'Deploy' },
+      { id: 'showcase', label: 'Showcase' },
+      { id: 'resources', label: 'Resources' },
+    ],
+    defaultTab: 'home',
+    home: {
+      title: 'Vibe Coding for the Legal Profession',
+      description:
+        'Build a custom tool for your practice — a client intake form, a deadline tracker, a research assistant — just by describing what you need in plain English.',
+      steps: [
+        { tab: 'slides', label: 'Slides', desc: 'Follow along with the session presentation' },
+        { tab: 'build', label: 'Build', desc: 'Use the prompt wizard to generate your project with AI' },
+        { tab: 'preview', label: 'Preview', desc: 'Paste your code to see it rendered live' },
+        { tab: 'deploy', label: 'Deploy', desc: 'Learn how to publish your project to the web' },
+        { tab: 'showcase', label: 'Showcase', desc: 'See examples of what\'s possible — from simple tools to AI-powered apps' },
+        { tab: 'resources', label: 'Resources', desc: 'Articles, tools, and inspiration to keep building after the session' },
+      ],
+    },
+    build: {
+      templates: [
+        {
+          id: 'canvas',
+          label: 'Gemini Canvas',
+          prompt: 'I want to make a Gemini Canvas app. [DESCRIBE YOUR IDEA \u2014 what problem does it solve? who is it for?]\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
+        },
+        {
+          id: 'aistudio',
+          label: 'Google AI Studio',
+          note: 'AI Studio apps take longer to build \u2014 great for exploring AI-powered tools, but you may not finish in the session.',
+          prompt: 'I want to build an app in Google AI Studio using the Build tab \u2014 look it up if you\'re not sure, Google AI Studio has a Build tab now. [DESCRIBE YOUR IDEA \u2014 what problem does it solve? who is it for?]\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
+        },
+      ],
+      ideas: [
+        {
+          id: 'client-intake',
+          title: 'Client Intake Form',
+          description: 'Walk a new client through intake questions and produce a clean summary.',
+          template: 'canvas',
+          prompt: 'I want to make a Gemini Canvas app. When someone comes in for an initial consultation, there\'s a lot of information to gather \u2014 what happened, key dates, who\'s involved, what documents they have. I want to build a tool that walks them through those questions and gives a clean summary at the end.\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
+        },
+        {
+          id: 'fee-calculator',
+          title: 'Fee Estimate Calculator',
+          description: 'Enter matter type, complexity, and rates to generate a fee estimate.',
+          template: 'canvas',
+          prompt: 'I want to make a Gemini Canvas app. I want to build a fee estimate calculator for my law practice. A client enters their matter type, the expected complexity, estimated hours, and my hourly rate, and it generates a clear fee estimate they can review.\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
+        },
+        {
+          id: 'deadline-calculator',
+          title: 'Deadline Calculator',
+          description: 'Enter a trigger date and case type to compute filing deadlines.',
+          template: 'canvas',
+          prompt: 'I want to make a Gemini Canvas app. Missing a filing deadline is one of the most common sources of malpractice claims. I want to build a tool where you enter a trigger date and case type, and it computes the key filing deadlines under the applicable rules.\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
+        },
+        {
+          id: 'case-timeline',
+          title: 'Case Timeline Builder',
+          description: 'Enter key events from a case and generate a visual timeline.',
+          template: 'canvas',
+          prompt: 'I want to make a Gemini Canvas app. I need a tool for building case timelines \u2014 I enter key events with dates and descriptions, and it generates a clean visual timeline I can use for trial prep or client presentations.\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
+        },
+        {
+          id: 'uscode-explorer',
+          title: 'US Code Section Explorer',
+          description: 'Browse and search a specific title of the US Code interactively.',
+          template: 'canvas',
+          prompt: 'I want to make a Gemini Canvas app. I want to build an interactive tool for browsing a specific title of the US Code \u2014 search by section number or keyword, read the text, and navigate between sections easily.\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
+        },
+        {
+          id: 'ai-timeline',
+          title: 'AI Timeline Builder',
+          description: 'Upload case documents and let AI extract events into an editable timeline.',
+          template: 'aistudio',
+          prompt: 'I want to build an app in Google AI Studio using the Build tab \u2014 look it up if you\'re not sure, Google AI Studio has a Build tab now. I want a tool where I can upload case documents and the AI extracts key events into a visual timeline. I should be able to edit, add, and remove events from the timeline after it\'s generated.\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
+        },
+        {
+          id: 'ai-code-explorer',
+          title: 'AI-Powered Code Explorer',
+          description: 'Browse the US Code with AI-powered annotations and updates from government sources.',
+          template: 'aistudio',
+          prompt: 'I want to build an app in Google AI Studio using the Build tab \u2014 look it up if you\'re not sure, Google AI Studio has a Build tab now. I want an interactive US Code explorer where I can browse sections, add my own notes and annotations, and pull updates from the official government source.\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
+        },
+        {
+          id: 'clause-reviewer',
+          title: 'Contract Clause Reviewer',
+          description: 'Paste a contract clause and get plain-English explanation plus red flags.',
+          template: 'aistudio',
+          prompt: 'I want to build an app in Google AI Studio using the Build tab \u2014 look it up if you\'re not sure, Google AI Studio has a Build tab now. I want a tool where I can paste a contract clause and get a plain-English explanation of what it means, plus any red flags or issues to watch for.\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
+        },
+      ],
+    },
+    showcase: [
+      {
+        title: 'TokenExplorer',
+        description:
+          'Manipulate temperature settings and watch probability distributions shift in real time, making the statistical nature of LLMs visible.',
+        url: 'https://token-explorer-rlfordon.replit.app/',
+        github: 'https://github.com/rlfordon/TokenExplorer',
+        screenshot: '/showcase/token-explorer.png',
+        category: 'ai-literacy',
+        tags: ['LLMs', 'interactive demo'],
+        builtWith: 'Replit',
+      },
+      {
+        title: 'Prompt Coach',
+        description:
+          'Split-panel app where you draft prompts on the left and receive real-time AI coaching on technique, confidentiality, and professional judgment on the right.',
+        url: 'https://prompt-coach-21cl.replit.app/',
+        github: 'https://github.com/rlfordon/prompt-coach',
+        screenshot: '/showcase/prompt-coach.png',
+        category: 'ai-literacy',
+        tags: ['prompting', 'AI coaching'],
+        builtWith: 'Google AI Studio',
+        hostedOn: 'Replit',
+      },
+      {
+        title: 'Citation Hallucination Game',
+        description:
+          'Competitive exercise where teams create hallucinated citations, then try to catch another team\'s fakes under time pressure.',
+        url: 'https://hallucination-game.replit.app/',
+        github: 'https://github.com/rlfordon/hallucination-game',
+        screenshot: '/showcase/hallucination-game.png',
+        category: 'ai-literacy',
+        tags: ['hallucinations', 'team exercise'],
+        builtWith: 'Claude Code',
+        hostedOn: 'Replit',
+      },
+      {
+        title: '4th Amendment Search & Seizure Analysis',
+        description:
+          'Interactive decision tree walking through the gates of Fourth Amendment analysis \u2014 applicability, reasonable expectation of privacy, and warrant requirements \u2014 with case law at each step.',
+        url: 'https://gemini.google.com/share/c7ba3b487abf',
+        screenshot: '/showcase/4th-amendment.png',
+        category: 'practice',
+        tags: ['constitutional law', 'decision trees'],
+        builtWith: 'Gemini Canvas',
+      },
+      {
+        title: 'Citation Verifier',
+        description:
+          'Verify legal citations at scale \u2014 check whether case citations in a brief are real and accurately cited.',
+        url: 'https://verify-and-retrieve.replit.app/',
+        github: 'https://github.com/rlfordon/citation-verifier',
+        screenshot: '/showcase/citation-verifier.png',
+        category: 'practice',
+        tags: ['citations', 'verification'],
+        builtWith: 'Claude Code',
+        hostedOn: 'Replit',
+      },
+      {
+        title: 'Docket Q&A',
+        description:
+          'AI-powered tool for querying bankruptcy case documents from the RECAP Archive. Ask questions about a case and get answers grounded in the actual filings.',
+        url: 'https://bankruptcy-docket-qanda.onrender.com',
+        github: 'https://github.com/rlfordon/docket-qna',
+        screenshot: '/showcase/docket-qna.png',
+        category: 'practice',
+        tags: ['research', 'AI', 'bankruptcy'],
+        builtWith: 'Claude Code',
+        hostedOn: 'Render',
+      },
+      {
+        title: 'eDiscovery Simulator',
+        description:
+          'Navigate EDRM phases on a fictional employment case \u2014 compare keyword search, TAR/CAL, and GenAI-assisted review across 100 mock documents.',
+        url: 'https://ediscovery-simulator.onrender.com/',
+        github: 'https://github.com/rlfordon/ediscovery-simulator',
+        screenshot: '/showcase/ediscovery-simulator.png',
+        category: 'practice',
+        tags: ['eDiscovery', 'simulation'],
+        builtWith: 'Claude Code',
+        hostedOn: 'Render',
+      },
+      {
+        title: 'AI-Powered Lawyering Heatmap',
+        description:
+          'Interactive visualization comparing how reasoning models and RAG perform against human-only legal work across specialized tasks.',
+        url: 'https://gemini.google.com/share/22471ef31949',
+        screenshot: '/showcase/ai-lawyering-heatmap.png',
+        category: 'ai-literacy',
+        tags: ['research', 'visualization'],
+        builtWith: 'Gemini Canvas',
+      },
+      {
+        title: 'DHS AI Use Case Explorer',
+        description:
+          'Searchable explorer of 236 AI systems in the DHS inventory, with curated watchdog annotations from the Brennan Center, EFF, and others, plus bias taxonomy flags.',
+        url: 'https://rlfordon.github.io/dhs-ai-explorer/',
+        github: 'https://github.com/rlfordon/dhs-ai-explorer',
+        screenshot: '/showcase/dhs-ai-explorer.png',
+        category: 'practice',
+        tags: ['AI policy', 'government', 'bias'],
+        builtWith: 'Claude Code',
+        hostedOn: 'GitHub Pages',
+      },
+      {
+        title: 'Document Tech Gallery',
+        description:
+          'Seven quick interactive demos covering automation, clause libraries, editing, verification, metadata, redaction, and contract review.',
+        url: 'https://doc-tech-gallery.onrender.com',
+        github: 'https://github.com/rlfordon/doc-tech-gallery',
+        screenshot: '/showcase/doc-tech-gallery.png',
+        category: 'practice',
+        tags: ['document tech', 'interactive demos'],
+        builtWith: 'Claude Code',
+        hostedOn: 'Render',
+      },
+      {
+        title: 'Career Landscape Explorer',
+        description:
+          'Explore how AI reshapes legal careers \u2014 browse by practice area or firm type, see a five-variable impact framework adapted from the O-Ring model.',
+        url: 'https://career-landscape.onrender.com/',
+        github: 'https://github.com/rlfordon/career-landscape',
+        screenshot: '/showcase/career-landscape.png',
+        category: 'ai-literacy',
+        tags: ['careers', 'AI impact'],
+        builtWith: 'Claude Code',
+        hostedOn: 'Render',
+      },
+      {
+        title: "Jamie Tso's Vibe-Coded Legal Apps",
+        description:
+          'Collection of legal tools built by Jamie Tso, Clifford Chance senior associate and founder of LegalQuants \u2014 showcasing what one lawyer can build with vibe coding.',
+        url: 'https://jamievibes.replit.app/',
+        screenshot: '/showcase/jamie-vibes.png',
+        category: 'community',
+        tags: ['vibe coding', 'legal tools', 'community'],
+      },
+      {
+        title: "Barbora Obracajova's Legal Tech Gallery",
+        description:
+          'Curated gallery of legal tech tools built with AI-assisted development, showcasing practical applications across legal workflows.',
+        url: 'https://legaltechgallery.lovable.app/',
+        screenshot: '/showcase/legal-tech-gallery.png',
+        category: 'community',
+        tags: ['vibe coding', 'legal tech', 'community'],
+      },
+      {
+        title: 'LegalQuants Hackathon #LQ001 — Manus',
+        description:
+          'The inaugural LegalQuants hackathon in partnership with Manus AI (January 2026). Twenty submissions judged on creativity, pain point relevance, and production readiness.',
+        url: 'https://www.legalquants.com/hackathons#LQ001',
+        screenshot: '/showcase/legalquants-lq001.png',
+        category: 'community',
+        tags: ['hackathon', 'legal tech', 'community'],
+      },
+      {
+        title: 'LegalQuants Hackathon #LQ002 — Replit',
+        description:
+          'The second LegalQuants hackathon in partnership with Replit (March 2026), bringing together in-house counsels from around the world.',
+        url: 'https://www.legalquants.com/hackathons#LQ002',
+        screenshot: '/showcase/legalquants-lq002.png',
+        category: 'community',
+        tags: ['hackathon', 'legal tech', 'community'],
+      },
+    ],
+    resources: [
+      {
+        title: "Can't Stop, Won't Stop: One Semester, Eight Vibe-Coded Teaching Tools",
+        source: 'AI Law Librarians',
+        url: 'https://www.ailawlibrarians.com/2026/03/04/cant-stop-wont-stop-one-semester-eight-vibe-coded-teaching-tools/',
+      },
+      {
+        title: 'Jamie Tso Interview: Vibe-Coding Your Own Legal AI Tools',
+        source: 'Artificial Lawyer',
+        url: 'https://www.artificiallawyer.com/2026/01/05/jamie-tso-interview-vibe-coding-your-own-legal-ai-tools/',
+      },
+      {
+        title: "Jamie's collection of vibe-coded apps",
+        url: 'https://jamievibes.replit.app/',
+      },
+      {
+        title: "Barbora Obracajova's Legal Tech Gallery",
+        source: 'Lovable',
+        url: 'https://legaltechgallery.lovable.app/',
+      },
+      {
+        title: 'LegalQuants Hackathon #LQ001',
+        source: 'LegalQuants',
+        url: 'https://www.legalquants.com/hackathons#LQ001',
+      },
+      {
+        title: 'LegalQuants Hackathon #LQ002',
+        source: 'LegalQuants',
+        url: 'https://www.legalquants.com/hackathons#LQ002',
       },
       {
         title: 'Secure Vibe Coding Guide',

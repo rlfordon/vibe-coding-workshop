@@ -5,52 +5,30 @@ import {
   Lightbulb,
 } from 'lucide-react';
 
-const PROJECT_IDEAS = [
-  {
-    id: 'court-filing',
-    title: 'Court Filing Decision Tree',
-    description: 'Figure out which court to file in based on your dispute.',
-    prompt: 'I want to make a Gemini Canvas app. A lot of people don\'t know which court to file in \u2014 small claims, municipal, common pleas, etc. I want to build something where someone answers a few questions about their dispute and finds out which court to go to and what the process looks like.\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
-  },
-  {
-    id: 'sol-calculator',
-    title: 'Statute of Limitations Calculator',
-    description: 'Check whether the deadline to file a lawsuit has passed.',
-    prompt: 'I want to make a Gemini Canvas app. I\'m a law student and I think it would be really useful to have a tool that helps someone figure out whether they\'ve missed the deadline to file a lawsuit in Ohio. Here\'s the relevant statute: https://codes.ohio.gov/ohio-revised-code/chapter-2305\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
-  },
-  {
-    id: 'case-brief',
-    title: 'Case Brief Builder',
-    description: 'Fill in the parts of a case brief and get a clean formatted version.',
-    prompt: 'I want to make a Gemini Canvas app. Briefing cases takes me forever and I always forget what goes in each section. I want a tool where I can fill in the parts of a case brief and get a clean, formatted version I can use for class.\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
-  },
-  {
-    id: 'tenant-rights',
-    title: 'Know Your Rights: Tenant Edition',
-    description: 'Help renters figure out their rights when something goes wrong.',
-    prompt: 'I want to make a Gemini Canvas app. A lot of renters don\'t know their rights when something goes wrong \u2014 like their landlord won\'t fix something, or they\'re being evicted, or they\'re not getting their security deposit back. I want to build a tool that helps someone figure out what their rights are in Ohio. Here\'s some background: https://www.ohiolegalhelp.org/guide/housing\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
-  },
-  {
-    id: 'red-flag',
-    title: 'Contract Red-Flag Spotter',
-    description: 'Teach people to spot dangerous clauses in contracts.',
-    prompt: 'I want to make a Gemini Canvas app. A lot of people sign contracts without knowing what to look out for. I want to build something that teaches people to spot red flags in contracts \u2014 like one-sided indemnification or automatic renewal clauses. Here\'s some background on Ohio consumer protection law: https://codes.ohio.gov/ohio-revised-code/chapter-1345\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
-  },
-  {
-    id: 'client-intake',
-    title: 'Client Intake Questionnaire',
-    description: 'Walk someone through the questions for an initial legal consultation.',
-    prompt: 'I want to make a Gemini Canvas app. When someone comes in for an initial legal consultation, there\'s a lot of information to gather \u2014 what happened, key dates, who\'s involved, what documents they have. I want to build a tool that walks someone through those questions and gives them a clean summary at the end.\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
-  },
-];
+const DEFAULT_TEMPLATE = {
+  id: 'canvas',
+  label: 'Gemini Canvas',
+  prompt: 'I want to make a Gemini Canvas app. [DESCRIBE YOUR IDEA \u2014 what problem does it solve? who is it for?]\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.',
+};
 
-const PROMPT_TEMPLATE = 'I want to make a Gemini Canvas app. [DESCRIBE YOUR IDEA \u2014 what problem does it solve? who is it for?]\n\nBefore you start building, ask me a few questions about who this is for and what their experience should be like.';
+export default function PromptWizard({ build }) {
+  const templates = build?.templates || [DEFAULT_TEMPLATE];
+  const ideas = build?.ideas || [];
 
-export default function PromptWizard() {
+  const [activeTemplate, setActiveTemplate] = useState(templates[0].id);
   const [selectedIdea, setSelectedIdea] = useState(null);
   const [copied, setCopied] = useState(false);
 
-  const displayedPrompt = selectedIdea ? selectedIdea.prompt : PROMPT_TEMPLATE;
+  const currentTemplate = templates.find((t) => t.id === activeTemplate) || templates[0];
+  const displayedPrompt = selectedIdea ? selectedIdea.prompt : currentTemplate.prompt;
+
+  // When switching templates, clear selected idea if it belongs to a different template
+  const handleTemplateChange = (templateId) => {
+    setActiveTemplate(templateId);
+    if (selectedIdea && selectedIdea.template && selectedIdea.template !== templateId) {
+      setSelectedIdea(null);
+    }
+  };
 
   const copyToClipboard = async () => {
     try {
@@ -67,6 +45,12 @@ export default function PromptWizard() {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // Group ideas by template if there are multiple templates
+  const hasMultipleTemplates = templates.length > 1;
+  const ideasForCurrentTemplate = hasMultipleTemplates
+    ? ideas.filter((idea) => !idea.template || idea.template === activeTemplate)
+    : ideas;
+
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-8 pb-20">
       {/* Header */}
@@ -79,6 +63,33 @@ export default function PromptWizard() {
         </p>
         <div className="h-1.5 w-full bg-[#BA0C2F] rounded-full mt-4" />
       </div>
+
+      {/* Template Switcher (only if multiple templates) */}
+      {hasMultipleTemplates && (
+        <div className="mb-6">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wide">Build with:</span>
+          </div>
+          <div className="flex gap-2">
+            {templates.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => handleTemplateChange(t.id)}
+                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
+                  activeTemplate === t.id
+                    ? 'bg-[#BA0C2F] text-white'
+                    : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+          {currentTemplate.note && (
+            <p className="text-xs text-amber-600 mt-2 font-medium">{currentTemplate.note}</p>
+          )}
+        </div>
+      )}
 
       {/* Prompt Template Box */}
       <div className="relative group mb-10">
@@ -117,28 +128,30 @@ export default function PromptWizard() {
       </div>
 
       {/* Need an idea? */}
-      <div>
-        <div className="flex items-center gap-2 mb-4">
-          <Lightbulb size={18} className="text-[#BA0C2F]" />
-          <h2 className="text-lg font-[BioRhyme,serif] font-bold text-slate-800">Need an idea?</h2>
+      {ideasForCurrentTemplate.length > 0 && (
+        <div>
+          <div className="flex items-center gap-2 mb-4">
+            <Lightbulb size={18} className="text-[#BA0C2F]" />
+            <h2 className="text-lg font-[BioRhyme,serif] font-bold text-slate-800">Need an idea?</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {ideasForCurrentTemplate.map((idea) => (
+              <button
+                key={idea.id}
+                onClick={() => setSelectedIdea(selectedIdea?.id === idea.id ? null : idea)}
+                className={`p-4 rounded-xl text-left transition-all border-2 ${
+                  selectedIdea?.id === idea.id
+                    ? 'border-[#BA0C2F] bg-red-50/30'
+                    : 'border-slate-100 bg-slate-50/50 hover:border-slate-300'
+                }`}
+              >
+                <div className="font-bold text-sm text-slate-800 mb-1">{idea.title}</div>
+                <div className="text-[11px] text-slate-500 leading-snug font-medium">{idea.description}</div>
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {PROJECT_IDEAS.map((idea) => (
-            <button
-              key={idea.id}
-              onClick={() => setSelectedIdea(selectedIdea?.id === idea.id ? null : idea)}
-              className={`p-4 rounded-xl text-left transition-all border-2 ${
-                selectedIdea?.id === idea.id
-                  ? 'border-[#BA0C2F] bg-red-50/30'
-                  : 'border-slate-100 bg-slate-50/50 hover:border-slate-300'
-              }`}
-            >
-              <div className="font-bold text-sm text-slate-800 mb-1">{idea.title}</div>
-              <div className="text-[11px] text-slate-500 leading-snug font-medium">{idea.description}</div>
-            </button>
-          ))}
-        </div>
-      </div>
+      )}
     </div>
   );
 }

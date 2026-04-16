@@ -43,17 +43,26 @@ rm server/data/workshop.db        # Recreated on next server start
 
 The lucide-react UMD bundle expects `window.react` (lowercase) but React's UMD sets `window.React` (uppercase). Fixed by injecting `window.react = window.React` shim before CDN libs load, and using `'LucideReact'` (PascalCase) in `LIB_GLOBALS`.
 
+## Event Configs
+
+`client/src/eventConfigs.js` — Defines multiple event configurations (workshop for students, faculty for law professors). Each config specifies tabs, showcase items (with category/tags for filtering), and resources. Accessed via `?event=faculty` query param; defaults to workshop.
+
 ## Key Files
 
+- `client/src/eventConfigs.js` — Event-specific configuration (tabs, showcase items, resources)
 - `client/src/Home.jsx` — Default landing page with workshop overview and tab navigation
+- `client/src/Showcase.jsx` — Tool showcase with category filter bar (All/Teaching/Research/Community) and image lightbox
 - `client/src/SandboxedIframe.jsx` — Shared iframe rendering pipeline (prepareHtml, wrapReactCode, CDN shims)
 - `client/src/Gallery.jsx` — Gallery UI (submit/vote/comment)
 - `client/src/PromptWizard.jsx` — Build tab single-screen launchpad (prompt template + idea cards)
 - `client/src/Preview.jsx` — Preview tab (paste code, render in SandboxedIframe)
+- `client/src/Deploy.jsx` — Deployment guide for single-file apps
 - `client/src/Resources.jsx` — Curated links to vibe-coding articles and guides
 - `client/src/Admin.jsx` — Password-protected database reset (hidden at `/#admin`)
 - `server/db.js` — sql.js wrapper providing a better-sqlite3-like API (`prepare().all()`, `.get()`, `.run()`)
-- `client/public/slides.html` — Self-contained 23-slide deck with auto-scaling, served as static file
+- `client/public/slides.html` — Self-contained 23-slide student deck with auto-scaling
+- `client/public/slides-faculty.html` — Faculty slide deck (auto-numbered via JS)
+- `client/public/showcase/` — Screenshot images for showcase tools
 - `backup-handout.html` — Offline backup with all prompts, ideas, and session plan
 
 ## Conventions
