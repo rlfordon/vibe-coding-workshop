@@ -730,47 +730,117 @@ export const EVENT_CONFIGS = {
         tags: ['hackathon', 'legal tech', 'community'],
       },
     ],
-    resources: [
-      {
-        title: "Can't Stop, Won't Stop: One Semester, Eight Vibe-Coded Teaching Tools",
-        source: 'AI Law Librarians',
-        url: 'https://www.ailawlibrarians.com/2026/03/04/cant-stop-wont-stop-one-semester-eight-vibe-coded-teaching-tools/',
+    resources: {
+      galleries: {
+        label: 'Galleries & examples',
+        tagline: 'Browse what others have built',
+        items: [
+          {
+            title: "Jamie's collection of vibe-coded apps",
+            url: 'https://jamievibes.replit.app/',
+            description: "Dozens of legal tools one lawyer built solo \u2014 proof of what's possible without a dev team.",
+          },
+          {
+            title: "Barbora Obracajova's Legal Tech Gallery",
+            source: 'Lovable',
+            url: 'https://legaltechgallery.lovable.app/',
+            description: 'Curated gallery of AI-built legal tech, organized by use case.',
+          },
+          {
+            title: 'case.dev Gallery',
+            source: 'case.dev',
+            url: 'https://case.dev/gallery',
+            description: 'Production legal AI apps running at real law firms \u2014 what these tools look like at scale.',
+          },
+          {
+            title: 'LegalQuants Hackathon #LQ001',
+            source: 'LegalQuants',
+            url: 'https://www.legalquants.com/hackathons#LQ001',
+            description: 'Twenty legal AI apps built in one week, judged on creativity and production readiness.',
+          },
+          {
+            title: 'LegalQuants Hackathon #LQ002',
+            source: 'LegalQuants',
+            url: 'https://www.legalquants.com/hackathons#LQ002',
+            description: 'Second hackathon (March 2026), in-house counsel from around the world.',
+          },
+        ],
       },
-      {
-        title: 'Jamie Tso Interview: Vibe-Coding Your Own Legal AI Tools',
-        source: 'Artificial Lawyer',
-        url: 'https://www.artificiallawyer.com/2026/01/05/jamie-tso-interview-vibe-coding-your-own-legal-ai-tools/',
+      readWatch: {
+        label: 'Read & watch',
+        tagline: "Learn from others' experience",
+        items: [
+          {
+            title: 'Jamie Tso Interview: Vibe-Coding Your Own Legal AI Tools',
+            source: 'Artificial Lawyer',
+            url: 'https://www.artificiallawyer.com/2026/01/05/jamie-tso-interview-vibe-coding-your-own-legal-ai-tools/',
+            description: 'How a Clifford Chance associate started building his own tools and what it changed about his practice.',
+          },
+          {
+            title: 'Built on a Weekend: Damien Riehl & Mike Bommarito',
+            source: 'YouTube',
+            url: 'https://www.youtube.com/watch?v=kTh08RbdFlg',
+            description: 'Two legal tech veterans demo what vibe coding can actually produce in a weekend.',
+          },
+          {
+            title: "Can't Stop, Won't Stop: One Semester, Eight Vibe-Coded Teaching Tools",
+            source: 'AI Law Librarians',
+            url: 'https://www.ailawlibrarians.com/2026/03/04/cant-stop-wont-stop-one-semester-eight-vibe-coded-teaching-tools/',
+            description: 'Eight teaching tools built in one semester, with honest notes on what worked.',
+          },
+          {
+            title: 'Vibe Coding: Best Practices for Prompting',
+            source: 'Supabase',
+            url: 'https://supabase.com/blog/vibe-coding-best-practices-for-prompting',
+            description: 'Practical techniques for writing better prompts when building.',
+          },
+          {
+            title: 'Secure Vibe Coding Guide',
+            source: 'Cloud Security Alliance',
+            url: 'https://cloudsecurityalliance.org/blog/2025/04/09/secure-vibe-coding-guide',
+            description: 'What to watch out for \u2014 especially if handling client data.',
+          },
+        ],
       },
-      {
-        title: "Jamie's collection of vibe-coded apps",
-        url: 'https://jamievibes.replit.app/',
+      allInOne: {
+        label: 'One-stop platforms',
+        tagline: 'Build and deploy in one place',
+        items: [
+          {
+            title: 'Replit',
+            url: 'https://replit.com',
+            description: "Vibe-code and deploy in the browser \u2014 no local setup needed. Good for quick projects and prototypes; pricing can scale with use.",
+          },
+          {
+            title: 'Lovable',
+            url: 'https://lovable.dev',
+            description: 'Similar approach to Replit: build a full web app in the browser and deploy with one click. Strong for rapid prototyping without touching a terminal.',
+          },
+        ],
       },
-      {
-        title: "Barbora Obracajova's Legal Tech Gallery",
-        source: 'Lovable',
-        url: 'https://legaltechgallery.lovable.app/',
+      developerStack: {
+        label: 'Developer stack',
+        tagline: 'Maximum flexibility \u2014 requires installing a few tools',
+        items: [
+          {
+            title: 'Claude Code',
+            source: 'Anthropic',
+            url: 'https://claude.com/claude-code',
+            description: 'AI coding assistant that runs on your computer. Handles multi-file projects and iterative debugging \u2014 more capable than the all-in-one platforms for serious work.',
+          },
+          {
+            title: 'GitHub',
+            url: 'https://github.com',
+            description: 'Free code hosting. Connects your project to Render so pushing an update refreshes your live site, and gives you a history so you can undo mistakes.',
+          },
+          {
+            title: 'Render',
+            url: 'https://render.com',
+            description: 'Free-tier web hosting. Connects to GitHub and redeploys on push. Works with Canvas exports or full Claude Code projects.',
+          },
+        ],
       },
-      {
-        title: 'LegalQuants Hackathon #LQ001',
-        source: 'LegalQuants',
-        url: 'https://www.legalquants.com/hackathons#LQ001',
-      },
-      {
-        title: 'LegalQuants Hackathon #LQ002',
-        source: 'LegalQuants',
-        url: 'https://www.legalquants.com/hackathons#LQ002',
-      },
-      {
-        title: 'Secure Vibe Coding Guide',
-        source: 'Cloud Security Alliance',
-        url: 'https://cloudsecurityalliance.org/blog/2025/04/09/secure-vibe-coding-guide',
-      },
-      {
-        title: 'Vibe Coding: Best Practices for Prompting',
-        source: 'Supabase',
-        url: 'https://supabase.com/blog/vibe-coding-best-practices-for-prompting',
-      },
-    ],
+    },
   },
 };
 
