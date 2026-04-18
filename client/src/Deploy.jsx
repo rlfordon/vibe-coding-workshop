@@ -10,9 +10,9 @@ export default function Deploy() {
           Deploy Your <em className="text-[#BA0C2F] italic">Vibe-Coded</em> App
         </h1>
         <p className="text-slate-500 text-[1.05rem] max-w-[540px]">
-          You built something in Gemini Canvas. Here's how to get it running on
-          your own computer or published to an actual website — no coding
-          experience required.
+          You built something in Gemini Canvas. Here's how to share it — from
+          just sending a link (10 seconds) to publishing it at a URL you own
+          (a few minutes). No coding experience required.
         </p>
         <p className="text-slate-500 text-[1.05rem] max-w-[540px] mt-4">
           Juliet Edjere wrote a{' '}
@@ -33,14 +33,18 @@ export default function Deploy() {
       {/* 00 — The Big Picture */}
       <Section number="00" title="The Big Picture">
         <p className="mb-4 text-slate-800 leading-relaxed">
-          What you built in Gemini Canvas is a single HTML file. That file
-          contains everything your app needs — the structure, the styling, and
-          the logic. Because it's self-contained, deploying it is surprisingly
-          simple. You have two options:
+          What you built in Gemini Canvas is a single HTML file containing
+          everything your app needs — the structure, the styling, and the
+          logic. You have three ways to share it:
         </p>
         <ComparisonTable
           headers={['Option', 'What It Does', 'Best For']}
           rows={[
+            [
+              'Share the Link',
+              "Send Canvas's built-in share URL directly — no download, no setup",
+              'Quick demos, showing a colleague, in-session sharing',
+            ],
             [
               'Run Locally',
               'Opens in your browser like a regular webpage, but only on your machine',
@@ -48,18 +52,53 @@ export default function Deploy() {
             ],
             [
               'Host on a Website',
-              'Publishes to a real URL anyone can visit',
-              'Sharing with others, portfolio pieces, class presentations',
+              'Publishes to a real URL you own that anyone can visit',
+              'Sharing widely, portfolio pieces, tools you keep updating',
             ],
           ]}
         />
       </Section>
 
-      {/* 01 — Get Your Code */}
-      <Section number="01" title="Get Your Code Out of Gemini Canvas">
+      {/* 01 — Share the Link */}
+      <Section number="01" title="Shortcut — Share the Canvas Link">
         <p className="mb-4 text-slate-800 leading-relaxed">
-          Before you can do anything, you need to copy the raw HTML code from
-          Canvas.
+          Gemini Canvas lets you share your app as a link. The recipient clicks
+          and sees your working app in their browser — no downloads, no setup.
+          This is the fastest way to get your tool in someone else's hands.
+        </p>
+
+        <Step num="Step 1">
+          In your Canvas project, click <strong>Share</strong> (top-right
+          corner). Gemini will generate a public URL.
+        </Step>
+
+        <Step num="Step 2">
+          Copy the URL. It'll look like{' '}
+          <Code>https://gemini.google.com/share/...</Code>
+        </Step>
+
+        <Step num="Step 3">
+          Send it. Anyone with the link can open your app.
+        </Step>
+
+        <Callout label="Heads up">
+          The viewer may be asked to sign into a Google account to see the
+          share. You don't own the URL — it belongs to Google and could change
+          or expire. For something you want to own and keep updating, use one
+          of the options below.
+        </Callout>
+
+        <p className="text-slate-500 text-[0.95rem] mb-4">
+          Claude Artifacts works similarly — look for a <strong>Publish</strong>{' '}
+          button, which creates a public URL at <Code>claude.site</Code>.
+        </p>
+      </Section>
+
+      {/* 02 — Get Your Code */}
+      <Section number="02" title="Get Your Code Out of Gemini Canvas">
+        <p className="mb-4 text-slate-800 leading-relaxed">
+          For a URL you own (Options A, B, or C below), you first need to copy
+          the raw HTML code out of Canvas.
         </p>
 
         <Step num="Step 1">
@@ -111,8 +150,8 @@ export default function Deploy() {
         </Callout>
       </Section>
 
-      {/* 02 — Run Locally */}
-      <Section number="02" title="Option A — Run It Locally">
+      {/* 03 — Run Locally */}
+      <Section number="03" title="Option A — Run It Locally">
         <p className="mb-4 text-slate-800 leading-relaxed">
           This is the fastest way to see your app in action. It's literally one
           step.
@@ -144,8 +183,8 @@ export default function Deploy() {
         </p>
       </Section>
 
-      {/* 03 — Netlify Drop */}
-      <Section number="03" title="Option B — Publish With Netlify Drop">
+      {/* 04 — Netlify Drop */}
+      <Section number="04" title="Option B — Publish With Netlify Drop">
         <p className="mb-4 text-slate-800 leading-relaxed">
           Netlify Drop is the fastest way to get your app on a real URL. No
           command line, no Git, no technical setup. It's drag-and-drop.
@@ -187,8 +226,8 @@ export default function Deploy() {
         </p>
       </Section>
 
-      {/* 04 — GitHub Pages */}
-      <Section number="04" title="Option C — Publish With GitHub Pages">
+      {/* 05 — GitHub Pages */}
+      <Section number="05" title="Option C — Publish With GitHub Pages">
         <p className="mb-4 text-slate-800 leading-relaxed">
           GitHub Pages gives you a permanent, free URL and is great if you want
           to keep updating your project over time. It requires a few more steps.
@@ -249,25 +288,27 @@ export default function Deploy() {
       {/* Which Should I Use */}
       <Section title="Which Should I Use?">
         <ComparisonTable
-          headers={['', 'Local', 'Netlify Drop', 'GitHub Pages']}
+          headers={['', 'Share Link', 'Local', 'Netlify Drop', 'GitHub Pages']}
           rows={[
-            ['Speed', 'Instant', '~30 seconds', '~5 minutes'],
-            ['Shareable URL', 'No', 'Yes', 'Yes'],
-            ['Account needed', 'No', 'Optional', 'Yes (free)'],
+            ['Speed', '10 seconds', 'Instant', '~30 seconds', '~5 minutes'],
+            ['Shareable URL', 'Yes', 'No', 'Yes', 'Yes'],
+            ['You own the URL', 'No', 'N/A', 'With account', 'Yes'],
+            ['Account needed', 'No', 'No', 'Optional', 'Yes (free)'],
             [
               'Easy updates',
+              'Edit in Canvas',
               'Just edit the file',
               'Re-drag the folder',
               'Edit on GitHub',
             ],
-            ['Stays up forever', 'N/A', 'With account', 'Yes'],
+            ['Stays up forever', "Google's call", 'N/A', 'With account', 'Yes'],
           ]}
         />
         <p className="mb-4 text-slate-800 leading-relaxed">
-          For a quick demo or class presentation, go local. For sharing a link
-          with classmates or a professor, Netlify Drop is the fastest. For
-          something you want to keep in your portfolio, GitHub Pages gives you
-          the most control.
+          For showing a colleague right now, share the Canvas link. For a
+          personal demo on your laptop, go local. For a link you'll send more
+          widely, Netlify Drop is the fastest upgrade. For something you want
+          to keep updating at a URL you control, GitHub Pages.
         </p>
       </Section>
 
