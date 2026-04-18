@@ -40,11 +40,47 @@ export default function Deploy() {
         </p>
       </Section>
 
-      {/* 01 — Get Your Code */}
-      <Section number="01" title="Get Your Code Out of Gemini Canvas">
+      {/* 01 — Shortcut: Share the Canvas Link */}
+      <Section number="01" title="Shortcut — Share the Canvas Link">
         <p className="mb-4 text-slate-800 leading-relaxed">
-          Before you can do anything, you need to copy the raw HTML code from
-          Canvas.
+          Gemini Canvas lets you share your app as a link. The recipient clicks
+          and sees your working app in their browser — no downloads, no
+          hosting, no code extraction. For a quick demo or showing a colleague
+          what you built, this is all you need.
+        </p>
+
+        <Step num="Step 1">
+          In your Canvas project, click <strong>Share</strong> (top-right
+          corner). Gemini will generate a public URL.
+        </Step>
+
+        <Step num="Step 2">
+          Copy the URL. It'll look like{' '}
+          <Code>https://gemini.google.com/share/...</Code>
+        </Step>
+
+        <Step num="Step 3">
+          Send it. Anyone with the link can open your app.
+        </Step>
+
+        <Callout label="Heads up">
+          The viewer may be asked to sign into a Google account to see the
+          share. You don't own the URL — it belongs to Google and could change
+          or expire. For something you want to own and keep updating, use
+          Options A, B, or C below.
+        </Callout>
+
+        <p className="text-slate-500 text-[0.95rem] mb-4">
+          Claude Artifacts works similarly — look for a <strong>Publish</strong>{' '}
+          button, which creates a public URL at <Code>claude.site</Code>.
+        </p>
+      </Section>
+
+      {/* 02 — Get Your Code */}
+      <Section number="02" title="Get Your Code Out of Gemini Canvas">
+        <p className="mb-4 text-slate-800 leading-relaxed">
+          For Options A, B, or C below, you need to first copy the raw HTML
+          code out of Canvas.
         </p>
 
         <Step num="Step 1">
@@ -96,8 +132,8 @@ export default function Deploy() {
         </Callout>
       </Section>
 
-      {/* 02 — Security: What data does it touch? */}
-      <Section number="02" title="Before You Share It — What Data Does It Touch?">
+      {/* 03 — Security: What data does it touch? */}
+      <Section number="03" title="Before You Share It — What Data Does It Touch?">
         <p className="mb-4 text-slate-800 leading-relaxed">
           The right way to deploy depends less on "can I publish this?" and more
           on <strong>what data the tool touches and who has access</strong>.
