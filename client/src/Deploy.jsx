@@ -36,23 +36,8 @@ export default function Deploy() {
           What you built in Gemini Canvas is a single HTML file. That file
           contains everything your app needs — the structure, the styling, and
           the logic. Because it's self-contained, deploying it is surprisingly
-          simple. You have two options:
+          simple.
         </p>
-        <ComparisonTable
-          headers={['Option', 'What It Does', 'Best For']}
-          rows={[
-            [
-              'Run Locally',
-              'Opens in your browser like a regular webpage, but only on your machine',
-              'Testing, personal use, demos on your laptop',
-            ],
-            [
-              'Host on a Website',
-              'Publishes to a real URL anyone can visit',
-              'Sharing with others, portfolio pieces, class presentations',
-            ],
-          ]}
-        />
       </Section>
 
       {/* 01 — Get Your Code */}
@@ -111,8 +96,48 @@ export default function Deploy() {
         </Callout>
       </Section>
 
+      {/* Three Options — Visual Summary */}
+      <div className="mb-8 mt-12">
+        <p className="font-mono text-xs uppercase tracking-[0.15em] text-slate-500 mb-4">
+          Pick Your Path
+        </p>
+        <div className="grid sm:grid-cols-3 gap-3">
+          <OptionSummary
+            targetId="option-a"
+            letter="A"
+            accent="#D97706"
+            title="Run Locally"
+            subtitle="On your machine"
+            speed="Instant"
+          />
+          <OptionSummary
+            targetId="option-b"
+            letter="B"
+            accent="#BA0C2F"
+            title="Netlify Drop"
+            subtitle="Drag & drop to a live URL"
+            speed="~30 seconds"
+          />
+          <OptionSummary
+            targetId="option-c"
+            letter="C"
+            accent="#1E3A8A"
+            title="GitHub Pages"
+            subtitle="Permanent free hosting"
+            speed="~5 minutes"
+          />
+        </div>
+      </div>
+
       {/* 02 — Run Locally */}
-      <Section number="02" title="Option A — Run It Locally">
+      <OptionSection
+        id="option-a"
+        letter="A"
+        accent="#D97706"
+        title="Run It Locally"
+        subtitle="Open the file on your computer — or email it to someone else to open on theirs."
+        badges={['Instant', 'No account', 'Any modern browser']}
+      >
         <p className="mb-4 text-slate-800 leading-relaxed">
           This is the fastest way to see your app in action. It's literally one
           step.
@@ -126,12 +151,20 @@ export default function Deploy() {
           is now running.
         </Step>
 
-        <p className="text-slate-500 text-[0.95rem] mb-4">
+        <p className="text-slate-500 text-[0.95rem] mb-5">
           The URL bar will show something like{' '}
           <Code>file:///C:/Users/you/Desktop/index.html</Code>. This is normal —
           it's reading the file directly from your computer. No one else can
           access it.
         </p>
+
+        <Callout label="Share it by email">
+          Want someone else to use the app? Just attach{' '}
+          <Code>index.html</Code> to an email. The recipient downloads it,
+          double-clicks it, and it opens in their browser — no install, no
+          account, no URL needed. Works in any modern browser (Chrome, Safari,
+          Edge, Firefox).
+        </Callout>
 
         <h3 className="font-semibold text-[1.1rem] mt-6 mb-3 text-slate-900">
           When local won't work
@@ -142,10 +175,17 @@ export default function Deploy() {
           restrictions. If your app seems broken locally but worked in Canvas,
           this is probably why. Jump to Option B instead.
         </p>
-      </Section>
+      </OptionSection>
 
       {/* 03 — Netlify Drop */}
-      <Section number="03" title="Option B — Publish With Netlify Drop">
+      <OptionSection
+        id="option-b"
+        letter="B"
+        accent="#BA0C2F"
+        title="Publish With Netlify Drop"
+        subtitle="Drag a folder onto a webpage and get a live URL anyone can visit."
+        badges={['~30 seconds', 'Account optional', 'Shareable link']}
+      >
         <p className="mb-4 text-slate-800 leading-relaxed">
           Netlify Drop is the fastest way to get your app on a real URL. No
           command line, no Git, no technical setup. It's drag-and-drop.
@@ -185,10 +225,17 @@ export default function Deploy() {
           the site later, or prevent it from expiring. Without an account, the
           site stays up temporarily.
         </p>
-      </Section>
+      </OptionSection>
 
       {/* 04 — GitHub Pages */}
-      <Section number="04" title="Option C — Publish With GitHub Pages">
+      <OptionSection
+        id="option-c"
+        letter="C"
+        accent="#1E3A8A"
+        title="Publish With GitHub Pages"
+        subtitle="A permanent, free URL you can keep updating over time."
+        badges={['~5 minutes', 'Free GitHub account', 'Permanent URL']}
+      >
         <p className="mb-4 text-slate-800 leading-relaxed">
           GitHub Pages gives you a permanent, free URL and is great if you want
           to keep updating your project over time. It requires a few more steps.
@@ -242,7 +289,7 @@ export default function Deploy() {
           new code, and commit the changes. GitHub Pages will automatically
           redeploy within a couple minutes.
         </Callout>
-      </Section>
+      </OptionSection>
 
       <hr className="border-t border-slate-200 my-10" />
 
@@ -370,6 +417,99 @@ function Code({ children }) {
     <code className="font-mono text-[0.88em] bg-red-50 text-[#BA0C2F] px-1.5 py-0.5 rounded">
       {children}
     </code>
+  );
+}
+
+function OptionSummary({ targetId, letter, accent, title, subtitle, speed }) {
+  const handleClick = () => {
+    const el = document.getElementById(targetId);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+  return (
+    <button
+      type="button"
+      onClick={handleClick}
+      className="text-left w-full border border-slate-200 rounded-md p-4 bg-white hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+      style={{ borderTop: `4px solid ${accent}`, '--tw-ring-color': accent }}
+    >
+      <div className="flex items-start gap-3 mb-2">
+        <div
+          className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center font-[BioRhyme,serif] text-lg font-extrabold text-white"
+          style={{ background: accent }}
+        >
+          {letter}
+        </div>
+        <div className="min-w-0">
+          <p className="font-mono text-[0.7rem] uppercase tracking-[0.1em] text-slate-500 leading-tight">
+            Option {letter}
+          </p>
+          <h3 className="font-[BioRhyme,serif] font-bold text-slate-900 leading-tight text-[1.05rem] mt-0.5">
+            {title}
+          </h3>
+        </div>
+      </div>
+      <p className="text-slate-600 text-[0.9rem] leading-snug mb-3">{subtitle}</p>
+      <p
+        className="font-mono text-[0.7rem] uppercase tracking-[0.1em] font-medium flex items-center gap-1"
+        style={{ color: accent }}
+      >
+        {speed}
+        <span aria-hidden="true">→</span>
+      </p>
+    </button>
+  );
+}
+
+function OptionSection({ id, letter, accent, title, subtitle, badges, children }) {
+  return (
+    <section
+      id={id}
+      className="mb-10 rounded-lg overflow-hidden border border-slate-200 bg-white scroll-mt-6"
+      style={{ borderTop: `6px solid ${accent}` }}
+    >
+      <div
+        className="px-5 sm:px-6 py-5"
+        style={{ background: `${accent}0D` }}
+      >
+        <div className="flex items-start gap-4">
+          <div
+            className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center font-[BioRhyme,serif] text-2xl font-extrabold text-white shadow-sm"
+            style={{ background: accent }}
+          >
+            {letter}
+          </div>
+          <div className="min-w-0 pt-0.5">
+            <p
+              className="font-mono text-[0.7rem] uppercase tracking-[0.15em] font-medium mb-1"
+              style={{ color: accent }}
+            >
+              Option {letter}
+            </p>
+            <h2 className="font-[BioRhyme,serif] text-xl sm:text-2xl font-bold leading-tight text-slate-900">
+              {title}
+            </h2>
+            {subtitle && (
+              <p className="text-slate-600 text-[0.95rem] leading-snug mt-2">
+                {subtitle}
+              </p>
+            )}
+          </div>
+        </div>
+        {badges && badges.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-4 pl-16">
+            {badges.map((badge, i) => (
+              <span
+                key={i}
+                className="inline-block text-[0.72rem] font-mono uppercase tracking-[0.08em] px-2 py-1 rounded-full bg-white border border-slate-200 text-slate-700"
+              >
+                {badge}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+      <div className="px-5 sm:px-6 py-5">{children}</div>
+    </section>
   );
 }
 
