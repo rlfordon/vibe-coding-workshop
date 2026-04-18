@@ -1,3 +1,66 @@
+const PATHS = [
+  {
+    id: 'path-share',
+    letter: 'A',
+    accent: '#047857',
+    title: 'Share the Canvas Link',
+    subtitle: "Send Canvas's built-in share URL — no download, no hosting.",
+    badges: ['10 seconds', 'Canvas share URL', 'No code extraction'],
+    speed: '10 sec',
+    summary: 'Google-owned URL (viewer may need sign-in)',
+    bestFor: 'Quick demo for a colleague',
+    needsFile: false,
+  },
+  {
+    id: 'path-email',
+    letter: 'B',
+    accent: '#0891B2',
+    title: 'Email the HTML File',
+    subtitle: 'Attach the file. Recipient downloads and double-clicks.',
+    badges: ['~1 minute', 'No account', 'Works in any browser'],
+    speed: '~1 min',
+    summary: 'No URL — they run it on their computer',
+    bestFor: 'One or two specific people',
+    needsFile: true,
+  },
+  {
+    id: 'path-local',
+    letter: 'C',
+    accent: '#D97706',
+    title: 'Run Locally',
+    subtitle: 'Open the file on your own machine. No sharing involved.',
+    badges: ['Instant', 'No account', 'Private to you'],
+    speed: 'Instant',
+    summary: 'Runs only on your computer',
+    bestFor: 'Testing, personal use',
+    needsFile: true,
+  },
+  {
+    id: 'path-netlify',
+    letter: 'D',
+    accent: '#BA0C2F',
+    title: 'Netlify Drop',
+    subtitle: 'Drag a folder onto a webpage and get a live URL.',
+    badges: ['~30 seconds', 'Account optional', 'Public URL'],
+    speed: '~30 sec',
+    summary: 'Public URL (random address)',
+    bestFor: 'Sharing widely, short-term',
+    needsFile: true,
+  },
+  {
+    id: 'path-github',
+    letter: 'E',
+    accent: '#1E3A8A',
+    title: 'GitHub Pages',
+    subtitle: 'Permanent, free URL you can keep updating over time.',
+    badges: ['~5 minutes', 'Free GitHub account', 'Permanent URL'],
+    speed: '~5 min',
+    summary: 'Permanent URL you own',
+    bestFor: 'Tools you keep updating',
+    needsFile: true,
+  },
+];
+
 export default function Deploy() {
   return (
     <div className="max-w-2xl mx-auto px-4 py-12">
@@ -7,80 +70,67 @@ export default function Deploy() {
           Quick Reference Guide
         </p>
         <h1 className="font-[BioRhyme,serif] text-3xl sm:text-4xl font-extrabold leading-tight mb-3">
-          Deploy Your <em className="text-[#BA0C2F] italic">Vibe-Coded</em> App
+          Share Your <em className="text-[#BA0C2F] italic">Vibe-Coded</em> App
         </h1>
         <p className="text-slate-500 text-[1.05rem] max-w-[540px]">
-          You built something in Gemini Canvas. Here's how to get it running on
-          your own computer or published to an actual website — no coding
-          experience required.
-        </p>
-        <p className="text-slate-500 text-[1.05rem] max-w-[540px] mt-4">
-          Juliet Edjere wrote a{' '}
-          <a
-            href="https://blog.julietedjere.com/posts/vibe-coding-how-to-host-websites-from-gemini-canvas-on-netlify-for-free"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#BA0C2F] underline underline-offset-2 hover:decoration-2"
-          >
-            great guide
-          </a>{' '}
-          on deploying Gemini Canvas apps to Netlify — read it for more detail.
-          Below are the basic steps, plus an additional option for hosting on
-          GitHub Pages.
+          You built something in Gemini Canvas. Five ways to get it into
+          someone else's hands — from a 10-second share link to a permanent
+          URL you own. No coding experience required.
         </p>
       </div>
 
-      {/* 00 — The Big Picture */}
-      <Section number="00" title="The Big Picture">
-        <p className="mb-4 text-slate-800 leading-relaxed">
-          What you built in Gemini Canvas is a single HTML file. That file
-          contains everything your app needs — the structure, the styling, and
-          the logic. Because it's self-contained, deploying it is surprisingly
-          simple.
+      {/* Pick Your Path — unified decision table */}
+      <Section title="Pick Your Path">
+        <p className="mb-5 text-slate-800 leading-relaxed">
+          Each row below is a complete deployment option. Click the name to
+          jump to the steps.
         </p>
+        <PathsDecisionTable />
       </Section>
 
-      {/* 01 — Shortcut: Share the Canvas Link */}
-      <Section number="01" title="Shortcut — Share the Canvas Link">
+      {/* Gate: Data sensitivity */}
+      <Section title="Before You Publish — What Data Does It Touch?">
         <p className="mb-4 text-slate-800 leading-relaxed">
-          Gemini Canvas lets you share your app as a link. The recipient clicks
-          and sees your working app in their browser — no downloads, no
-          hosting, no code extraction. For a quick demo or showing a colleague
-          what you built, this is all you need.
+          The right path depends less on "can I publish this?" and more on{' '}
+          <strong>what data the tool touches and who has access</strong>.
+          A fee calculator with no personal information is very different from
+          an intake form that collects names, case facts, or PII.
         </p>
 
-        <Step num="Step 1">
-          In your Canvas project, click <strong>Share</strong> (top-right
-          corner). Gemini will generate a public URL.
-        </Step>
+        <div className="space-y-3 my-5">
+          <SensitivityTier
+            level="safe"
+            label="No sensitive data"
+            body="Calculators, decision trees, reference tools, educational demos. Anything where the user's inputs don't need to be protected. Any option above works — pick whichever is easiest."
+          />
+          <SensitivityTier
+            level="caution"
+            label="Internal or confidential use"
+            body="Tools for your own desk or your team, or anything that handles client information. Keep it local (C) or behind an internal share. Think twice before putting it on a public URL."
+          />
+          <SensitivityTier
+            level="stop"
+            label="Client-facing or collecting sensitive data"
+            body="Needs a real security review — HTTPS, access controls, data-handling policies, and your IT or security team involved. Netlify Drop or GitHub Pages alone are not enough."
+          />
+        </div>
 
-        <Step num="Step 2">
-          Copy the URL. It'll look like{' '}
-          <Code>https://gemini.google.com/share/...</Code>
-        </Step>
-
-        <Step num="Step 3">
-          Send it. Anyone with the link can open your app.
-        </Step>
-
-        <Callout label="Heads up">
-          The viewer may be asked to sign into a Google account to see the
-          share. You don't own the URL — it belongs to Google and could change
-          or expire. For something you want to own and keep updating, use
-          Options A, B, or C below.
+        <Callout label="For legal professionals">
+          Confidentiality rules (e.g., ABA Model Rule 1.6) apply to where your
+          client data lives and who can reach it. Also remember: when you
+          prompt Gemini or AI Studio, those prompts are processed on Google's
+          servers — don't paste real client facts into the chat while building.
+          When in doubt, run the tool locally and loop in your IT or security
+          team before publishing.
         </Callout>
-
-        <p className="text-slate-500 text-[0.95rem] mb-4">
-          Claude Artifacts works similarly — look for a <strong>Publish</strong>{' '}
-          button, which creates a public URL at <Code>claude.site</Code>.
-        </p>
       </Section>
 
-      {/* 02 — Get Your Code */}
-      <Section number="02" title="Get Your Code Out of Gemini Canvas">
+      {/* Prerequisite (only for B/C/D/E) */}
+      <Section title="Prerequisite — Get Your Code Out of Canvas">
         <p className="mb-4 text-slate-800 leading-relaxed">
-          For Options A, B, or C below, you need to first copy the raw HTML
-          code out of Canvas.
+          Required for Options <strong>B, C, D, and E</strong>. (Option A —
+          Share the Canvas Link — skips this entirely and uses Canvas's share
+          URL directly.)
         </p>
 
         <Step num="Step 1">
@@ -124,145 +174,119 @@ export default function Deploy() {
         </Step>
 
         <Callout label="Important">
-          The file must end in <Code>. html</Code>, not <Code>.txt</Code>. On
-          Windows, make sure "Save as type" is set to "All Files" in Notepad, or
-          it may silently add <Code>.txt</Code> to the end. If you see{' '}
-          <Code>index.html.txt</Code> in your file explorer, rename it to remove
-          the <Code>.txt</Code>.
+          The file must end in <Code>.html</Code>, not <Code>.txt</Code>. On
+          Windows, make sure "Save as type" is set to "All Files" in Notepad,
+          or it may silently add <Code>.txt</Code> to the end. If you see{' '}
+          <Code>index.html.txt</Code> in your file explorer, rename it to
+          remove the <Code>.txt</Code>.
         </Callout>
       </Section>
 
-      {/* 03 — Security: What data does it touch? */}
-      <Section number="03" title="Before You Share It — What Data Does It Touch?">
+      {/* Option A — Share the Canvas Link */}
+      <OptionSection {...PATHS[0]}>
         <p className="mb-4 text-slate-800 leading-relaxed">
-          The right way to deploy depends less on "can I publish this?" and more
-          on <strong>what data the tool touches and who has access</strong>.
-          A fee calculator with no personal information is very different from
-          an intake form that collects names, case facts, or PII.
+          Gemini Canvas lets you publish your app as a link. The recipient
+          clicks and sees your working app in their browser — no downloads, no
+          hosting, no code extraction.
         </p>
 
-        <div className="space-y-3 my-5">
-          <SensitivityTier
-            level="safe"
-            label="No sensitive data"
-            body="Calculators, decision trees, reference tools, educational demos. Anything where the user's inputs don't need to be protected. Any option below works — pick whichever is easiest."
-          />
-          <SensitivityTier
-            level="caution"
-            label="Internal or confidential use"
-            body="Tools for your own desk or your team, or anything that handles client information. Keep it local or behind an internal share. Think twice before putting it on a public URL."
-          />
-          <SensitivityTier
-            level="stop"
-            label="Client-facing or collecting sensitive data"
-            body="Needs a real security review — HTTPS, access controls, data-handling policies, and your IT or security team involved. Netlify/GitHub Pages alone are not enough."
-          />
-        </div>
+        <Step num="Step 1">
+          In your Canvas project, click <strong>Share</strong> (top-right
+          corner). Gemini will generate a public URL.
+        </Step>
 
-        <Callout label="For legal professionals">
-          Confidentiality rules (e.g., ABA Model Rule 1.6) apply to where your
-          client data lives and who can reach it. Also remember: when you
-          prompt Gemini or AI Studio, those prompts are processed on Google's
-          servers — don't paste real client facts into the chat while building.
-          When in doubt, run the tool locally and loop in your IT or security
-          team before publishing.
+        <Step num="Step 2">
+          Copy the URL. It'll look like{' '}
+          <Code>https://gemini.google.com/share/...</Code>
+        </Step>
+
+        <Step num="Step 3">
+          Send it. Anyone with the link can open your app.
+        </Step>
+
+        <Callout label="Heads up">
+          The viewer may be asked to sign into a Google account to see the
+          share. You don't own the URL — it belongs to Google and could change
+          or expire. For something you want to own and keep updating, use
+          Option D or E.
         </Callout>
-      </Section>
 
-      {/* Three Options — Visual Summary */}
-      <div className="mb-8 mt-12">
-        <p className="font-mono text-xs uppercase tracking-[0.15em] text-slate-500 mb-4">
-          Pick Your Path
+        <p className="text-slate-500 text-[0.95rem] mb-0">
+          Claude Artifacts works similarly — look for a <strong>Publish</strong>{' '}
+          button, which creates a public URL at <Code>claude.site</Code>.
         </p>
-        <div className="grid sm:grid-cols-3 gap-3">
-          <OptionSummary
-            targetId="option-a"
-            letter="A"
-            accent="#D97706"
-            title="Run Locally"
-            subtitle="On your machine"
-            speed="Instant"
-          />
-          <OptionSummary
-            targetId="option-b"
-            letter="B"
-            accent="#BA0C2F"
-            title="Netlify Drop"
-            subtitle="Drag & drop to a live URL"
-            speed="~30 seconds"
-          />
-          <OptionSummary
-            targetId="option-c"
-            letter="C"
-            accent="#1E3A8A"
-            title="GitHub Pages"
-            subtitle="Permanent free hosting"
-            speed="~5 minutes"
-          />
-        </div>
-      </div>
+      </OptionSection>
 
-      {/* 02 — Run Locally */}
-      <OptionSection
-        id="option-a"
-        letter="A"
-        accent="#D97706"
-        title="Run It Locally"
-        subtitle="Open the file on your computer — or email it to someone else to open on theirs."
-        badges={['Instant', 'No account', 'Any modern browser']}
-      >
+      {/* Option B — Email the HTML File */}
+      <OptionSection {...PATHS[1]}>
         <p className="mb-4 text-slate-800 leading-relaxed">
-          This is the fastest way to see your app in action. It's literally one
-          step.
+          Treat your app like any other file — attach it to an email and the
+          recipient runs it on their own computer. No URL needed, no account
+          needed, no public exposure.
         </p>
+
+        <Step num="Prereq">
+          Make sure you've done "Get Your Code Out of Canvas" above and have
+          an <Code>index.html</Code> file saved.
+        </Step>
+
+        <Step num="Step 1">
+          Attach <Code>index.html</Code> to an email to the person you want to
+          share it with.
+        </Step>
+
+        <Step num="Step 2">
+          They save the attachment, double-click it, and it opens in their
+          default browser. Works in Chrome, Safari, Edge, Firefox — any modern
+          browser.
+        </Step>
+
+        <Callout label="When email won't work">
+          Apps that need to call external services (like fetching live data)
+          may be blocked by browser security when opened as a local file. If
+          it worked in Canvas but not when opened from an email attachment,
+          use Option D instead.
+        </Callout>
+      </OptionSection>
+
+      {/* Option C — Run Locally */}
+      <OptionSection {...PATHS[2]}>
+        <p className="mb-4 text-slate-800 leading-relaxed">
+          This is for testing on your own machine. Nobody else can see it.
+        </p>
+
+        <Step num="Prereq">
+          Make sure you've done "Get Your Code Out of Canvas" above and have
+          an <Code>index.html</Code> file saved.
+        </Step>
 
         <Step num="That's it">
           <strong>
             Double-click <Code>index.html</Code>
           </strong>{' '}
-          in your file explorer. It will open in your default browser. Your app
-          is now running.
+          in your file explorer. It will open in your default browser. Your
+          app is now running.
         </Step>
 
-        <p className="text-slate-500 text-[0.95rem] mb-5">
+        <p className="text-slate-500 text-[0.95rem] mb-0">
           The URL bar will show something like{' '}
-          <Code>file:///C:/Users/you/Desktop/index.html</Code>. This is normal —
-          it's reading the file directly from your computer. No one else can
-          access it.
-        </p>
-
-        <Callout label="Share it by email">
-          Want someone else to use the app? Just attach{' '}
-          <Code>index.html</Code> to an email. The recipient downloads it,
-          double-clicks it, and it opens in their browser — no install, no
-          account, no URL needed. Works in any modern browser (Chrome, Safari,
-          Edge, Firefox).
-        </Callout>
-
-        <h3 className="font-semibold text-[1.1rem] mt-6 mb-3 text-slate-900">
-          When local won't work
-        </h3>
-        <p className="mb-4 text-slate-800 leading-relaxed">
-          Some apps that make API calls to external services (like fetching live
-          data) may not work when opened as a local file due to browser security
-          restrictions. If your app seems broken locally but worked in Canvas,
-          this is probably why. Jump to Option B instead.
+          <Code>file:///C:/Users/you/Desktop/index.html</Code>. That's normal —
+          your browser is reading the file directly from your computer, and
+          nobody else can reach it.
         </p>
       </OptionSection>
 
-      {/* 03 — Netlify Drop */}
-      <OptionSection
-        id="option-b"
-        letter="B"
-        accent="#BA0C2F"
-        title="Publish With Netlify Drop"
-        subtitle="Drag a folder onto a webpage and get a live URL anyone can visit."
-        badges={['~30 seconds', 'Account optional', 'Shareable link']}
-      >
+      {/* Option D — Netlify Drop */}
+      <OptionSection {...PATHS[3]}>
         <p className="mb-4 text-slate-800 leading-relaxed">
-          Netlify Drop is the fastest way to get your app on a real URL. No
-          command line, no Git, no technical setup. It's drag-and-drop.
+          Netlify Drop is the fastest way to get your app on a real public URL.
+          No command line, no Git — drag-and-drop.
         </p>
+
+        <Step num="Prereq">
+          Make sure you've done "Get Your Code Out of Canvas" above and have
+          an <Code>index.html</Code> file saved.
+        </Step>
 
         <Step num="Step 1">
           Create a new folder on your computer. Name it whatever you want —
@@ -284,35 +308,42 @@ export default function Deploy() {
 
         <Step num="Step 3">
           <strong>Drag your entire folder</strong> into the upload area on the
-          page. Not just the HTML file — the folder containing it.
+          page — not just the HTML file, the folder containing it.
         </Step>
 
         <Step num="Step 4">
           Wait a few seconds. Netlify will give you a live URL like{' '}
-          <Code>https://random-name-12345.netlify.app</Code>. Your app is now on
-          the internet.
+          <Code>https://random-name-12345.netlify.app</Code>. Your app is now
+          on the internet.
         </Step>
 
-        <p className="text-slate-500 text-[0.95rem] mb-4">
-          You can sign up for a free Netlify account to customize the URL, update
-          the site later, or prevent it from expiring. Without an account, the
-          site stays up temporarily.
+        <p className="text-slate-500 text-[0.95rem] mb-0">
+          You can sign up for a free Netlify account to customize the URL,
+          update the site later, or prevent it from expiring. Without an
+          account, the site stays up temporarily. For more detail, read{' '}
+          <a
+            href="https://blog.julietedjere.com/posts/vibe-coding-how-to-host-websites-from-gemini-canvas-on-netlify-for-free"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#BA0C2F] underline underline-offset-2 hover:decoration-2"
+          >
+            Juliet Edjere's guide
+          </a>
+          .
         </p>
       </OptionSection>
 
-      {/* 04 — GitHub Pages */}
-      <OptionSection
-        id="option-c"
-        letter="C"
-        accent="#1E3A8A"
-        title="Publish With GitHub Pages"
-        subtitle="A permanent, free URL you can keep updating over time."
-        badges={['~5 minutes', 'Free GitHub account', 'Permanent URL']}
-      >
+      {/* Option E — GitHub Pages */}
+      <OptionSection {...PATHS[4]}>
         <p className="mb-4 text-slate-800 leading-relaxed">
-          GitHub Pages gives you a permanent, free URL and is great if you want
-          to keep updating your project over time. It requires a few more steps.
+          GitHub Pages gives you a permanent URL and the easiest way to keep
+          updating your project over time. It takes a few more steps.
         </p>
+
+        <Step num="Prereq">
+          Make sure you've done "Get Your Code Out of Canvas" above and have
+          an <Code>index.html</Code> file saved.
+        </Step>
 
         <Step num="Step 1">
           Create a free account at{' '}
@@ -336,8 +367,8 @@ export default function Deploy() {
 
         <Step num="Step 3">
           On the next page, look for the link that says{' '}
-          <strong>"uploading an existing file"</strong> and click it. Drag your{' '}
-          <Code>index.html</Code> file in and click{' '}
+          <strong>"uploading an existing file"</strong> and click it. Drag
+          your <Code>index.html</Code> file in and click{' '}
           <strong>Commit changes</strong>.
         </Step>
 
@@ -358,38 +389,11 @@ export default function Deploy() {
 
         <Callout label="Updating your site">
           To update the app later, go to your repository on GitHub, click on{' '}
-          <Code>index.html</Code>, click the pencil icon to edit, paste in your
-          new code, and commit the changes. GitHub Pages will automatically
-          redeploy within a couple minutes.
+          <Code>index.html</Code>, click the pencil icon to edit, paste in
+          your new code, and commit the changes. GitHub Pages will
+          automatically redeploy within a couple minutes.
         </Callout>
       </OptionSection>
-
-      <hr className="border-t border-slate-200 my-10" />
-
-      {/* Which Should I Use */}
-      <Section title="Which Should I Use?">
-        <ComparisonTable
-          headers={['', 'Local', 'Netlify Drop', 'GitHub Pages']}
-          rows={[
-            ['Speed', 'Instant', '~30 seconds', '~5 minutes'],
-            ['Shareable URL', 'No', 'Yes', 'Yes'],
-            ['Account needed', 'No', 'Optional', 'Yes (free)'],
-            [
-              'Easy updates',
-              'Just edit the file',
-              'Re-drag the folder',
-              'Edit on GitHub',
-            ],
-            ['Stays up forever', 'N/A', 'With account', 'Yes'],
-          ]}
-        />
-        <p className="mb-4 text-slate-800 leading-relaxed">
-          For a quick demo or walkthrough, go local. For sharing a link with
-          colleagues, clients, or collaborators, Netlify Drop is the fastest.
-          For something you want to keep and keep updating, GitHub Pages gives
-          you the most control.
-        </p>
-      </Section>
 
       {/* Troubleshooting */}
       <Section title="Troubleshooting">
@@ -398,8 +402,8 @@ export default function Deploy() {
         </h3>
         <p className="mb-4 text-slate-800 leading-relaxed">
           Your file probably saved as <Code>.txt</Code> instead of{' '}
-          <Code>.html</Code>. Rename it so it ends in <Code>.html</Code> and try
-          opening it again.
+          <Code>.html</Code>. Rename it so it ends in <Code>.html</Code> and
+          try opening it again.
         </p>
 
         <h3 className="font-semibold text-[1.1rem] mt-5 mb-3 text-slate-900">
@@ -407,7 +411,7 @@ export default function Deploy() {
         </h3>
         <p className="mb-4 text-slate-800 leading-relaxed">
           Some apps call external APIs or load resources that require a web
-          server. Try hosting it on Netlify or GitHub Pages instead — this often
+          server. Try Option D or E instead — hosting on a real URL often
           fixes the problem.
         </p>
 
@@ -445,15 +449,10 @@ export default function Deploy() {
 
 /* ── Reusable sub-components ── */
 
-function Section({ number, title, children }) {
+function Section({ title, children }) {
   return (
     <section className="mb-10">
       <h2 className="font-[BioRhyme,serif] text-xl font-bold pb-2 mb-4 border-b border-slate-200">
-        {number && (
-          <span className="font-mono text-xs text-[#BA0C2F] mr-2 align-[2px]">
-            {number}
-          </span>
-        )}
         {title}
       </h2>
       {children}
@@ -527,43 +526,64 @@ function SensitivityTier({ level, label, body }) {
   );
 }
 
-function OptionSummary({ targetId, letter, accent, title, subtitle, speed }) {
-  const handleClick = () => {
-    const el = document.getElementById(targetId);
+function PathsDecisionTable() {
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
   return (
-    <button
-      type="button"
-      onClick={handleClick}
-      className="text-left w-full border border-slate-200 rounded-md p-4 bg-white hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-      style={{ borderTop: `4px solid ${accent}`, '--tw-ring-color': accent }}
-    >
-      <div className="flex items-start gap-3 mb-2">
-        <div
-          className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center font-[BioRhyme,serif] text-lg font-extrabold text-white"
-          style={{ background: accent }}
-        >
-          {letter}
-        </div>
-        <div className="min-w-0">
-          <p className="font-mono text-[0.7rem] uppercase tracking-[0.1em] text-slate-500 leading-tight">
-            Option {letter}
-          </p>
-          <h3 className="font-[BioRhyme,serif] font-bold text-slate-900 leading-tight text-[1.05rem] mt-0.5">
-            {title}
-          </h3>
-        </div>
-      </div>
-      <p className="text-slate-600 text-[0.9rem] leading-snug mb-3">{subtitle}</p>
-      <p
-        className="font-mono text-[0.7rem] uppercase tracking-[0.1em] font-medium flex items-center gap-1"
-        style={{ color: accent }}
-      >
-        {speed}
-        <span aria-hidden="true">→</span>
-      </p>
-    </button>
+    <div className="overflow-x-auto my-3 rounded-md border border-slate-200">
+      <table className="w-full text-[0.95rem] border-collapse">
+        <thead className="bg-slate-50">
+          <tr>
+            <th className="font-mono text-[0.72rem] uppercase tracking-[0.1em] text-slate-500 font-medium text-left px-3 py-2.5 border-b border-slate-200">
+              Option
+            </th>
+            <th className="font-mono text-[0.72rem] uppercase tracking-[0.1em] text-slate-500 font-medium text-left px-3 py-2.5 border-b border-slate-200">
+              Speed
+            </th>
+            <th className="font-mono text-[0.72rem] uppercase tracking-[0.1em] text-slate-500 font-medium text-left px-3 py-2.5 border-b border-slate-200">
+              What you get
+            </th>
+            <th className="font-mono text-[0.72rem] uppercase tracking-[0.1em] text-slate-500 font-medium text-left px-3 py-2.5 border-b border-slate-200">
+              Best for
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {PATHS.map((p, i) => (
+            <tr
+              key={p.id}
+              className={i === PATHS.length - 1 ? '' : 'border-b border-slate-100'}
+            >
+              <td className="px-3 py-3 align-top">
+                <button
+                  type="button"
+                  onClick={() => scrollTo(p.id)}
+                  className="text-left font-semibold text-slate-900 hover:underline decoration-2 underline-offset-2 cursor-pointer"
+                  style={{ textDecorationColor: p.accent }}
+                >
+                  <span
+                    className="inline-block w-5 h-5 rounded-full text-white text-[0.7rem] font-bold mr-2 text-center leading-5 align-[-2px]"
+                    style={{ background: p.accent }}
+                    aria-hidden="true"
+                  >
+                    {p.letter}
+                  </span>
+                  {p.title}
+                  <span aria-hidden="true" className="ml-1 text-slate-400">↓</span>
+                </button>
+              </td>
+              <td className="px-3 py-3 align-top text-slate-700 whitespace-nowrap">
+                {p.speed}
+              </td>
+              <td className="px-3 py-3 align-top text-slate-700">{p.summary}</td>
+              <td className="px-3 py-3 align-top text-slate-700">{p.bestFor}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
@@ -617,42 +637,5 @@ function OptionSection({ id, letter, accent, title, subtitle, badges, children }
       </div>
       <div className="px-5 sm:px-6 py-5">{children}</div>
     </section>
-  );
-}
-
-function ComparisonTable({ headers, rows }) {
-  return (
-    <div className="overflow-x-auto my-5">
-      <table className="w-full text-[0.95rem] border-collapse">
-        <thead>
-          <tr>
-            {headers.map((h, i) => (
-              <th
-                key={i}
-                className="font-mono text-[0.75rem] uppercase tracking-[0.1em] text-slate-500 font-medium text-left px-3 py-2 border-b-2 border-slate-900"
-              >
-                {h}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, ri) => (
-            <tr key={ri}>
-              {row.map((cell, ci) => (
-                <td
-                  key={ci}
-                  className={`px-3 py-2 border-b border-slate-100 align-top ${
-                    ci === 0 ? 'font-medium' : ''
-                  } ${ri === rows.length - 1 ? 'border-b-0' : ''}`}
-                >
-                  {cell}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
   );
 }
