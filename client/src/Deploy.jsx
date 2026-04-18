@@ -96,6 +96,43 @@ export default function Deploy() {
         </Callout>
       </Section>
 
+      {/* 02 — Security: What data does it touch? */}
+      <Section number="02" title="Before You Share It — What Data Does It Touch?">
+        <p className="mb-4 text-slate-800 leading-relaxed">
+          The right way to deploy depends less on "can I publish this?" and more
+          on <strong>what data the tool touches and who has access</strong>.
+          A fee calculator with no personal information is very different from
+          an intake form that collects names, case facts, or PII.
+        </p>
+
+        <div className="space-y-3 my-5">
+          <SensitivityTier
+            level="safe"
+            label="No sensitive data"
+            body="Calculators, decision trees, reference tools, educational demos. Anything where the user's inputs don't need to be protected. Any option below works — pick whichever is easiest."
+          />
+          <SensitivityTier
+            level="caution"
+            label="Internal or confidential use"
+            body="Tools for your own desk or your team, or anything that handles client information. Keep it local or behind an internal share. Think twice before putting it on a public URL."
+          />
+          <SensitivityTier
+            level="stop"
+            label="Client-facing or collecting sensitive data"
+            body="Needs a real security review — HTTPS, access controls, data-handling policies, and your IT or security team involved. Netlify/GitHub Pages alone are not enough."
+          />
+        </div>
+
+        <Callout label="For legal professionals">
+          Confidentiality rules (e.g., ABA Model Rule 1.6) apply to where your
+          client data lives and who can reach it. Also remember: when you
+          prompt Gemini or AI Studio, those prompts are processed on Google's
+          servers — don't paste real client facts into the chat while building.
+          When in doubt, run the tool locally and loop in your IT or security
+          team before publishing.
+        </Callout>
+      </Section>
+
       {/* Three Options — Visual Summary */}
       <div className="mb-8 mt-12">
         <p className="font-mono text-xs uppercase tracking-[0.15em] text-slate-500 mb-4">
@@ -311,10 +348,10 @@ export default function Deploy() {
           ]}
         />
         <p className="mb-4 text-slate-800 leading-relaxed">
-          For a quick demo or class presentation, go local. For sharing a link
-          with classmates or a professor, Netlify Drop is the fastest. For
-          something you want to keep in your portfolio, GitHub Pages gives you
-          the most control.
+          For a quick demo or walkthrough, go local. For sharing a link with
+          colleagues, clients, or collaborators, Netlify Drop is the fastest.
+          For something you want to keep and keep updating, GitHub Pages gives
+          you the most control.
         </p>
       </Section>
 
@@ -363,7 +400,7 @@ export default function Deploy() {
       {/* Footer */}
       <div className="border-t-2 border-slate-900 pt-5 mt-12">
         <p className="text-sm text-slate-500">
-          Have questions? Reach out to your instructor.
+          Have questions? Reach out to the session lead.
         </p>
       </div>
     </div>
@@ -417,6 +454,40 @@ function Code({ children }) {
     <code className="font-mono text-[0.88em] bg-red-50 text-[#BA0C2F] px-1.5 py-0.5 rounded">
       {children}
     </code>
+  );
+}
+
+function SensitivityTier({ level, label, body }) {
+  const config = {
+    safe: { accent: '#047857', symbol: '✓', labelText: 'Safe to publish' },
+    caution: { accent: '#D97706', symbol: '!', labelText: 'Keep it private' },
+    stop: { accent: '#BA0C2F', symbol: '⊘', labelText: 'Needs security review' },
+  }[level];
+  return (
+    <div
+      className="flex gap-3 items-start rounded-md border border-slate-200 px-4 py-3"
+      style={{ borderLeft: `4px solid ${config.accent}` }}
+    >
+      <div
+        className="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center font-bold text-white text-sm"
+        style={{ background: config.accent }}
+        aria-hidden="true"
+      >
+        {config.symbol}
+      </div>
+      <div className="min-w-0">
+        <p
+          className="font-mono text-[0.7rem] uppercase tracking-[0.1em] font-medium mb-0.5"
+          style={{ color: config.accent }}
+        >
+          {config.labelText}
+        </p>
+        <p className="font-semibold text-slate-900 text-[0.95rem] leading-tight mb-1">
+          {label}
+        </p>
+        <p className="text-slate-700 text-[0.9rem] leading-snug">{body}</p>
+      </div>
+    </div>
   );
 }
 

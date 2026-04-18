@@ -433,16 +433,16 @@
 
 <div class="slide-container" id="deck">
 
-  <!-- SLIDE 1: Title -->
+  <!-- Title -->
   <div class="slide title-slide active">
     <h1>Vibe Coding for the<br>Legal Profession</h1>
     <p class="subtitle">Build a Custom Tool with AI in 60 Minutes</p>
-    <p class="event-info">Rebecca Fordon &middot; OSU Moritz College of Law<br>AI Legal Practice Summit &middot; Capital University &middot; April 18, 2026</p>
+    <p class="event-info">Rebecca Fordon &middot; The Ohio State University Moritz College of Law<br>AI Legal Practice Summit &middot; Capital University &middot; April 18, 2026</p>
     <span class="osu-footer">AI Legal Practice Summit 2026</span>
     <span class="slide-number"></span>
   </div>
 
-  <!-- SLIDE 2: Do Now -->
+  <!-- Do Now -->
   <div class="slide flex-col" style="justify-content: center;">
     <h1 style="font-size: 28px; margin-bottom: 24px;">While you're waiting...</h1>
     <div class="callout" style="margin: 0; padding: 24px 28px;">
@@ -453,20 +453,25 @@
     <span class="slide-number"></span>
   </div>
 
-  <!-- SLIDE 3: About me -->
-  <div class="slide flex-col" style="justify-content: center;">
-    <h1>Hi, I'm Rebecca</h1>
-    <p style="font-size: 20px; line-height: 1.6; margin-bottom: 20px;">Assistant Director of Innovation, Research &amp; Instruction<br><span style="color: var(--osu-gray);">The Ohio State University Moritz College of Law</span></p>
-    <div style="display: flex; flex-direction: column; gap: 10px; font-size: 17px;">
-      <a href="mailto:fordon.4@osu.edu" style="color: var(--osu-scarlet); text-decoration: none; font-weight: 600;">fordon.4@osu.edu</a>
-      <a href="https://www.linkedin.com/in/rebeccafordon/" target="_blank" style="color: #333; text-decoration: none;">LinkedIn <span style="color: var(--osu-gray);">&rarr; linkedin.com/in/rebeccafordon</span></a>
-      <a href="https://www.ailawlibrarians.com" target="_blank" style="color: #333; text-decoration: none;">Blog <span style="color: var(--osu-gray);">&rarr; ailawlibrarians.com</span></a>
+  <!-- About me -->
+  <div class="slide flex-col" style="justify-content: center; align-items: center;">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 40px;">
+      <img src="fordon-headshot.jpg" alt="Rebecca Fordon" style="width: 240px; height: 240px; border-radius: 50%; object-fit: cover; object-position: center 25%; flex-shrink: 0; box-shadow: 0 4px 16px rgba(0,0,0,0.15);" />
+      <div>
+        <h1 style="margin-top: 0;">Hi, I'm Rebecca</h1>
+        <p style="font-size: 20px; line-height: 1.6; margin-bottom: 20px;">Assistant Director of Innovation, Research &amp; Instruction<br><span style="color: var(--osu-gray);">The Ohio State University Moritz College of Law</span></p>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 17px;">
+          <a href="mailto:fordon.4@osu.edu" style="color: var(--osu-scarlet); text-decoration: none; font-weight: 600;">fordon.4@osu.edu</a>
+          <a href="https://www.linkedin.com/in/rebeccafordon/" target="_blank" style="color: #333; text-decoration: none;">LinkedIn <span style="color: var(--osu-gray);">&rarr; linkedin.com/in/rebeccafordon</span></a>
+          <a href="https://www.ailawlibrarians.com" target="_blank" style="color: #333; text-decoration: none;">Blog <span style="color: var(--osu-gray);">&rarr; ailawlibrarians.com</span></a>
+        </div>
+      </div>
     </div>
     <span class="osu-footer">AI Legal Practice Summit 2026</span>
     <span class="slide-number"></span>
   </div>
 
-  <!-- SLIDE 4: What is vibe coding? -->
+  <!-- What is vibe coding? -->
   <div class="slide flex-col">
     <h1>What is vibe coding?</h1>
     <p style="margin-bottom: 16px;">A way for non-technical people to create software by <strong>describing what they want in natural language</strong>, while AI generates the code behind the scenes.</p>
@@ -479,7 +484,7 @@
     <span class="slide-number"></span>
   </div>
 
-  <!-- SLIDE 5: Why vibe code? -->
+  <!-- Why vibe code? -->
   <div class="slide flex-col">
     <h1>Why vibe code?</h1>
     <ul style="margin-top: 8px;">
@@ -491,7 +496,7 @@
     <span class="slide-number"></span>
   </div>
 
-  <!-- SLIDE 6: What could you build? -->
+  <!-- What could you build? -->
   <div class="slide flex-col">
     <h1>What could you build?</h1>
     <div class="three-col" style="margin-top: 8px;">
@@ -530,7 +535,7 @@
     <span class="slide-number"></span>
   </div>
 
-  <!-- SLIDE 7: Security & Ethics -->
+  <!-- Security & Ethics -->
   <div class="slide flex-col">
     <h1>Security &amp; Ethics</h1>
     <ul style="margin-top: 8px;">
@@ -539,47 +544,21 @@
       <li><strong>Supervision (Rules 5.1/5.3)</strong> &mdash; if staff or associates use a tool you built, you're responsible for ensuring it performs as intended</li>
       <li><strong>Data residency</strong> &mdash; when you use Gemini or AI Studio, your prompts and code are processed on Google's servers. Know what your tool's terms of service say about data retention</li>
     </ul>
-    <span class="osu-footer">AI Legal Practice Summit 2026</span>
-    <span class="slide-number"></span>
-  </div>
-
-  <!-- SLIDE 8: Deployment & Security in Practice -->
-  <div class="slide flex-col">
-    <h1>Deploying What You Build</h1>
-    <p style="margin-bottom: 8px; font-size: 16px;">The right deployment strategy depends on what data the tool touches and who uses it.</p>
-    <div class="two-col" style="margin-top: 4px;">
-      <div>
-        <div class="deploy-option">
-          <h3>No sensitive data</h3>
-          <p>Static HTML &mdash; calculators, decision trees, reference tools. Share the file directly, host on GitHub Pages for free, or deploy to Render/Vercel.</p>
-        </div>
-        <div class="deploy-option">
-          <h3>Internal use only</h3>
-          <p>Tools for your desk or your team. Run locally, share via internal file share. No public exposure, minimal risk.</p>
-        </div>
-      </div>
-      <div>
-        <div class="deploy-option">
-          <h3>Client-facing or sensitive data</h3>
-          <p>Needs real security review: HTTPS, access controls, data handling policies. This is where IT involvement matters &mdash; not to gatekeep, but to help you do it safely.</p>
-        </div>
-        <div class="warning-callout" style="margin-top: 0;">
-          <p><strong>The question isn't "can I deploy this?"</strong> &mdash; it's "what data does it touch and who has access?" A fee calculator with no client data is very different from an intake form that collects PII.</p>
-        </div>
-      </div>
+    <div class="warning-callout" style="margin-top: 14px;">
+      <p>Before you build, ask: <strong>"what data will this touch and who will have access?"</strong> A fee calculator with no client data is very different from an intake form that collects PII &mdash; and that answer shapes every later choice.</p>
     </div>
     <span class="osu-footer">AI Legal Practice Summit 2026</span>
     <span class="slide-number"></span>
   </div>
 
-  <!-- SLIDE 9: Steps section -->
+  <!-- Steps section -->
   <div class="slide section-slide">
     <h1>Steps to follow</h1>
     <span class="osu-footer">AI Legal Practice Summit 2026</span>
     <span class="slide-number"></span>
   </div>
 
-  <!-- SLIDE 10: Step 1 - Identify a pain point -->
+  <!-- Step 1 - Identify a pain point -->
   <div class="slide flex-col">
     <h1>Step 1: Identify a pain point</h1>
     <ul style="margin-top: 8px;">
@@ -589,14 +568,11 @@
       <li>Calculations or checklists you do manually and wish were automated</li>
       <li>Things you've thought "there has to be a better way" about</li>
     </ul>
-    <div class="callout" style="margin-top: 14px;">
-      <p><strong>The index card test:</strong> If you could write every possible answer on index cards ahead of time, your app can handle it. If you'd need professional judgment to figure out the answer &mdash; it can't.</p>
-    </div>
     <span class="osu-footer">AI Legal Practice Summit 2026</span>
     <span class="slide-number"></span>
   </div>
 
-  <!-- SLIDE 11: Step 2 - Today's tools -->
+  <!-- Step 2 - Today's tools -->
   <div class="slide flex-col">
     <h1>Step 2: Choose a tool</h1>
     <div class="two-col" style="margin-top: 8px;">
@@ -610,6 +586,9 @@
         </ul>
         <div class="callout" style="margin-top: 8px;">
           <p><strong>Recommended for today.</strong> You'll have a working tool in the session.</p>
+        </div>
+        <div class="callout" style="margin-top: 8px;">
+          <p><strong>Index card test:</strong> If every possible answer could fit on index cards, your app can handle it. Anything that needs judgment &mdash; it can't.</p>
         </div>
       </div>
       <div>
@@ -630,7 +609,7 @@
     <span class="slide-number"></span>
   </div>
 
-  <!-- SLIDE 12: Step 3 - Plan with AI -->
+  <!-- Step 3 - Plan with AI -->
   <div class="slide flex-col">
     <h1>Step 3: Plan with AI</h1>
     <p style="margin-bottom: 12px;">Don't just say "build me an app." <strong>Have a conversation first.</strong></p>
@@ -647,7 +626,7 @@
     <span class="slide-number"></span>
   </div>
 
-  <!-- SLIDE 13: Step 4 - Build it -->
+  <!-- Step 4 - Build it -->
   <div class="slide flex-col">
     <h1>Step 4: Build it</h1>
     <ul style="margin-top: 8px;">
@@ -664,7 +643,7 @@
     <span class="slide-number"></span>
   </div>
 
-  <!-- SLIDE 14: Step 5 - Iterate -->
+  <!-- Step 5 - Iterate -->
   <div class="slide flex-col">
     <h1>Step 5: Iterate</h1>
     <p style="margin-bottom: 10px;">The first version is just the start. <strong>The real skill is the conversation you have with AI after that.</strong></p>
@@ -698,7 +677,34 @@
     <span class="slide-number"></span>
   </div>
 
-  <!-- SLIDE 15: What Canvas apps can & can't do -->
+  <!-- Step 6 - Deploy -->
+  <div class="slide flex-col">
+    <h1>Step 6: Deploy</h1>
+    <p style="margin-bottom: 8px;">Before you share it, ask: <strong>what data does it touch?</strong> A calculator with no personal info is very different from an intake form.</p>
+    <div class="two-col" style="margin-top: 4px;">
+      <div>
+        <h3>Pick a path</h3>
+        <ul>
+          <li><strong>Run locally</strong> &mdash; double-click the HTML file, or email it to someone to open in their browser</li>
+          <li><strong>Netlify Drop</strong> &mdash; drag a folder, get a live URL in 30 seconds</li>
+          <li><strong>GitHub Pages</strong> &mdash; free, permanent URL you can keep updating</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Before going public</h3>
+        <ul>
+          <li>If it touches client info &mdash; keep it local or behind an internal share</li>
+          <li>If it collects PII or goes client-facing &mdash; loop in IT/security for HTTPS, access controls, data handling</li>
+          <li>Don't paste real client facts into Gemini while building (Rule 1.6)</li>
+        </ul>
+      </div>
+    </div>
+    <p class="small" style="margin-top: 10px;">See the <strong>Deploy</strong> tab for step-by-step instructions.</p>
+    <span class="osu-footer">AI Legal Practice Summit 2026</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- What Canvas apps can & can't do -->
   <div class="slide flex-col">
     <h1>What Canvas apps can &amp; can't do</h1>
     <div class="two-col" style="margin-top: 8px;">
@@ -730,7 +736,7 @@
     <span class="slide-number"></span>
   </div>
 
-  <!-- SLIDE 16: Let's build -->
+  <!-- Let's build -->
   <div class="slide section-slide">
     <h1>Let's build something.</h1>
     <p>Pick an idea and start building. Raise your hand if you get stuck.</p>
@@ -738,14 +744,10 @@
     <span class="slide-number"></span>
   </div>
 
-  <!-- SLIDE 17: Session plan -->
+  <!-- Session plan -->
   <div class="slide flex-col">
-    <h1>Session plan</h1>
+    <h1>How the build time will run</h1>
     <div style="margin-top: 8px;">
-      <div class="timeline-row">
-        <div class="timeline-time">~15 min</div>
-        <div class="timeline-desc"><strong>Intro &amp; context</strong> &mdash; what vibe coding is, security considerations, tools overview</div>
-      </div>
       <div class="timeline-row">
         <div class="timeline-time">~20 min</div>
         <div class="timeline-desc"><strong>Build &mdash; first sprint</strong> &mdash; pick your idea, plan with Gemini, start building</div>
@@ -763,12 +765,12 @@
         <div class="timeline-desc"><strong>Share &amp; discuss</strong> &mdash; volunteers demo what they built, what surprised them</div>
       </div>
     </div>
-    <p class="small" style="margin-top: 12px;">Total: ~58 minutes. Don't worry if you don't finish &mdash; you'll have everything you need to keep going after the session.</p>
+    <p class="small" style="margin-top: 12px;">Don't worry if you don't finish &mdash; you'll have everything you need to keep going after the session.</p>
     <span class="osu-footer">AI Legal Practice Summit 2026</span>
     <span class="slide-number"></span>
   </div>
 
-  <!-- SLIDE 18: What's possible -->
+  <!-- What's possible -->
   <div class="slide flex-col">
     <h1>What's possible</h1>
     <p style="margin-bottom: 10px;">Everything on the Showcase tab was built with AI assistance &mdash; no hand-written code.</p>
@@ -785,35 +787,36 @@
     <span class="slide-number"></span>
   </div>
 
-  <!-- SLIDE 19: Free tools to keep building -->
+  <!-- Tools to keep building -->
   <div class="slide flex-col">
     <h1>Tools to keep building</h1>
-    <p style="margin-bottom: 8px;">You don't need to stop after today.</p>
+    <p style="margin-bottom: 8px;">You don't need to stop after today. Two paths, depending on how much setup you want.</p>
     <div class="two-col" style="margin-top: 4px;">
       <div>
-        <h3>Free / free tier</h3>
+        <h3>One-stop platforms</h3>
+        <p class="small" style="margin-top: -4px; margin-bottom: 6px;">Build and deploy in one place &mdash; all in the browser.</p>
         <ul>
-          <li><strong>Gemini Canvas</strong> &mdash; what you used today</li>
-          <li><strong>Google AI Studio</strong> &mdash; for AI-powered apps</li>
-          <li><strong>Cursor</strong> &mdash; AI-powered code editor</li>
-          <li><strong>Replit</strong> &mdash; browser-based IDE with AI</li>
-          <li><strong>Lovable</strong> / <strong>Bolt.new</strong> &mdash; full-stack app builders</li>
+          <li><strong>Replit</strong> &mdash; vibe-code and deploy in the browser; no local setup</li>
+          <li><strong>Lovable</strong> &mdash; full web app from a prompt, one-click deploy</li>
+          <li><strong>Bolt.new</strong> &mdash; similar browser-based full-stack builder</li>
         </ul>
       </div>
       <div>
-        <h3>Paid / more advanced</h3>
+        <h3>Developer stack</h3>
+        <p class="small" style="margin-top: -4px; margin-bottom: 6px;">Maximum flexibility &mdash; requires installing a few tools.</p>
         <ul>
-          <li><strong>Claude Code</strong> (Anthropic) &mdash; command-line coding tool, very capable for complex projects</li>
-          <li><strong>Codex</strong> (OpenAI) &mdash; OpenAI's coding agent</li>
+          <li><strong>Claude Code</strong> (Anthropic) &mdash; command-line AI agent; handles multi-file projects</li>
+          <li><strong>GitHub</strong> &mdash; free code hosting with version history</li>
+          <li><strong>Render</strong> &mdash; free-tier web hosting that redeploys on push from GitHub</li>
         </ul>
-        <p class="small" style="margin-top: 10px;">These require paid accounts and comfort with the command line, but they're significantly more powerful for multi-file projects and apps that need a backend.</p>
       </div>
     </div>
+    <p class="small" style="margin-top: 10px;">See the <strong>Resources</strong> tab for links and a few articles on using these safely.</p>
     <span class="osu-footer">AI Legal Practice Summit 2026</span>
     <span class="slide-number"></span>
   </div>
 
-  <!-- SLIDE 20: Thank you -->
+  <!-- Thank you -->
   <div class="slide flex-col" style="justify-content: center;">
     <h1>Thank you</h1>
     <p style="font-size: 20px; line-height: 1.6; margin-bottom: 20px;">Rebecca Fordon<br>Assistant Director of Innovation, Research &amp; Instruction<br><span style="color: var(--osu-gray);">Moritz Law Library | The Ohio State University Moritz College of Law</span></p>

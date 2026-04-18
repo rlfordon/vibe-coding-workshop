@@ -786,13 +786,19 @@ export const EVENT_CONFIGS = {
             title: "Can't Stop, Won't Stop: One Semester, Eight Vibe-Coded Teaching Tools",
             source: 'AI Law Librarians',
             url: 'https://www.ailawlibrarians.com/2026/03/04/cant-stop-wont-stop-one-semester-eight-vibe-coded-teaching-tools/',
-            description: 'Eight teaching tools built in one semester, with honest notes on what worked.',
+            description: 'My own write-up of eight tools I built in one semester of teaching \u2014 included here because the honest notes on what worked and what didn\u2019t translate directly to practice.',
           },
           {
             title: 'Vibe Coding: Best Practices for Prompting',
             source: 'Supabase',
             url: 'https://supabase.com/blog/vibe-coding-best-practices-for-prompting',
             description: 'Practical techniques for writing better prompts when building.',
+          },
+          {
+            title: 'How to Use Claude Code Safely',
+            source: 'Product Talk (Teresa Torres)',
+            url: 'https://www.producttalk.org/how-to-use-claude-code-safely',
+            description: 'A builder\u2019s practical playbook for using Claude Code without blowing up your repo or leaking data.',
           },
           {
             title: 'Secure Vibe Coding Guide',
