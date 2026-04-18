@@ -17,6 +17,10 @@ function parseHash() {
   return { mode: 'event', eventId };
 }
 
+const PRESENTER_MODE =
+  typeof window !== 'undefined' &&
+  new URLSearchParams(window.location.search).get('present') === '1';
+
 export default function App() {
   const [{ mode, eventId }, setRoute] = useState(parseHash);
   const [activeTab, setActiveTab] = useState(() => {
@@ -46,6 +50,7 @@ export default function App() {
 
   const eventConfig = EVENT_CONFIGS[eventId] || EVENT_CONFIGS[DEFAULT_EVENT];
   const isSlides = activeTab === 'slides';
+  const hasSlidesTab = eventConfig.tabs.some((t) => t.id === 'slides');
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-slate-50 font-[Source_Sans_Pro,sans-serif] text-slate-900">
@@ -96,7 +101,14 @@ export default function App() {
       {/* Content */}
       <main>
         {activeTab === 'home' && <Home config={eventConfig} onNavigate={setActiveTab} />}
-        {activeTab === 'slides' && <Slides slidesUrl={eventConfig.slidesUrl} />}
+        {/* In presenter mode, keep Slides mounted so the deck holds its position across tabs. */}
+        {PRESENTER_MODE && hasSlidesTab ? (
+          <div style={{ display: isSlides ? 'block' : 'none' }}>
+            <Slides slidesUrl={eventConfig.slidesUrl} />
+          </div>
+        ) : (
+          activeTab === 'slides' && <Slides slidesUrl={eventConfig.slidesUrl} />
+        )}
         {activeTab === 'build' && <PromptWizard build={eventConfig.build} />}
         {activeTab === 'preview' && <Preview />}
         {activeTab === 'gallery' && <Gallery eventId={eventConfig.id} />}
