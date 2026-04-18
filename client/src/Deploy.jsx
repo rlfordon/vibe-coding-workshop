@@ -7,8 +7,8 @@ const PATHS = [
     subtitle: "Send Canvas's built-in share URL — no download, no hosting.",
     badges: ['10 seconds', 'Canvas share URL', 'No code extraction'],
     speed: '10 sec',
-    summary: 'Google-owned URL (viewer may need sign-in)',
-    bestFor: 'Quick demo for a colleague',
+    whoSeesIt: 'Google + anyone with link',
+    bestFor: 'Demos, non-sensitive data',
     needsFile: false,
   },
   {
@@ -19,8 +19,8 @@ const PATHS = [
     subtitle: 'Attach the file. Recipient downloads and double-clicks.',
     badges: ['~1 minute', 'No account', 'Works in any browser'],
     speed: '~1 min',
-    summary: 'No URL — they run it on their computer',
-    bestFor: 'One or two specific people',
+    whoSeesIt: 'Just the recipient',
+    bestFor: 'One-to-one, any data',
     needsFile: true,
   },
   {
@@ -31,8 +31,8 @@ const PATHS = [
     subtitle: 'Open the file on your own machine. No sharing involved.',
     badges: ['Instant', 'No account', 'Private to you'],
     speed: 'Instant',
-    summary: 'Runs only on your computer',
-    bestFor: 'Testing, personal use',
+    whoSeesIt: 'Just you',
+    bestFor: 'Testing, any data',
     needsFile: true,
   },
   {
@@ -43,8 +43,8 @@ const PATHS = [
     subtitle: 'Drag a folder onto a webpage and get a live URL.',
     badges: ['~30 seconds', 'Account optional', 'Public URL'],
     speed: '~30 sec',
-    summary: 'Public URL (random address)',
-    bestFor: 'Sharing widely, short-term',
+    whoSeesIt: 'Anyone with the URL',
+    bestFor: 'Wider sharing, non-sensitive',
     needsFile: true,
   },
   {
@@ -55,8 +55,8 @@ const PATHS = [
     subtitle: 'Permanent, free URL you can keep updating over time.',
     badges: ['~5 minutes', 'Free GitHub account', 'Permanent URL'],
     speed: '~5 min',
-    summary: 'Permanent URL you own',
-    bestFor: 'Tools you keep updating',
+    whoSeesIt: 'Anyone with the URL',
+    bestFor: 'Long-term, non-sensitive',
     needsFile: true,
   },
 ];
@@ -79,8 +79,20 @@ export default function Deploy() {
         </p>
       </div>
 
-      {/* Pick Your Path — unified decision table */}
+      {/* Pick Your Path — unified decision table with off-ramp above */}
       <Section title="Pick Your Path">
+        <div className="bg-red-50 border border-red-200 rounded-md px-5 py-4 mb-5">
+          <p className="font-mono text-[0.75rem] font-medium uppercase tracking-[0.12em] text-[#BA0C2F] mb-2">
+            Handling client data or PII?
+          </p>
+          <p className="text-slate-800 text-[0.95rem] leading-relaxed">
+            None of the options below are enough on their own. Stop here and
+            loop in your IT or security team — they'll want HTTPS, access
+            controls, and a data-handling review. This page assumes your tool
+            handles <strong>non-sensitive data</strong>.
+          </p>
+        </div>
+
         <p className="mb-5 text-slate-800 leading-relaxed">
           Each row below is a complete deployment option. Click the name to
           jump to the steps.
@@ -88,45 +100,8 @@ export default function Deploy() {
         <PathsDecisionTable />
       </Section>
 
-      {/* Gate: Data sensitivity */}
-      <Section title="Before You Publish — What Data Does It Touch?">
-        <p className="mb-4 text-slate-800 leading-relaxed">
-          The right path depends less on "can I publish this?" and more on{' '}
-          <strong>what data the tool touches and who has access</strong>.
-          A fee calculator with no personal information is very different from
-          an intake form that collects names, case facts, or PII.
-        </p>
-
-        <div className="space-y-3 my-5">
-          <SensitivityTier
-            level="safe"
-            label="No sensitive data"
-            body="Calculators, decision trees, reference tools, educational demos. Anything where the user's inputs don't need to be protected. Any option above works — pick whichever is easiest."
-          />
-          <SensitivityTier
-            level="caution"
-            label="Internal or confidential use"
-            body="Tools for your own desk or your team, or anything that handles client information. Keep it local (C) or behind an internal share. Think twice before putting it on a public URL."
-          />
-          <SensitivityTier
-            level="stop"
-            label="Client-facing or collecting sensitive data"
-            body="Needs a real security review — HTTPS, access controls, data-handling policies, and your IT or security team involved. Netlify Drop or GitHub Pages alone are not enough."
-          />
-        </div>
-
-        <Callout label="For legal professionals">
-          Confidentiality rules (e.g., ABA Model Rule 1.6) apply to where your
-          client data lives and who can reach it. Also remember: when you
-          prompt Gemini or AI Studio, those prompts are processed on Google's
-          servers — don't paste real client facts into the chat while building.
-          When in doubt, run the tool locally and loop in your IT or security
-          team before publishing.
-        </Callout>
-      </Section>
-
       {/* Prerequisite (only for B/C/D/E) */}
-      <Section title="Prerequisite — Get Your Code Out of Canvas">
+      <Section id="prerequisite" title="Prerequisite — Get Your Code Out of Canvas">
         <p className="mb-4 text-slate-800 leading-relaxed">
           Required for Options <strong>B, C, D, and E</strong>. (Option A —
           Share the Canvas Link — skips this entirely and uses Canvas's share
@@ -211,6 +186,12 @@ export default function Deploy() {
           Option D or E.
         </Callout>
 
+        <Callout label="Rule 1.6 note">
+          While building in Canvas, don't paste real client facts into the
+          chat. Your prompts go to Google's servers — treat Canvas like any
+          other cloud tool under your confidentiality obligations.
+        </Callout>
+
         <p className="text-slate-500 text-[0.95rem] mb-0">
           Claude Artifacts works similarly — look for a <strong>Publish</strong>{' '}
           button, which creates a public URL at <Code>claude.site</Code>.
@@ -226,8 +207,14 @@ export default function Deploy() {
         </p>
 
         <Step num="Prereq">
-          Make sure you've done "Get Your Code Out of Canvas" above and have
-          an <Code>index.html</Code> file saved.
+          You'll need an <Code>index.html</Code> file saved from{' '}
+          <a
+            href="#prerequisite"
+            className="text-[#BA0C2F] underline underline-offset-2 hover:decoration-2"
+          >
+            Get Your Code Out of Canvas
+          </a>{' '}
+          above.
         </Step>
 
         <Step num="Step 1">
@@ -256,8 +243,14 @@ export default function Deploy() {
         </p>
 
         <Step num="Prereq">
-          Make sure you've done "Get Your Code Out of Canvas" above and have
-          an <Code>index.html</Code> file saved.
+          You'll need an <Code>index.html</Code> file saved from{' '}
+          <a
+            href="#prerequisite"
+            className="text-[#BA0C2F] underline underline-offset-2 hover:decoration-2"
+          >
+            Get Your Code Out of Canvas
+          </a>{' '}
+          above.
         </Step>
 
         <Step num="That's it">
@@ -284,8 +277,14 @@ export default function Deploy() {
         </p>
 
         <Step num="Prereq">
-          Make sure you've done "Get Your Code Out of Canvas" above and have
-          an <Code>index.html</Code> file saved.
+          You'll need an <Code>index.html</Code> file saved from{' '}
+          <a
+            href="#prerequisite"
+            className="text-[#BA0C2F] underline underline-offset-2 hover:decoration-2"
+          >
+            Get Your Code Out of Canvas
+          </a>{' '}
+          above.
         </Step>
 
         <Step num="Step 1">
@@ -341,8 +340,14 @@ export default function Deploy() {
         </p>
 
         <Step num="Prereq">
-          Make sure you've done "Get Your Code Out of Canvas" above and have
-          an <Code>index.html</Code> file saved.
+          You'll need an <Code>index.html</Code> file saved from{' '}
+          <a
+            href="#prerequisite"
+            className="text-[#BA0C2F] underline underline-offset-2 hover:decoration-2"
+          >
+            Get Your Code Out of Canvas
+          </a>{' '}
+          above.
         </Step>
 
         <Step num="Step 1">
@@ -449,9 +454,9 @@ export default function Deploy() {
 
 /* ── Reusable sub-components ── */
 
-function Section({ title, children }) {
+function Section({ id, title, children }) {
   return (
-    <section className="mb-10">
+    <section id={id} className="mb-10 scroll-mt-6">
       <h2 className="font-[BioRhyme,serif] text-xl font-bold pb-2 mb-4 border-b border-slate-200">
         {title}
       </h2>
@@ -492,40 +497,6 @@ function Code({ children }) {
   );
 }
 
-function SensitivityTier({ level, label, body }) {
-  const config = {
-    safe: { accent: '#047857', symbol: '✓', labelText: 'Safe to publish' },
-    caution: { accent: '#D97706', symbol: '!', labelText: 'Keep it private' },
-    stop: { accent: '#BA0C2F', symbol: '⊘', labelText: 'Needs security review' },
-  }[level];
-  return (
-    <div
-      className="flex gap-3 items-start rounded-md border border-slate-200 px-4 py-3"
-      style={{ borderLeft: `4px solid ${config.accent}` }}
-    >
-      <div
-        className="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center font-bold text-white text-sm"
-        style={{ background: config.accent }}
-        aria-hidden="true"
-      >
-        {config.symbol}
-      </div>
-      <div className="min-w-0">
-        <p
-          className="font-mono text-[0.7rem] uppercase tracking-[0.1em] font-medium mb-0.5"
-          style={{ color: config.accent }}
-        >
-          {config.labelText}
-        </p>
-        <p className="font-semibold text-slate-900 text-[0.95rem] leading-tight mb-1">
-          {label}
-        </p>
-        <p className="text-slate-700 text-[0.9rem] leading-snug">{body}</p>
-      </div>
-    </div>
-  );
-}
-
 function PathsDecisionTable() {
   const scrollTo = (id) => {
     const el = document.getElementById(id);
@@ -543,7 +514,7 @@ function PathsDecisionTable() {
               Speed
             </th>
             <th className="font-mono text-[0.72rem] uppercase tracking-[0.1em] text-slate-500 font-medium text-left px-3 py-2.5 border-b border-slate-200">
-              What you get
+              Who sees it?
             </th>
             <th className="font-mono text-[0.72rem] uppercase tracking-[0.1em] text-slate-500 font-medium text-left px-3 py-2.5 border-b border-slate-200">
               Best for
@@ -577,7 +548,7 @@ function PathsDecisionTable() {
               <td className="px-3 py-3 align-top text-slate-700 whitespace-nowrap">
                 {p.speed}
               </td>
-              <td className="px-3 py-3 align-top text-slate-700">{p.summary}</td>
+              <td className="px-3 py-3 align-top text-slate-700">{p.whoSeesIt}</td>
               <td className="px-3 py-3 align-top text-slate-700">{p.bestFor}</td>
             </tr>
           ))}
