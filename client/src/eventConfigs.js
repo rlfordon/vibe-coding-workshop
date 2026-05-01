@@ -853,11 +853,11 @@ export const EVENT_CONFIGS = {
     },
   },
 
-  cali: {
-    id: 'cali',
+  calicon26: {
+    id: 'calicon26',
     title: 'Vibe Coding for Law Faculty',
-    subtitle: 'CALI',
-    slidesUrl: '/slides-faculty.html',
+    subtitle: 'CALIcon 26',
+    slidesUrl: '/slides-calicon26.html',
     showcaseSubtitle: 'Tools built with AI for teaching, research, and the classroom',
     tabs: [
       { id: 'home', label: 'Home' },

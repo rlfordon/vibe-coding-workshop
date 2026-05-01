@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vibe Coding for Law Faculty &mdash; CALIcon 26</title>
+<link href="https://fonts.googleapis.com/css2?family=BioRhyme:wght@400;700;800&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --osu-scarlet: #BA0C2F;
+    --osu-gray: #666666;
+    --osu-dark: #1a1a1a;
+    --osu-light: #f5f4f0;
+    --osu-white: #ffffff;
+    --slide-width: 960px;
+    --slide-height: 540px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #2a2a2a;
+    font-family: 'Source Sans Pro', sans-serif;
+    color: var(--osu-dark);
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slide-container {
+    width: var(--slide-width);
+    height: var(--slide-height);
+    position: relative;
+    background: var(--osu-white);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    transform-origin: center center;
+  }
+
+  .slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    padding: 50px 60px 60px;
+    overflow: hidden;
+  }
+
+  .slide.active { display: flex; }
+
+  .slide::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--osu-scarlet);
+  }
+
+  .slide-number {
+    position: absolute;
+    bottom: 12px;
+    right: 20px;
+    font-size: 12px;
+    color: var(--osu-gray);
+  }
+
+  .osu-footer {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    font-size: 11px;
+    color: var(--osu-gray);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: 'BioRhyme', serif;
+    color: var(--osu-scarlet);
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-family: 'BioRhyme', serif;
+    color: var(--osu-scarlet);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    font-family: 'BioRhyme', serif;
+    color: var(--osu-dark);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  p, li {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #333;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul li {
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 10px;
+  }
+
+  ul li::before {
+    content: '\2022';
+    color: var(--osu-scarlet);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+  }
+
+  .subtitle {
+    font-size: 20px;
+    color: var(--osu-gray);
+    margin-bottom: 10px;
+  }
+
+  .flex-col {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .two-col {
+    display: flex;
+    gap: 40px;
+    flex: 1;
+  }
+
+  .two-col > div { flex: 1; }
+
+  .three-col {
+    display: flex;
+    gap: 24px;
+    flex: 1;
+  }
+
+  .three-col > div { flex: 1; }
+
+  .title-slide {
+    background: var(--osu-scarlet);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .title-slide h1 {
+    color: var(--osu-white);
+    font-size: 44px;
+    margin-bottom: 12px;
+  }
+
+  .title-slide .subtitle {
+    color: rgba(255,255,255,0.85);
+    font-size: 22px;
+  }
+
+  .title-slide .event-info {
+    color: rgba(255,255,255,0.65);
+    font-size: 16px;
+    margin-top: 20px;
+    line-height: 1.5;
+  }
+
+  .title-slide::after { background: rgba(255,255,255,0.3); }
+  .title-slide .osu-footer,
+  .title-slide .slide-number { color: rgba(255,255,255,0.6); }
+
+  .section-slide {
+    background: var(--osu-scarlet);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .section-slide h1 {
+    color: var(--osu-white);
+    font-size: 42px;
+  }
+
+  .section-slide p {
+    color: rgba(255,255,255,0.8);
+    font-size: 20px;
+    margin-top: 8px;
+  }
+
+  .section-slide::after { background: rgba(255,255,255,0.3); }
+  .section-slide .osu-footer,
+  .section-slide .slide-number { color: rgba(255,255,255,0.6); }
+
+  .callout {
+    background: #fef3f4;
+    border-left: 4px solid var(--osu-scarlet);
+    padding: 16px 20px;
+    margin: 14px 0;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .callout p {
+    font-size: 17px;
+    font-style: italic;
+    color: #444;
+  }
+
+  .callout strong { color: var(--osu-scarlet); }
+
+  .can-do, .cant-do {
+    padding: 16px 20px;
+    border-radius: 8px;
+    flex: 1;
+  }
+
+  .can-do {
+    background: #eef7ee;
+    border: 2px solid #4a9e4a;
+  }
+
+  .can-do h3 { color: #2d7a2d; }
+  .can-do li::before { color: #2d7a2d; }
+
+  .cant-do {
+    background: #fef3f4;
+    border: 2px solid var(--osu-scarlet);
+  }
+
+  .cant-do h3 { color: var(--osu-scarlet); }
+
+  .index-card {
+    background: #fffde6;
+    border: 2px solid #d4c84a;
+    padding: 18px 24px;
+    border-radius: 4px;
+    margin-top: 14px;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.06);
+    transform: rotate(-0.5deg);
+  }
+
+  .index-card p {
+    font-size: 18px;
+    font-weight: 600;
+    color: #555;
+  }
+
+  .index-card strong { color: var(--osu-scarlet); }
+
+  .small { font-size: 14px; color: var(--osu-gray); }
+
+  .tool-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .tool-item {
+    background: var(--osu-light);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 15px;
+    color: #333;
+    line-height: 1.35;
+  }
+
+  .tool-item strong {
+    color: var(--osu-scarlet);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .tool-item .week {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--osu-gray);
+  }
+
+  .prompt-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .prompt-chip {
+    background: var(--osu-light);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 15px;
+    color: #333;
+    line-height: 1.35;
+  }
+
+  .prompt-chip .prompt-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--osu-scarlet);
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .timeline-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  .timeline-time {
+    width: 100px;
+    flex-shrink: 0;
+    font-family: 'BioRhyme', serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--osu-scarlet);
+    padding-top: 2px;
+  }
+
+  .timeline-desc {
+    flex: 1;
+    font-size: 17px;
+    color: #333;
+    border-left: 3px solid #eee;
+    padding-left: 16px;
+  }
+
+  .timeline-desc strong { color: var(--osu-dark); }
+
+  .key-insight {
+    background: #e8f0f8;
+    border-left: 4px solid #4a7ab5;
+    padding: 12px 16px;
+    margin-top: 12px;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .key-insight p {
+    font-size: 16px;
+    color: #2a5a8a;
+    font-style: italic;
+  }
+
+  .key-insight strong {
+    color: #2a5a8a;
+    font-style: normal;
+  }
+
+  .warning-callout {
+    background: #fff8e6;
+    border-left: 4px solid #d4a017;
+    padding: 12px 16px;
+    margin-top: 12px;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .warning-callout p {
+    font-size: 16px;
+    color: #7a5d00;
+    font-style: italic;
+  }
+
+  .warning-callout strong {
+    color: #7a5d00;
+    font-style: normal;
+  }
+
+  .nav-bar {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    user-select: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .slide-container:hover .nav-bar,
+  .nav-bar:focus-within {
+    opacity: 1;
+  }
+
+  .nav-btn {
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(4px);
+    border: none;
+    color: rgba(255,255,255,0.85);
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'Source Sans Pro', sans-serif;
+    transition: all 0.15s;
+  }
+
+  .nav-btn:hover {
+    background: rgba(0,0,0,0.65);
+    color: #fff;
+  }
+
+  #slideCount {
+    font-size: 11px;
+    color: rgba(0,0,0,0.45);
+    font-weight: 600;
+    min-width: 40px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-container" id="deck">
+
+  <!-- Title -->
+  <div class="slide title-slide active">
+    <h1>Vibe Coding<br>for Law Faculty</h1>
+    <p class="subtitle">Build a teaching tool with AI &mdash; in the time it takes to brief a case.</p>
+    <p class="event-info">Rebecca Fordon &middot; The Ohio State University Moritz College of Law<br>CALIcon 26</p>
+    <span class="osu-footer">CALIcon 26</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- Do Now -->
+  <div class="slide flex-col" style="justify-content: center;">
+    <h1 style="font-size: 28px; margin-bottom: 24px;">While you're waiting&hellip;</h1>
+    <div class="callout" style="margin: 0; padding: 24px 28px;">
+      <p style="font-size: 20px; font-style: normal; color: #1a1a1a; line-height: 1.6;"><strong style="color: var(--osu-scarlet);">What's something you wish existed for your classroom?</strong><br>A concept students always trip over, a doctrine that's hard to visualize, an exercise you do by hand every semester.</p>
+      <p style="font-size: 17px; margin-top: 14px; font-style: normal; color: #666;">Think small. The narrower the problem, the easier it is to build.</p>
+    </div>
+    <span class="osu-footer">CALIcon 26</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- About me -->
+  <div class="slide flex-col" style="justify-content: center; align-items: center;">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 40px;">
+      <img src="fordon-headshot.jpg" alt="Rebecca Fordon" style="width: 240px; height: 240px; border-radius: 50%; object-fit: cover; object-position: center 25%; flex-shrink: 0; box-shadow: 0 4px 16px rgba(0,0,0,0.15);" />
+      <div>
+        <h1 style="margin-top: 0;">Hi, I'm Rebecca</h1>
+        <p style="font-size: 20px; line-height: 1.6; margin-bottom: 20px;">Assistant Director of Innovation, Research &amp; Instruction<br><span style="color: var(--osu-gray);">The Ohio State University Moritz College of Law</span></p>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 17px;">
+          <a href="mailto:fordon.4@osu.edu" style="color: var(--osu-scarlet); text-decoration: none; font-weight: 600;">fordon.4@osu.edu</a>
+          <a href="https://www.linkedin.com/in/rebeccafordon/" target="_blank" style="color: #333; text-decoration: none;">LinkedIn <span style="color: var(--osu-gray);">&rarr; linkedin.com/in/rebeccafordon</span></a>
+          <a href="https://www.ailawlibrarians.com" target="_blank" style="color: #333; text-decoration: none;">Blog <span style="color: var(--osu-gray);">&rarr; ailawlibrarians.com</span></a>
+        </div>
+      </div>
+    </div>
+    <span class="osu-footer">CALIcon 26</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- What is vibe coding? -->
+  <div class="slide flex-col">
+    <h1>What is vibe coding?</h1>
+    <p style="margin-bottom: 16px;">A way for non-technical people to create software by <strong>describing what they want in natural language</strong>, while AI generates the code behind the scenes.</p>
+    <div class="callout">
+      <p>"There's a new kind of coding I call 'vibe coding', where you fully give in to the vibes, embrace exponentials, and forget the code even exists."</p>
+      <p class="small" style="margin-top: 6px; font-style: normal;">&mdash; Andrej Karpathy, Feb 2025</p>
+    </div>
+    <p style="margin-top: 14px;">You describe what you want. AI writes the code. You get a working tool you can use in class on Monday.</p>
+    <span class="osu-footer">CALIcon 26</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- Why vibe code? -->
+  <div class="slide flex-col">
+    <h1>Why vibe code?</h1>
+    <ul style="margin-top: 8px;">
+      <li><strong>You're the domain expert.</strong> You know your students, your doctrine, your classroom. That expertise is the hard part &mdash; the coding is now the easy part.</li>
+      <li><strong>It builds real AI fluency.</strong> Being precise about what you want, iterating when the output isn't right, evaluating critically &mdash; these are the skills that matter for any professional AI use. And you get a useful tool at the end.</li>
+      <li><strong>The cost of experimenting is near zero.</strong> Build a teaching tool in an afternoon. Try it once. Toss it or iterate. No vendor, no budget request, no instructional-design queue.</li>
+      <li><strong>It changes what you're willing to try.</strong> When the cost of building drops, you pursue ideas you'd never have proposed before &mdash; and your students see what's possible too.</li>
+    </ul>
+    <span class="osu-footer">CALIcon 26</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- What could you build? -->
+  <div class="slide flex-col">
+    <h1>What could you build?</h1>
+    <div class="three-col" style="margin-top: 8px;">
+      <div>
+        <h3>Teaching</h3>
+        <ul>
+          <li>Interactive decision trees for multi-factor tests</li>
+          <li>Case-brief builders with live formatting</li>
+          <li>Practice-hypo generators with model answers</li>
+          <li>Visualizations AI can build but PowerPoint can't</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Research</h3>
+        <ul>
+          <li>Query case documents with AI (<a href="https://github.com/rlfordon/docket-qna" target="_blank" style="color: var(--osu-scarlet);">Docket Q&amp;A</a>)</li>
+          <li>Verify citations at scale (<a href="https://github.com/rlfordon/citation-verifier" target="_blank" style="color: var(--osu-scarlet);">Citation Verifier</a>)</li>
+          <li>Custom data visualizations and heatmaps</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Student &amp; Practice Tools</h3>
+        <ul>
+          <li>Multi-stage clinical simulations</li>
+          <li>Intake screeners and self-assessments</li>
+          <li>Exam-prep walkthroughs with branching feedback</li>
+          <li>AI-graded practice with rubric feedback</li>
+        </ul>
+      </div>
+    </div>
+    <div class="key-insight">
+      <p><strong>You're not alone.</strong> Faculty and librarians around the country are already shipping these. See the Showcase tab for a working set.</p>
+    </div>
+    <span class="osu-footer">CALIcon 26</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- What I built this semester -->
+  <div class="slide flex-col">
+    <h1>What I built this semester</h1>
+    <p style="margin-bottom: 6px; font-size: 16px;">Eight interactive teaching tools for 21st Century Lawyering, built with AI assistance. Each one started with a pedagogical problem I couldn't solve with slides alone.</p>
+    <div class="tool-grid">
+      <div class="tool-item">
+        <strong>TokenExplorer</strong>
+        <span class="week">Week 2</span>
+      </div>
+      <div class="tool-item">
+        <strong>Prompt Coach</strong>
+        <span class="week">Week 5</span>
+      </div>
+      <div class="tool-item">
+        <strong>QnA Markup Screener</strong>
+        <span class="week">Week 6</span>
+      </div>
+      <div class="tool-item">
+        <strong>QnA&rarr;Markup Gem</strong>
+        <span class="week">Week 6</span>
+      </div>
+      <div class="tool-item">
+        <strong>Wage Screener</strong>
+        <span class="week">Week 6</span>
+      </div>
+      <div class="tool-item">
+        <strong>Citation Extractor</strong>
+        <span class="week">Week 7</span>
+      </div>
+      <div class="tool-item">
+        <strong>Hallucination Game</strong>
+        <span class="week">Week 7</span>
+      </div>
+      <div class="tool-item">
+        <strong>Doc Tech Gallery</strong>
+        <span class="week">Week 8</span>
+      </div>
+    </div>
+    <p class="small" style="margin-top: 10px;">Visit the Showcase tab for live links and details.</p>
+    <span class="osu-footer">CALIcon 26</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- Things to keep in mind -->
+  <div class="slide flex-col">
+    <h1>Things to keep in mind</h1>
+    <ul style="margin-top: 8px;">
+      <li><strong>Student data &amp; FERPA</strong> &mdash; don't put student names, grades, or identifiable work into AI tools or vibe-coded apps</li>
+      <li><strong>Accessibility</strong> &mdash; AI-generated code may not meet ADA standards; test with screen readers and iterate</li>
+      <li><strong>Vet before classroom use</strong> &mdash; AI-written code can have bugs or wrong answers; click through it yourself first</li>
+      <li><strong>Academic integrity</strong> &mdash; if students use the tool, be clear about what the tool does vs. what they do</li>
+      <li><strong>Not legal advice</strong> &mdash; if the tool touches legal topics, label it as a teaching exercise</li>
+    </ul>
+    <div class="warning-callout" style="margin-top: 14px;">
+      <p>Before you share it, ask: <strong>"what data will this touch and who will use it?"</strong> A doctrinal decision tree is very different from a tool that collects student responses &mdash; and that answer shapes every later choice.</p>
+    </div>
+    <span class="osu-footer">CALIcon 26</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- Steps section -->
+  <div class="slide section-slide">
+    <h1>Steps to follow</h1>
+    <span class="osu-footer">CALIcon 26</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- Step 1 -->
+  <div class="slide flex-col">
+    <h1>Step 1: Identify a pedagogical pain point</h1>
+    <ul style="margin-top: 8px;">
+      <li>A concept students consistently misunderstand</li>
+      <li>A doctrine that's hard to visualize on a slide</li>
+      <li>An exercise you'd love to assign but can't grade at scale</li>
+      <li>Information you find yourself re-explaining every semester</li>
+      <li>Something you've thought "there has to be a better way" about</li>
+    </ul>
+    <span class="osu-footer">CALIcon 26</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- Step 2 - Choose a tool -->
+  <div class="slide flex-col">
+    <h1>Step 2: Choose a tool</h1>
+    <div class="two-col" style="margin-top: 8px;">
+      <div>
+        <h3>Gemini Canvas</h3>
+        <ul>
+          <li>Free with any Google account</li>
+          <li>Describe what you want, get a live preview</li>
+          <li>Builds fast &mdash; first version in minutes</li>
+          <li>Great for decision trees, hypos, flashcards, timelines</li>
+        </ul>
+        <div class="callout" style="margin-top: 8px;">
+          <p><strong>Recommended for today.</strong> You'll have a working tool in the session.</p>
+        </div>
+      </div>
+      <div>
+        <h3>Google AI Studio</h3>
+        <ul>
+          <li>Free with any Google account</li>
+          <li>Has a Build tab for creating apps</li>
+          <li>Builds are slower (10+ minutes)</li>
+          <li>Can incorporate AI &mdash; case readers, AI tutors, rubric feedback</li>
+        </ul>
+        <div class="warning-callout" style="margin-top: 8px;">
+          <p><strong>More powerful, but slower.</strong> You may not finish in the session.</p>
+        </div>
+      </div>
+    </div>
+    <p class="small" style="margin-top: 8px;"><strong>Other options:</strong> ChatGPT has Canvas and Claude has Artifacts &mdash; both can generate apps the same way.</p>
+    <span class="osu-footer">CALIcon 26</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- Step 3 - Plan with AI -->
+  <div class="slide flex-col">
+    <h1>Step 3: Plan with AI</h1>
+    <p style="margin-bottom: 12px;">Don't just say "build me an app." <strong>Have a conversation first.</strong></p>
+    <ul style="margin-top: 8px;">
+      <li>Tell Gemini what you want students to learn and how they'll use the tool</li>
+      <li>Let it ask you questions &mdash; answer honestly (even "I'm not sure" is fine)</li>
+      <li>Go back and forth until you both understand what you're building</li>
+      <li><em>Then</em> tell it to start building</li>
+    </ul>
+    <div class="callout" style="margin-top: 16px;">
+      <p><strong>Your prompt template ends with:</strong> "Before you start building, ask me a few questions about who this is for and what their experience should be like."</p>
+    </div>
+    <div class="callout" style="margin-top: 10px;">
+      <p><strong>Working from a casebook PDF or article?</strong> Paste the text, not the file. LLMs handle raw text much better than document structure. If you need to convert, open a separate AI chat, drop in the PDF, and ask for plain text you can bring back over.</p>
+    </div>
+    <span class="osu-footer">CALIcon 26</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- Step 4 - Build it -->
+  <div class="slide flex-col">
+    <h1>Step 4: Build it</h1>
+    <ul style="margin-top: 8px;">
+      <li>Go to the <strong>Build</strong> tab &mdash; copy the prompt template or pick an idea card</li>
+      <li>Paste the prompt into Gemini and plan together</li>
+      <li>When you're ready to build, click <strong>"Canvas"</strong> under Tools</li>
+      <li>Test it &mdash; click through, try the inputs a confused student would try</li>
+      <li>Don't worry about getting it perfect on the first try</li>
+    </ul>
+    <div class="callout" style="margin-top: 16px;">
+      <p><strong>No Canvas button?</strong> That's OK &mdash; ask Gemini to write the code, then copy and paste it into the <strong>Preview</strong> tab on this site to see it run.</p>
+    </div>
+    <span class="osu-footer">CALIcon 26</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- Step 5 - Iterate -->
+  <div class="slide flex-col">
+    <h1>Step 5: Iterate</h1>
+    <p style="margin-bottom: 10px;">The first version is just the start. <strong>The real skill is the conversation you have with AI after that.</strong></p>
+    <div class="prompt-grid">
+      <div class="prompt-chip">
+        <span class="prompt-label">Pedagogical polish</span>
+        "Add a short explanation after each answer so students see why"
+      </div>
+      <div class="prompt-chip">
+        <span class="prompt-label">Edge cases</span>
+        "What if a student picks a weird combination of answers? Handle gracefully"
+      </div>
+      <div class="prompt-chip">
+        <span class="prompt-label">Hints</span>
+        "Add a 'hint' button that nudges without giving the answer away"
+      </div>
+      <div class="prompt-chip">
+        <span class="prompt-label">Accessibility</span>
+        "Make sure this works with a keyboard and a screen reader"
+      </div>
+      <div class="prompt-chip">
+        <span class="prompt-label">Mobile</span>
+        "Make this work well on a phone screen"
+      </div>
+      <div class="prompt-chip">
+        <span class="prompt-label">Export</span>
+        "Add a button so students can download their results as a PDF"
+      </div>
+    </div>
+    <span class="osu-footer">CALIcon 26</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- Step 6 - Deploy -->
+  <div class="slide flex-col">
+    <h1>Step 6: Deploy</h1>
+    <p style="margin-bottom: 8px;">Before you share it, ask: <strong>what data does it touch?</strong> A decision tree with no student input is very different from a tool that collects responses.</p>
+    <div class="two-col" style="margin-top: 4px;">
+      <div>
+        <h3>Pick a path</h3>
+        <ul>
+          <li><strong>Share the Canvas link</strong> &mdash; click Share in Canvas, send the URL (fastest)</li>
+          <li><strong>Drop the HTML in your LMS</strong> &mdash; download the file, embed in Canvas/Blackboard/Moodle</li>
+          <li><strong>Netlify Drop</strong> &mdash; drag a folder, get a live URL in 30 seconds</li>
+          <li><strong>GitHub Pages</strong> &mdash; free, permanent URL you can keep updating</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Before going public</h3>
+        <ul>
+          <li>If it collects student work &mdash; keep it inside your LMS, not on the open web</li>
+          <li>If it stores anything &mdash; loop in your IT/instructional-design folks for FERPA review</li>
+          <li>Don't paste real student work into Gemini while building</li>
+        </ul>
+      </div>
+    </div>
+    <p class="small" style="margin-top: 10px;">See the <strong>Deploy</strong> tab for step-by-step instructions.</p>
+    <span class="osu-footer">CALIcon 26</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- What Canvas apps can & can't do -->
+  <div class="slide flex-col">
+    <h1>What Canvas apps can &amp; can't do</h1>
+    <div class="two-col" style="margin-top: 8px;">
+      <div class="can-do">
+        <h3>Your app CAN</h3>
+        <ul>
+          <li>Follow a decision tree (if/then logic)</li>
+          <li>Calculate scores, deadlines, or rubric points</li>
+          <li>Look things up in data you provide</li>
+          <li>Display feedback based on user choices</li>
+          <li>Enforce rules and flag mistakes</li>
+        </ul>
+      </div>
+      <div class="cant-do">
+        <h3>Your app CANNOT</h3>
+        <ul>
+          <li>Read and interpret a document</li>
+          <li>Summarize or paraphrase text</li>
+          <li>Answer open-ended student questions</li>
+          <li>Make judgment calls</li>
+          <li>Do anything requiring "understanding"</li>
+        </ul>
+      </div>
+    </div>
+    <div class="index-card">
+      <p><strong>The index card test:</strong> If you could write every possible answer on index cards ahead of time, your app can handle it. If you'd need a smart person to figure out the answer &mdash; it can't. (For that, try Google AI Studio.)</p>
+    </div>
+    <span class="osu-footer">CALIcon 26</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- Let's build -->
+  <div class="slide section-slide">
+    <h1>Let's build something.</h1>
+    <p>Pick an idea and start building. Raise your hand if you get stuck.</p>
+    <span class="osu-footer">CALIcon 26</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- Session plan -->
+  <div class="slide flex-col">
+    <h1>How the build time will run</h1>
+    <div style="margin-top: 8px;">
+      <div class="timeline-row">
+        <div class="timeline-time">~20 min</div>
+        <div class="timeline-desc"><strong>Build &mdash; first sprint</strong> &mdash; pick your idea, plan with Gemini, start building</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-time">~3 min</div>
+        <div class="timeline-desc"><strong>Check-in</strong> &mdash; show your neighbor what you have so far</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-time">~15 min</div>
+        <div class="timeline-desc"><strong>Build &mdash; second sprint</strong> &mdash; keep iterating, polish the UX</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-time">~5 min</div>
+        <div class="timeline-desc"><strong>Share &amp; discuss</strong> &mdash; volunteers demo what they built and what surprised them</div>
+      </div>
+    </div>
+    <p class="small" style="margin-top: 12px;">Don't worry if you don't finish &mdash; you'll have everything you need to keep going after the session.</p>
+    <span class="osu-footer">CALIcon 26</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- Tools to keep building -->
+  <div class="slide flex-col">
+    <h1>Tools to keep building</h1>
+    <p style="margin-bottom: 8px;">You don't need to stop after today. Two paths, depending on how much setup you want.</p>
+    <div class="two-col" style="margin-top: 4px;">
+      <div>
+        <h3>One-stop platforms</h3>
+        <p class="small" style="margin-top: -4px; margin-bottom: 6px;">Build and deploy in one place &mdash; all in the browser.</p>
+        <ul>
+          <li><strong>Replit</strong> &mdash; vibe-code and deploy in the browser; no local setup</li>
+          <li><strong>Lovable</strong> &mdash; full web app from a prompt, one-click deploy</li>
+          <li><strong>Bolt.new</strong> &mdash; similar browser-based full-stack builder</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Developer stack</h3>
+        <p class="small" style="margin-top: -4px; margin-bottom: 6px;">Maximum flexibility &mdash; requires installing a few tools.</p>
+        <ul>
+          <li><strong>Claude Code</strong> (Anthropic) &mdash; command-line AI agent; handles multi-file projects</li>
+          <li><strong>GitHub</strong> &mdash; free code hosting with version history</li>
+          <li><strong>Render</strong> &mdash; free-tier web hosting that redeploys on push from GitHub</li>
+        </ul>
+      </div>
+    </div>
+    <p class="small" style="margin-top: 10px;">See the <strong>Resources</strong> tab for links and articles on using these safely.</p>
+    <span class="osu-footer">CALIcon 26</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- Thank you -->
+  <div class="slide flex-col" style="justify-content: center;">
+    <h1>Thank you</h1>
+    <p style="font-size: 20px; line-height: 1.6; margin-bottom: 20px;">Rebecca Fordon<br>Assistant Director of Innovation, Research &amp; Instruction<br><span style="color: var(--osu-gray);">Moritz Law Library | The Ohio State University Moritz College of Law</span></p>
+    <div style="display: flex; flex-direction: column; gap: 10px; font-size: 17px;">
+      <a href="mailto:fordon.4@osu.edu" style="color: var(--osu-scarlet); text-decoration: none; font-weight: 600;">fordon.4@osu.edu</a>
+      <a href="https://www.linkedin.com/in/rebeccafordon/" target="_blank" style="color: #333; text-decoration: none;">LinkedIn <span style="color: var(--osu-gray);">&rarr; linkedin.com/in/rebeccafordon</span></a>
+      <a href="https://www.ailawlibrarians.com" target="_blank" style="color: #333; text-decoration: none;">Blog <span style="color: var(--osu-gray);">&rarr; ailawlibrarians.com</span></a>
+    </div>
+    <span class="osu-footer">CALIcon 26</span>
+    <span class="slide-number"></span>
+  </div>
+
+  <!-- Navigation -->
+  <div class="nav-bar">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">&larr;</button>
+    <span id="slideCount"></span>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)">&rarr;</button>
+  </div>
+
+</div>
+
+<script>
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+
+  slides.forEach((slide, i) => {
+    const num = slide.querySelector('.slide-number');
+    if (num) num.textContent = i + 1;
+  });
+
+  function showSlide(n) {
+    slides.forEach(s => s.classList.remove('active'));
+    slides[n].classList.add('active');
+    document.getElementById('slideCount').textContent = `${n + 1} / ${total}`;
+  }
+
+  function navigate(dir) {
+    current = Math.max(0, Math.min(total - 1, current + dir));
+    showSlide(current);
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); navigate(1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); navigate(-1); }
+  });
+
+  let wheelTimeout = null;
+  document.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    if (wheelTimeout) return;
+    navigate(e.deltaY > 0 ? 1 : -1);
+    wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 400);
+  }, { passive: false });
+
+  showSlide(0);
+
+  const deck = document.getElementById('deck');
+  const BASE_W = 960;
+  const BASE_H = 540;
+
+  function rescale() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    if (vw > BASE_W + 10 || vh > BASE_H + 30) {
+      const scale = Math.min(vw / BASE_W, vh / BASE_H);
+      deck.style.transform = `scale(${scale})`;
+      deck.style.boxShadow = 'none';
+    } else {
+      deck.style.transform = '';
+      deck.style.boxShadow = '';
+    }
+  }
+
+  window.addEventListener('resize', rescale);
+  rescale();
+</script>
+
+</body>
+</html>
