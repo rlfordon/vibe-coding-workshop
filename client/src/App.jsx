@@ -13,6 +13,7 @@ import Admin from './Admin';
 function parseHash() {
   const raw = window.location.hash.replace('#', '') || '';
   if (raw === 'admin') return { mode: 'admin', eventId: null };
+  if (raw === 'portfolio') return { mode: 'portfolio', eventId: null };
   const eventId = EVENT_CONFIGS[raw] ? raw : DEFAULT_EVENT;
   return { mode: 'event', eventId };
 }
@@ -44,6 +45,14 @@ export default function App() {
     return (
       <div className="min-h-screen overflow-x-hidden bg-slate-50 font-[Source_Sans_Pro,sans-serif] text-slate-900">
         <Admin />
+      </div>
+    );
+  }
+
+  if (mode === 'portfolio') {
+    return (
+      <div className="min-h-screen overflow-x-hidden bg-slate-50 font-[Source_Sans_Pro,sans-serif] text-slate-900">
+        <Gallery mineOnly />
       </div>
     );
   }
