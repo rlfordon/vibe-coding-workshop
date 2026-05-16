@@ -41,6 +41,10 @@ export default function App() {
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
 
+  useEffect(() => {
+    document.title = mode === 'portfolio' ? 'Vibe Coding Portfolio' : 'Vibe Coding Workshop';
+  }, [mode]);
+
   if (mode === 'admin') {
     return (
       <div className="min-h-screen overflow-x-hidden bg-slate-50 font-[Source_Sans_Pro,sans-serif] text-slate-900">
