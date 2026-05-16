@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { EVENT_CONFIGS, DEFAULT_EVENT } from './eventConfigs';
+import { EVENT_CONFIGS, DEFAULT_EVENT, MY_PORTFOLIO } from './eventConfigs';
 import Home from './Home';
 import Slides from './Slides';
 import PromptWizard from './PromptWizard';
@@ -52,7 +52,12 @@ export default function App() {
   if (mode === 'portfolio') {
     return (
       <div className="min-h-screen overflow-x-hidden bg-slate-50 font-[Source_Sans_Pro,sans-serif] text-slate-900">
-        <Gallery mineOnly />
+        <Showcase
+          items={MY_PORTFOLIO}
+          title="Portfolio"
+          subtitle="Tools I've built for teaching, research, and the classroom"
+          hideOriginFilter
+        />
       </div>
     );
   }

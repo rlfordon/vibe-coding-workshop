@@ -1089,3 +1089,22 @@ export const EVENT_CONFIGS = {
 };
 
 export const DEFAULT_EVENT = 'workshop';
+
+// Portfolio: every showcase item across all event configs that has `builtWith`
+// set (the marker for "I built this" vs. community contributions), deduped by
+// title. Driven from EVENT_CONFIGS so new event configs are picked up
+// automatically.
+export const MY_PORTFOLIO = (() => {
+  const seen = new Set();
+  const out = [];
+  for (const config of Object.values(EVENT_CONFIGS)) {
+    const items = Array.isArray(config.showcase) ? config.showcase : [];
+    for (const item of items) {
+      if (!item.builtWith) continue;
+      if (seen.has(item.title)) continue;
+      seen.add(item.title);
+      out.push(item);
+    }
+  }
+  return out;
+})();
