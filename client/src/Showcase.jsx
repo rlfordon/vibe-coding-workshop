@@ -24,7 +24,7 @@ const HOSTED_ON_COLORS = {
   'GitHub Pages': { bg: 'bg-gray-50', text: 'text-gray-600', border: 'border-gray-200' },
 };
 
-export default function Showcase({ items, subtitle }) {
+export default function Showcase({ items, subtitle, title = 'Tool Showcase', hideOriginFilter = false }) {
   const [lightbox, setLightbox] = useState(null);
   const [category, setCategory] = useState('all');
   const [builtWith, setBuiltWith] = useState('all');
@@ -56,7 +56,7 @@ export default function Showcase({ items, subtitle }) {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-8 pb-20">
       <div className="mb-8">
         <h1 className="text-3xl sm:text-4xl font-[BioRhyme,serif] font-bold text-slate-800 tracking-tight">
-          Tool Showcase
+          {title}
         </h1>
         <p className="text-lg text-slate-500 font-medium mt-1">
           {subtitle || 'Tools built with AI for teaching, research, and the classroom'}
@@ -68,28 +68,35 @@ export default function Showcase({ items, subtitle }) {
       <div className="space-y-3 mb-6">
         {/* Row 1: Origin + Category */}
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-wide mr-1">Show:</span>
-          {[
-            { id: 'all', label: 'All' },
-            { id: 'mine', label: 'My Projects' },
-            { id: 'community', label: 'Community' },
-          ].map((f) => (
-            <button
-              key={f.id}
-              onClick={() => {
-                setOrigin(f.id);
-                if (f.id === 'community') setBuiltWith('all');
-              }}
-              className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors ${
-                origin === f.id
-                  ? 'bg-[#BA0C2F] text-white'
-                  : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
-              }`}
-            >
-              {f.label}
-            </button>
-          ))}
-          <span className="text-slate-200 mx-1">|</span>
+          {!hideOriginFilter && (
+            <>
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-wide mr-1">Show:</span>
+              {[
+                { id: 'all', label: 'All' },
+                { id: 'mine', label: 'My Projects' },
+                { id: 'community', label: 'Community' },
+              ].map((f) => (
+                <button
+                  key={f.id}
+                  onClick={() => {
+                    setOrigin(f.id);
+                    if (f.id === 'community') setBuiltWith('all');
+                  }}
+                  className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors ${
+                    origin === f.id
+                      ? 'bg-[#BA0C2F] text-white'
+                      : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                  }`}
+                >
+                  {f.label}
+                </button>
+              ))}
+              <span className="text-slate-200 mx-1">|</span>
+            </>
+          )}
+          {hideOriginFilter && (
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wide mr-1">Category:</span>
+          )}
           {categoryFilters.map((f) => (
             <button
               key={f.id}

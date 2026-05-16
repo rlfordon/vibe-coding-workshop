@@ -69,17 +69,8 @@ function parseProject(row) {
 // ---------------------------------------------------------------------------
 
 // GET /api/projects — all projects sorted by votes desc, filtered by event
-// (or by current voter_id when ?mine=1 is set, ignoring event_id)
 app.get("/api/projects", (req, res) => {
   const voterId = req.cookies.voter_id || "";
-  const mine = req.query.mine === "1";
-
-  if (mine) {
-    if (!voterId) return res.json([]);
-    const rows = db.prepare("SELECT * FROM projects WHERE author_id = ? ORDER BY id DESC").all(voterId);
-    return res.json(rows.map((row) => ({ ...parseProject(row), is_owner: true })));
-  }
-
   const eventId = req.query.event_id || "workshop";
   const rows = db.prepare("SELECT * FROM projects WHERE event_id = ? ORDER BY votes DESC").all(eventId);
   res.json(rows.map((row) => ({

@@ -4,7 +4,7 @@ import SandboxedIframe from './SandboxedIframe';
 
 const API = '/api/projects';
 
-export default function Gallery({ eventId, mineOnly = false }) {
+export default function Gallery({ eventId }) {
   const [projects, setProjects] = useState([]);
   const [showSubmit, setShowSubmit] = useState(false);
   const [expanded, setExpanded] = useState(null);
@@ -12,10 +12,7 @@ export default function Gallery({ eventId, mineOnly = false }) {
 
   const fetchProjects = async () => {
     try {
-      const url = mineOnly
-        ? `${API}?mine=1`
-        : `${API}?event_id=${encodeURIComponent(eventId)}`;
-      const res = await fetch(url);
+      const res = await fetch(`${API}?event_id=${encodeURIComponent(eventId)}`);
       const data = await res.json();
       setProjects(data);
     } catch (e) {
@@ -29,7 +26,7 @@ export default function Gallery({ eventId, mineOnly = false }) {
     fetchProjects();
     const interval = setInterval(fetchProjects, 5000);
     return () => clearInterval(interval);
-  }, [eventId, mineOnly]);
+  }, [eventId]);
 
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this project? You can always resubmit later.')) return;
@@ -61,22 +58,20 @@ export default function Gallery({ eventId, mineOnly = false }) {
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
         <div>
           <h1 className="text-3xl sm:text-4xl font-[BioRhyme,serif] font-bold text-slate-800 tracking-tight">
-            {mineOnly ? 'My Portfolio' : 'Project Gallery'}
+            Project Gallery
           </h1>
           <p className="text-lg text-slate-500 font-medium mt-1">
-            {projects.length} project{projects.length !== 1 ? 's' : ''}{mineOnly ? '' : ' submitted'}
+            {projects.length} project{projects.length !== 1 ? 's' : ''} submitted
           </p>
           <div className="h-1.5 w-full bg-[#BA0C2F] rounded-full mt-4" />
         </div>
-        {!mineOnly && (
-          <button
-            onClick={() => setShowSubmit(true)}
-            className="flex items-center gap-2 px-5 py-2.5 bg-[#BA0C2F] text-white rounded-xl font-bold text-sm hover:opacity-90 active:scale-95 transition-all shadow-sm shrink-0"
-          >
-            <Plus size={16} />
-            Submit Project
-          </button>
-        )}
+        <button
+          onClick={() => setShowSubmit(true)}
+          className="flex items-center gap-2 px-5 py-2.5 bg-[#BA0C2F] text-white rounded-xl font-bold text-sm hover:opacity-90 active:scale-95 transition-all shadow-sm shrink-0"
+        >
+          <Plus size={16} />
+          Submit Project
+        </button>
       </div>
 
       {/* Loading */}
@@ -87,12 +82,8 @@ export default function Gallery({ eventId, mineOnly = false }) {
       {/* Empty state */}
       {!loading && projects.length === 0 && (
         <div className="text-center py-20">
-          <p className="text-slate-400 font-medium text-lg mb-2">
-            {mineOnly ? "You haven't submitted any projects yet" : 'No projects yet'}
-          </p>
-          <p className="text-slate-400 text-sm">
-            {mineOnly ? 'Head to the Gallery to submit one.' : 'Be the first to submit!'}
-          </p>
+          <p className="text-slate-400 font-medium text-lg mb-2">No projects yet</p>
+          <p className="text-slate-400 text-sm">Be the first to submit!</p>
         </div>
       )}
 
