@@ -4,40 +4,37 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Single web app for a live vibe-coding workshop (~100 law students). Seven tabs: Home (default landing page with workshop overview and step-by-step navigation), Slides (embedded HTML deck), Build (prompt wizard for Gemini Canvas), Preview (paste code to test rendering), Gallery (submit/view/vote/comment on student HTML projects), Deploy (deployment guide), Resources (curated links). Hidden admin page at `/#admin` for database reset. Brand: "Vibe Coding Workshop", primary color scarlet `#BA0C2F`.
+Fully static web app for live vibe-coding workshops and talks. Tabs vary by event config, drawn from: Home (default landing page with overview and step-by-step navigation), Slides (embedded HTML deck), Build (prompt wizard for Gemini Canvas), Preview (paste code to test rendering), Showcase (curated tools with category filter), Deploy (deployment guide), Resources (curated links). Brand: "Vibe Coding Workshop", primary color scarlet `#BA0C2F`.
+
+There is no backend. The app was previously an Express + SQLite server on Render (Starter plan, $7/mo — the persistent disk for SQLite forced the paid tier) serving a Gallery tab where students submitted, voted on, and commented on projects. The Gallery was dropped and the server deleted; the app now deploys to GitHub Pages for free.
 
 ## Commands
 
 ```bash
-# Local dev (two terminals)
-cd client && npm run dev          # Vite HMR on :5173, proxies /api → :3001
-cd server && node index.js        # Express API on :3001
+# Local dev
+cd client && npm run dev          # Vite HMR on :5173
 
 # Build
 cd client && npm run build        # Output → client/dist/
 
+# Preview the production build at the real base path
+cd client && npm run preview      # Serves at /vibe-coding-workshop/
+
 # Lint
 cd client && npm run lint
-
-# Reset database
-rm server/data/workshop.db        # Recreated on next server start
 ```
 
 ## Architecture
 
-**Client** (`client/`): Vite + React 19 + Tailwind v4. Tab-based SPA — `App.jsx` renders `Home.jsx` (default), `Slides.jsx`, `PromptWizard.jsx`, `Preview.jsx`, `Gallery.jsx`, `Deploy.jsx`, or `Resources.jsx` based on active tab. `/#admin` renders `Admin.jsx` (hidden, not in nav). Fonts: BioRhyme (headings) + Source Sans Pro (body).
+**Client** (`client/`): Vite + React 19 + Tailwind v4. Tab-based SPA — `App.jsx` renders `Home.jsx` (default), `Slides.jsx`, `PromptWizard.jsx`, `Preview.jsx`, `Showcase.jsx`, `Deploy.jsx`, or `Resources.jsx` based on active tab. `/#portfolio` renders `Showcase.jsx` against `MY_PORTFOLIO` (hidden, not in nav). Fonts: BioRhyme (headings) + Source Sans Pro (body).
 
-**Server** (`server/`): Express serving the built client as static files + 6 REST endpoints. Uses `sql.js` (pure-JS SQLite compiled to WASM — chosen because `better-sqlite3` requires Visual Studio on this Windows machine). Database persisted to `server/data/workshop.db`, saved to disk after every write. Loads `.env` from project root for local dev (Render sets env vars via dashboard).
-
-**API**: `GET /api/projects` (sorted by votes desc, includes `is_owner` flag per cookie), `POST /api/projects` (author, title, html; stores voter_id as author_id), `POST /api/projects/:id/vote` (dedup via voter_id cookie), `POST /api/projects/:id/comments` (name, text), `DELETE /api/projects/:id` (owner-only, checks author_id matches voter_id cookie), `POST /api/admin/reset` (password-protected, clears all projects). The `voters` and `comments` columns store JSON strings, parsed on read by `parseProject()` in `index.js`. The `author_id` column tracks project ownership via the voter_id cookie; `db.js` includes a migration that adds this column to older databases automatically.
-
-**Gallery ownership**: Students can delete their own submissions via a trash icon that only appears on cards they created. This enables an iterate-and-resubmit workflow during testing sprints without needing to share laptops. Ownership is tracked by storing the `voter_id` cookie as `author_id` at submission time.
-
-**Iframe rendering** (`SandboxedIframe.jsx`): Shared module used by both Gallery and Build tabs. Students paste code from Gemini Canvas which may be React/JSX (with imports) or plain HTML. The `prepareHtml()` → `wrapReactCode()` pipeline: (1) parses all import statements, (2) strips them from the code, (3) generates CDN script tags and `const { ... } = window.globalName` shims, (4) wraps everything in an HTML shell with React, Babel standalone, and Tailwind loaded via CDN. Rendered in sandboxed iframes via Blob URLs.
+**Iframe rendering** (`SandboxedIframe.jsx`): Shared module used by the Build and Preview tabs. Students paste code from Gemini Canvas which may be React/JSX (with imports) or plain HTML. The `prepareHtml()` → `wrapReactCode()` pipeline: (1) parses all import statements, (2) strips them from the code, (3) generates CDN script tags and `const { ... } = window.globalName` shims, (4) wraps everything in an HTML shell with React, Babel standalone, and Tailwind loaded via CDN. Rendered in sandboxed iframes via Blob URLs.
 
 **PromptWizard** (`PromptWizard.jsx`): Single-screen launchpad — one copyable prompt template at the top, six idea cards below. Clicking a card swaps the prompt content; a Reset link returns to the template. No sidebar, no preview pane, no accordions.
 
-**Deploy**: `render.yaml` defines a single Render Web Service (Starter plan, $7/mo) with a 1GB persistent disk for SQLite. Build requires `npm install --include=dev` since Vite is a devDependency.
+**Deploy**: `.github/workflows/deploy.yml` builds `client/` and publishes `client/dist` to GitHub Pages on every push to `master`. Live at https://rlfordon.github.io/vibe-coding-workshop/. Build requires `npm ci --include=dev` since Vite is a devDependency.
+
+**Base path** (`assetUrl.js`): Pages serves the app from `/vibe-coding-workshop/`, not the domain root, so `vite.config.js` sets `base`. Vite rewrites imports and `index.html` but NOT runtime string literals — the root-relative `slidesUrl` and `screenshot` paths in `eventConfigs.js` would 404. `assetUrl()` rebases them against `import.meta.env.BASE_URL` at the point of use (`Slides.jsx`, `Showcase.jsx`). Any new root-relative asset path referenced from JS must go through it.
 
 ## Iframe CDN Rendering
 
@@ -45,7 +42,7 @@ The lucide-react UMD bundle expects `window.react` (lowercase) but React's UMD s
 
 ## Event Configs
 
-`client/src/eventConfigs.js` — Defines multiple event configurations (workshop for students, faculty for law professors). Each config specifies tabs, showcase items (with category/tags for filtering), and resources. Accessed via `?event=faculty` query param; defaults to workshop.
+`client/src/eventConfigs.js` — Defines multiple event configurations (workshop for students, faculty for law professors). Each config specifies tabs, showcase items (with category/tags for filtering), and resources. Selected by URL hash — `/#faculty`, `/#practicesummit`, `/#calicon26`; an unrecognized or absent hash falls back to `workshop`. The only query param is `?present=1`, which keeps the Slides iframe mounted across tab switches so the deck holds its position.
 
 ## Key Files
 
@@ -53,24 +50,25 @@ The lucide-react UMD bundle expects `window.react` (lowercase) but React's UMD s
 - `client/src/Home.jsx` — Default landing page with workshop overview and tab navigation
 - `client/src/Showcase.jsx` — Tool showcase with category filter bar (All/Teaching/Research/Community) and image lightbox
 - `client/src/SandboxedIframe.jsx` — Shared iframe rendering pipeline (prepareHtml, wrapReactCode, CDN shims)
-- `client/src/Gallery.jsx` — Gallery UI (submit/vote/comment)
 - `client/src/PromptWizard.jsx` — Build tab single-screen launchpad (prompt template + idea cards)
 - `client/src/Preview.jsx` — Preview tab (paste code, render in SandboxedIframe)
 - `client/src/Deploy.jsx` — Deployment guide for single-file apps
 - `client/src/Resources.jsx` — Curated links to vibe-coding articles and guides
-- `client/src/Admin.jsx` — Password-protected database reset (hidden at `/#admin`)
-- `server/db.js` — sql.js wrapper providing a better-sqlite3-like API (`prepare().all()`, `.get()`, `.run()`)
+- `client/src/assetUrl.js` — Rebases root-relative asset paths onto the Pages base path
 - `client/public/slides.html` — Self-contained 23-slide student deck with auto-scaling
 - `client/public/slides-faculty.html` — Faculty slide deck (auto-numbered via JS)
+- `client/public/slides-practicesummit.html` — AI Legal Practice Summit deck
+- `client/public/slides-calicon26.html` — CALIcon 26 deck
 - `client/public/showcase/` — Screenshot images for showcase tools
+- `.github/workflows/deploy.yml` — Builds and publishes to GitHub Pages on push to `master`
 - `backup-handout.html` — Offline backup with all prompts, ideas, and session plan
 
 ## Conventions
 
-- ESM throughout (`"type": "module"` in both package.json files)
+- ESM throughout (`"type": "module"` in `client/package.json`)
 - Tailwind utility classes, no CSS modules or styled-components
 - No TypeScript — plain JSX
-- Vite dev proxy handles `/api` routing; in production Express serves both static and API
+- Fully static: no server, no API, no database. Anything needing persistence belongs in a third-party service, not a backend in this repo.
 
 ## Other Files
 

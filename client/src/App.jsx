@@ -4,15 +4,12 @@ import Home from './Home';
 import Slides from './Slides';
 import PromptWizard from './PromptWizard';
 import Preview from './Preview';
-import Gallery from './Gallery';
 import Showcase from './Showcase';
 import Resources from './Resources';
 import Deploy from './Deploy';
-import Admin from './Admin';
 
 function parseHash() {
   const raw = window.location.hash.replace('#', '') || '';
-  if (raw === 'admin') return { mode: 'admin', eventId: null };
   if (raw === 'portfolio') return { mode: 'portfolio', eventId: null };
   const eventId = EVENT_CONFIGS[raw] ? raw : DEFAULT_EVENT;
   return { mode: 'event', eventId };
@@ -25,8 +22,8 @@ const PRESENTER_MODE =
 export default function App() {
   const [{ mode, eventId }, setRoute] = useState(parseHash);
   const [activeTab, setActiveTab] = useState(() => {
-    const { mode: m, eventId: eid } = parseHash();
-    return m === 'admin' ? null : EVENT_CONFIGS[eid]?.defaultTab || 'home';
+    const { eventId: eid } = parseHash();
+    return EVENT_CONFIGS[eid]?.defaultTab || 'home';
   });
 
   useEffect(() => {
@@ -44,14 +41,6 @@ export default function App() {
   useEffect(() => {
     document.title = mode === 'portfolio' ? 'Vibe Coding Portfolio' : 'Vibe Coding Workshop';
   }, [mode]);
-
-  if (mode === 'admin') {
-    return (
-      <div className="min-h-screen overflow-x-hidden bg-slate-50 font-[Source_Sans_Pro,sans-serif] text-slate-900">
-        <Admin />
-      </div>
-    );
-  }
 
   if (mode === 'portfolio') {
     return (
@@ -129,7 +118,6 @@ export default function App() {
         )}
         {activeTab === 'build' && <PromptWizard build={eventConfig.build} />}
         {activeTab === 'preview' && <Preview />}
-        {activeTab === 'gallery' && <Gallery eventId={eventConfig.id} />}
         {activeTab === 'showcase' && <Showcase items={eventConfig.showcase} subtitle={eventConfig.showcaseSubtitle} />}
         {activeTab === 'resources' && <Resources items={eventConfig.resources} />}
         {activeTab === 'deploy' && <Deploy />}
