@@ -1,70 +1,94 @@
 # Vibe Coding Workshop
 
-A ready-to-run web app for teaching **vibe coding** — building real web apps using AI, no prior coding experience required. Originally designed for ~100 law students at the University of Dayton School of Law, but built to be forked and adapted for any classroom.
+**[▶ Open the live site](https://rlfordon.github.io/vibe-coding-workshop/)**
+
+A workshop kit for teaching **vibe coding** — building working web apps by describing what you want to an AI, with no prior programming experience. It's a single static site that runs an entire session: slides, a prompt launchpad, a live code previewer, a deployment guide, and curated resources.
+
+Built for legal audiences (law students, faculty, and practitioners), but nothing about the machinery is law-specific — swap the prompts and slides and it works for any discipline.
+
+![The workshop site](client/public/workshop-site.png)
 
 ---
 
-## For Students
+## One site, several events
 
-### How the workshop works
+The same deployment serves multiple audiences. Each event config defines its own tabs, slide deck, project ideas, and resources, selected by URL hash:
 
-Everything lives in one app with tabs that walk you through the process:
+| Event | URL | Audience |
+|---|---|---|
+| Workshop | [`/`](https://rlfordon.github.io/vibe-coding-workshop/) | Students — hands-on build session |
+| Faculty | [`/#faculty`](https://rlfordon.github.io/vibe-coding-workshop/#faculty) | Law professors — what AI-assisted development means for teaching |
+| Practice Summit | [`/#practicesummit`](https://rlfordon.github.io/vibe-coding-workshop/#practicesummit) | Practitioners — building tools for legal practice |
+| CALIcon 26 | [`/#calicon26`](https://rlfordon.github.io/vibe-coding-workshop/#calicon26) | Conference session for law faculty |
 
-1. **Slides** — A 23-slide deck covering what vibe coding is and how to do it. Use arrow keys to navigate.
-2. **Build** — Pick from six starter project ideas (tenant rights quiz, case brief builder, contract red-flag spotter, and more), copy a ready-made prompt, and paste it into [Gemini Canvas](https://gemini.google.com) to start building.
-3. **Preview** — Paste your code from Gemini Canvas to instantly see how it looks. Supports plain HTML and React.
-4. **Deploy** — A step-by-step guide to publishing your app to a real website for free.
-5. **Resources** — Articles and guides on vibe coding, secure development, and legal tech.
+Anything unrecognized falls back to the student workshop. There's also [`/#portfolio`](https://rlfordon.github.io/vibe-coding-workshop/#portfolio), a standalone showcase of tools built this way.
 
-### Quick tips
+## What's in a session
 
-- You don't need to install anything — the workshop app runs in your browser
-- The Build tab gives you a prompt template that's designed to work well with Gemini Canvas
-- When you're ready to share, follow the Deploy tab to publish your project at a real URL
+- **Slides** — a self-contained HTML deck with auto-scaling and arrow-key navigation. Add `?present=1` to keep the deck mounted across tab switches so it holds its position while you demo something else.
+- **Build** — a prompt launchpad. One copyable template plus idea cards; clicking a card swaps in a full, ready-to-paste prompt. Lowers the barrier from "stare at a blank box" to "pick a thing and go."
+- **Preview** — paste code straight from Gemini Canvas and see it render. Handles plain HTML *and* React/JSX with imports, resolving libraries from CDN automatically.
+- **Showcase** — finished tools with category filters and an image lightbox, configured per event.
+- **Deploy** — a step-by-step guide for students publishing their own projects.
+- **Resources** — curated links for people who want to keep going afterward.
 
 ---
 
-## For Educators
+## Fork it for your own workshop
 
-This project is open for you to fork and adapt for your own workshops. Here's what you'd want to customize:
-
-### What to change
+The site is fully static, so a fork costs nothing to host. Everything you'd want to change lives in a handful of files:
 
 | What | Where | Notes |
 |------|-------|-------|
-| **Slide content** | `client/public/slides.html` | Self-contained HTML file — edit directly. 23 slides with auto-scaling. |
-| **Project ideas & prompts** | `client/src/PromptWizard.jsx` | Array of idea cards at the top of the file. Each has a title, description, and a full prompt. Swap in ideas relevant to your discipline. |
-| **Resource links** | `client/src/Resources.jsx` | Array of curated links at the top of the file. |
-| **Deploy guide** | `client/src/Deploy.jsx` | Step-by-step deployment instructions shown to students. |
-| **Branding & colors** | `client/src/App.jsx` | The primary color (`#BA0C2F` scarlet) and fonts (BioRhyme + Source Sans Pro) are set inline. |
-| **Events & tabs** | `client/src/eventConfigs.js` | Each event config defines its own tabs, showcase items, and resources. Select one by URL hash (`/#faculty`); no hash falls back to `workshop`. |
-| **Base path** | `client/vite.config.js` | Set `base` to match your repo name for GitHub Pages, or `'/'` for a custom domain. |
-| **Backup handout** | `backup-handout.html` | Offline HTML file with all prompts and the session plan — good to have if the network goes down. |
+| **Events, tabs, ideas, resources** | `client/src/eventConfigs.js` | The main file you'll edit. Each config sets its own tabs, slide deck, Home steps, prompt idea cards, showcase items, and links. Copy an existing config and rename the `id` to add an event. |
+| **Slide content** | `client/public/slides*.html` | Self-contained HTML — edit directly, no build step. One deck per event. |
+| **Base path** | `client/vite.config.js` | Set `base` to `'/<your-repo-name>/'` for GitHub Pages, or `'/'` for a custom domain. |
+| **Branding & colors** | `client/src/App.jsx` | Primary color and fonts are set inline. |
+| **Deploy guide** | `client/src/Deploy.jsx` | The instructions students follow to publish their work. |
+| **Backup handout** | `backup-handout.html` | Offline HTML with all prompts and the session plan — worth having when conference wifi fails. |
 
 ### What you get out of the box
 
-- A **sandboxed iframe renderer** that handles both plain HTML and React/JSX code (with automatic CDN imports), so students can paste code straight from Gemini Canvas
-- A **prompt wizard** that lowers the barrier to getting started — students pick an idea card and get a well-crafted prompt instead of staring at a blank text box
-- A **showcase** of finished tools with category filtering and an image lightbox, configured per event
-- **Multiple event configs** in one deployment — run a student workshop, a faculty talk, and a conference session from the same URL with different hashes
-- **Zero-cost hosting** — the app is fully static, so GitHub Pages serves it free with no server, database, or cold starts
+- A **sandboxed iframe renderer** that takes AI-generated code — plain HTML or React/JSX with imports — and renders it live, with no per-student setup
+- A **prompt launchpad** that hands people a well-crafted starting prompt instead of a blank text box
+- **Multiple event configs** in one deployment, so a student workshop, a faculty talk, and a conference session share a URL and differ by hash
+- **Zero-cost hosting** — no server, no database, no cold starts
 
 ---
 
-## Running It Yourself
+## Deploying
 
-### Prerequisites
+`.github/workflows/deploy.yml` lints, builds, and publishes to GitHub Pages on every push to `master`.
 
-- [Node.js](https://nodejs.org/) 18+
+1. Fork the repo
+2. Set `base` in `client/vite.config.js` to `'/<your-repo-name>/'`
+3. In your fork: **Settings → Pages → Build and deployment → Source → GitHub Actions**
+4. Push to `master`
 
-### Install & run
+The site lands at `https://<your-username>.github.io/<your-repo-name>/`.
+
+> **Base-path gotcha.** GitHub Pages serves from a subpath, and Vite rewrites imports and `index.html` but never runtime string literals. Root-relative paths in JS (`/slides.html`, `/showcase/foo.png`) would 404 without help, and the build succeeds either way — so this fails silently. `client/src/assetUrl.js` rebases them at the point of use; route any new root-relative asset path through it. On a custom domain with `base: '/'`, it becomes a no-op.
+
+**Free Pages hosting requires a public repo.** If you need yours private, a Render Static Site or Cloudflare Pages will host it free instead — change `base` to `'/'` and point the host at `client/` with a `npm run build` / `dist` config.
+
+---
+
+## How it works
+
+**Fully static.** React 19 + Vite + Tailwind v4, compiled to files a CDN can serve. There is no backend, no database, and no API. Earlier versions ran an Express + SQLite server for a project gallery where students submitted and voted on work; that was removed in favor of the static Showcase, which is why hosting is now free.
+
+**Routing** is hash-based (`/#faculty`), which is what lets an SPA live on Pages without 404 rewrite rules. `?present=1` is the only query parameter.
+
+**The iframe renderer** (`SandboxedIframe.jsx`) is the interesting part. Students paste whatever the AI gave them, which may be a React component with `import` statements — not something a browser runs directly. `prepareHtml()` parses the imports, strips them, maps each to a CDN `<script>` plus a `const { … } = window.Global` shim, and wraps the result in an HTML shell with React, Babel standalone, and Tailwind. It renders in a sandboxed iframe via a Blob URL.
+
+### Running locally
 
 ```bash
 cd client && npm install
 npm run dev
 ```
 
-Open **http://localhost:5173**. There is no server to start — the app is fully static.
+Opens at **http://localhost:5173**. There's no server to start.
 
 To check a production build the way it will actually be served:
 
@@ -72,70 +96,40 @@ To check a production build the way it will actually be served:
 cd client && npm run build && npm run preview
 ```
 
----
-
-## Deploying to GitHub Pages
-
-`.github/workflows/deploy.yml` builds `client/` and publishes `client/dist` on every push to `master`.
-
-1. Fork this repo and push to GitHub
-2. Set `base` in `client/vite.config.js` to `'/<your-repo-name>/'`
-3. In the repo, go to **Settings → Pages → Build and deployment → Source** and choose **GitHub Actions**
-4. Push to `master` — the workflow lints, builds, and deploys
-
-The site lands at `https://<your-username>.github.io/<your-repo-name>/`.
-
-> **Base path gotcha:** Pages serves the app from a subpath, so root-relative asset
-> paths in JS (`/slides.html`, `/showcase/foo.png`) would 404. Vite rewrites imports
-> and `index.html`, but never runtime string literals. `client/src/assetUrl.js`
-> rebases those at the point of use — route any new root-relative asset path
-> through it. On a custom domain, set `base` to `'/'` and this stops mattering.
-
----
-
-## Project Structure
+### Project structure
 
 ```
-client/                         React frontend (Vite + React 19 + Tailwind v4)
+client/
 ├── src/
-│   ├── App.jsx                 Tab-based SPA shell
+│   ├── App.jsx                 Tab shell + hash routing
+│   ├── eventConfigs.js         Per-event tabs, ideas, showcase, resources
+│   ├── Home.jsx                Landing page with step-by-step navigation
+│   ├── Slides.jsx              Embedded slide deck
 │   ├── PromptWizard.jsx        Build tab — prompt template + idea cards
 │   ├── Preview.jsx             Paste-and-render previewer
+│   ├── SandboxedIframe.jsx     Shared renderer (HTML + React/JSX via CDN)
 │   ├── Showcase.jsx            Tool showcase with filters + lightbox
 │   ├── Deploy.jsx              Deployment guide for students
 │   ├── Resources.jsx           Curated links
-│   ├── SandboxedIframe.jsx     Shared iframe renderer (HTML + React/JSX)
-│   ├── Slides.jsx              Embedded slide deck
-│   ├── eventConfigs.js         Per-event tabs, showcase items, resources
-│   └── assetUrl.js             Rebases asset paths onto the Pages base path
-├── public/
-│   ├── slides.html             Self-contained slide deck
-│   └── showcase/               Screenshots for showcase cards
-.github/workflows/deploy.yml    Builds and publishes to GitHub Pages
+│   └── assetUrl.js             Rebases asset paths onto the base path
+└── public/
+    ├── slides*.html            Self-contained decks, one per event
+    └── showcase/               Screenshots for showcase cards
+.github/workflows/deploy.yml    Build and publish to GitHub Pages
 backup-handout.html             Offline fallback handout
 ```
 
-## Tech Stack
-
-| | |
-|---|---|
-| **Frontend** | React 19, Vite, Tailwind CSS v4 |
-| **Backend** | None — fully static |
-| **Hosting** | GitHub Pages (via GitHub Actions) |
-
----
-
-## Useful Commands
+### Commands
 
 ```bash
 cd client && npm run dev         # Dev server with hot reload
-cd client && npm run build       # Production build
+cd client && npm run build       # Production build → client/dist/
 cd client && npm run preview     # Serve the build at the real base path
-cd client && npm run lint        # Lint frontend
+cd client && npm run lint        # Lint
 ```
 
 ---
 
 ## License
 
-[MIT License](LICENSE) — fork it, adapt it, teach with it.
+[MIT](LICENSE) — fork it, adapt it, teach with it.
