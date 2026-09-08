@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ExternalLink, X, BookOpen } from 'lucide-react';
+import { assetUrl } from './assetUrl';
 
 const CATEGORY_LABELS = {
   teaching: 'Teaching',
@@ -156,7 +157,7 @@ export default function Showcase({ items, subtitle, title = 'Tool Showcase', hid
             <div className="h-48 bg-slate-100 border-b border-slate-200 overflow-hidden">
               {item.screenshot ? (
                 <img
-                  src={item.screenshot}
+                  src={assetUrl(item.screenshot)}
                   alt={item.title}
                   className="w-full h-full object-cover object-top cursor-pointer hover:opacity-90 transition-opacity"
                   onClick={() => setLightbox(item)}
@@ -284,7 +285,7 @@ export default function Showcase({ items, subtitle, title = 'Tool Showcase', hid
           </button>
           <div className="max-w-4xl w-full" onClick={(e) => e.stopPropagation()}>
             <img
-              src={lightbox.screenshot}
+              src={assetUrl(lightbox.screenshot)}
               alt={lightbox.title}
               className="w-full rounded-lg shadow-2xl"
             />

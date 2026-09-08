@@ -1,4 +1,28 @@
 node_modules/
 client/dist/
-server/data/
+
+# Local env
 .env
+.env.local
+.env.*.local
+
+# Vite cache
+.vite/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Working notes (not for public repo)
+scratch/
+docs/plans/
+docs/superpowers/
+
+# Claude Code local state (worktrees, session data)
+.claude/

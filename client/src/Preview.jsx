@@ -66,7 +66,7 @@ export default function Preview() {
 
       {/* Hint */}
       <p className="mt-3 text-xs text-slate-400 font-medium">
-        This is the same renderer the Gallery uses — what you see here is what others will see.
+        Paste code straight from Gemini Canvas — this renders plain HTML and React/JSX alike.
       </p>
     </div>
   );
